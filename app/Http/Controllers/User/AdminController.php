@@ -1,0 +1,243 @@
+<?php
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
+use App\Model\ProUser;
+use App\Model\Recharge;
+use App\Model\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+class AdminController extends Controller
+{
+    //显示代理的信息
+    public function proxyList(Request $request)
+    {
+        $pageSize = $request->input('page_size',10);
+        $proList = ProUser::paginate($pageSize,[
+            'pro_id',
+            'pro_name',
+            'pro_total',
+            'pro_surplus',
+            'pro_used',
+            'pro_pick',
+            'pro_time',
+            'pro_discount',
+            'pro_comment',
+            'pro_status']);
+        $proCount = ProUser::count();
+        $proTotal = ProUser::sum('pro_total');
+        $proSurplus = ProUser::sum('pro_surplus');
+        $proUsed = ProUser::sum('pro_used');
+
+        $proRes = array(
+            'pro_count'=>$proCount,
+            'pro_total'=>$proTotal,
+            'pro_surplus'=>$proSurplus,
+            'pro_used'=>$proUsed
+        );
+
+        return view('user.admin')->with('proList',$proList)->with('proRes',$proRes);
+    }
+
+    //跳转修改密码页面，并携带参数
+    public function showPwd(Request $request)
+    {
+        $pro_id = $request->input('pro_id','');
+        $pro_name = $request->input('pro_name','');
+        $data = array(
+            'pro_id' => $pro_id,
+            'pro_name' => $pro_name
+        );
+        return view('user.cpwd')->with('data',$data);
+    }
+
+    //修改密码
+    public function changePwd(Request $request)
+    {
+        if(!$request->has('pro_id')){
+            return json_encode(['error_code'=>113,'msg'=>'没有pro_id传入'],JSON_UNESCAPED_UNICODE);
+//            echo "<script>alert('没有pro_id传入')</script>";
+//            return view('user.cpwd')->with('data',$data);
+        }
+
+        $proId = $request->input('pro_id');
+
+        if(!$request->has('new_pwd')){
+            return json_encode(['error_code'=>113,'msg'=>'没有new_pwd传入'],JSON_UNESCAPED_UNICODE);
+//            echo "<script>alert('没有new_pwd传入')</script>";
+//            return view('user.cpwd')->with('data',$data);
+        }
+        $newPassword = $request->input('new_pwd');
+        $userLen = mb_strlen($newPassword);
+        if($userLen<6 || $userLen>12){
+            return json_encode(['error_code'=>222,'msg'=>'密码在6-12位之间'],JSON_UNESCAPED_UNICODE);
+//            echo "<script>alert('密码在6-12位之间')</script>";
+//            return view('user.cpwd')->with('data',$data);
+        }
+
+        $password = md5($newPassword);
+        $res = ProUser::where('pro_id',$proId)->update(['pro_pwd' => $password]);
+
+        if(!$res){
+//            echo "<script>alert('修改密码失败')</script>";
+//            return view('user.cpwd')->with('data',$data);
+            return json_encode(['error_code'=>222,'msg'=>'修改密码失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+//        return redirect('/proxyList?page='.$page);
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+
+    }
+
+    //跳转修改备注页面，并携带参数
+    public function showCom(Request $request)
+    {
+        $pro_id = $request->input('pro_id','');
+        $pro_name = $request->input('pro_name','');
+        $data = array(
+            'pro_id' => $pro_id,
+            'pro_name' => $pro_name
+        );
+        return view('user.ccom')->with('data',$data);
+    }
+
+    //修改备注
+    public function changeCom(Request $request)
+    {
+
+        if(!$request->has('pro_id')){
+            return json_encode(['error_code'=>113,'msg'=>'没有pro_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $proId = $request->input('pro_id');
+
+        if(!$request->has('new_com')){
+            return json_encode(['error_code'=>113,'msg'=>'没有new_com传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $proCom = $request->input('new_com');
+
+        $res = ProUser::where('pro_id',$proId)->update(['pro_comment' => $proCom]);
+
+        if(!$res){
+            return json_encode(['error_code'=>113,'msg'=>'修改备注失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //修改状态
+    public function changeSta(Request $request)
+    {
+        if(!$request->has('pro_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有pro_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $proId = $request->input('pro_id');
+
+        $res = ProUser::where('pro_id',$proId)->get(['pro_status']);
+
+        if(!$res->isEmpty()){
+            $resSta = $res->toArray()[0]["pro_status"];
+        }
+
+        if($resSta == 1){
+            $res1 = ProUser::where('pro_id',$proId)->update(['pro_status' => 0]);
+
+            if(!$res1){
+                return json_encode(['error_code'=>222,'msg'=>'修改状态失败'],JSON_UNESCAPED_UNICODE);
+            }
+        }elseif($resSta == 0){
+            $res1 = ProUser::where('pro_id',$proId)->update(['pro_status' => 1]);
+
+            if(!$res1) {
+                return json_encode(['error_code'=>222,'msg'=>'修改状态失败'],JSON_UNESCAPED_UNICODE);
+            }
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+
+    }
+
+    //跳转修改备注页面，并携带参数
+    public function recShow(Request $request)
+    {
+        $pro_id = $request->input('pro_id','');
+        $pro_name = $request->input('pro_name','');
+        $pro_discount = $request->input('pro_discount','');
+        $pro_total = $request->input('pro_total','');
+        $data = array(
+            'pro_id' => $pro_id,
+            'pro_name' => $pro_name,
+            'pro_discount'=>$pro_discount,
+            'pro_total'=>$pro_total
+        );
+        return view('user.recharge')->with('data',$data);
+    }
+    //充值
+    public function recharge(Request $request)
+    {
+        if(!$request->has('pro_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有pro_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $proId = $request->input('pro_id');
+
+        if(!$request->has('pro_name')){
+            return json_encode(['error_code'=>222,'msg'=>'没有pro_name传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $proName = $request->input('pro_name');
+
+
+        if(!$request->has('rec_count')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入充值点数'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $recCount = $request->input('rec_count');
+        $recCom = $request->input('rec_com','');
+        $recTime = date('Y-m-d H:i:s',time());
+
+
+        $insRes = Recharge::insert([
+            'pro_id'=>$proId,
+            'pro_name'=>$proName,
+            'rec_count'=>$recCount,
+            'rec_time'=>$recTime,
+            'rec_com'=>$recCom
+        ]);
+        if(!$insRes){
+            return json_encode(['error_code'=>222,'msg'=>'充值失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        if(!$request->has('pro_total')){
+            return json_encode(['error_code'=>222,'msg'=>'没有pro_total传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $proTotal = $request->input('pro_total');
+
+        $resTotal = $proTotal+$recCount;
+
+        $upPro = ProUser::where('pro_id',$proId)->update(['pro_total'=>$resTotal]);
+
+        if(!$upPro){
+            return json_encode(['error_code'=>222,'msg'=>'加入到pro_user表失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        //修改折扣
+        if(!$request->has('pro_discount')){
+            return json_encode(['error_code'=>222,'msg'=>'字段pro_discount不存在'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $proDiscount = $request->input('pro_discount',0.5);
+
+        $disRes = ProUser::where('pro_id',$proId)->update(['pro_discount'=>$proDiscount]);
+
+        if(!$disRes){
+            return json_encode(['error_code'=>222,'msg'=>'同步折扣失败'],JSON_UNESCAPED_UNICODE);
+
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+
+    }
+
+}
