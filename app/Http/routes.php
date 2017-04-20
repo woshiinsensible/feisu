@@ -49,8 +49,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/recharge', 'User\AdminController@recharge');
     Route::get('/rec_show', 'User\AdminController@recShow');
 
-
-
+    //修改折扣
+    Route::get('/changeDis', 'User\AdminController@changeDis');
 
     Route::group(['middleware'=>'check'],function(){
 

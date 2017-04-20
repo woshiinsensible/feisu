@@ -102,6 +102,7 @@
 								<label class="control-label" for="input01">折扣</label>
 								<div class="controls">
 									<input type="text" class="input-xlarge" id="pro_discount" name="pro_discount" placeholder="折扣在0-1之间"   value="{{$data['pro_discount']}}">
+									<button type="button" class="btn btn-danger" id="b2">修改折扣</button>
 								</div>
 							</div>
 							<div class="control-group">
@@ -143,6 +144,8 @@
                 $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart").val())
             });
 		</script>
+
+
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('#b1').click(function () {
@@ -171,6 +174,25 @@
                         },
 						'json'
 					)
+                });
+                $('#b2').click(function () {
+                    var proId = $('#pro_id').val();
+                    var proDiscount = $('#pro_discount').val();
+                    $.get(
+                        '/changeDis',
+                        {
+                            pro_id:proId,
+                            pro_discount:proDiscount
+                        },
+                        function (res) {
+                            if(res.msg === ''){
+                                alert('修改成功');
+                            }else{
+                                alert(res.msg);
+                            }
+                        },
+                        'json'
+                    )
                 })
 			})
 		</script>

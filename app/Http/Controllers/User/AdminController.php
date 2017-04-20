@@ -222,7 +222,18 @@ class AdminController extends Controller
             return json_encode(['error_code'=>222,'msg'=>'加入到pro_user表失败'],JSON_UNESCAPED_UNICODE);
         }
 
-        //修改折扣
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+
+    }
+
+    //修改折扣
+    public function changeDis(Request $request)
+    {
+        if(!$request->has('pro_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有pro_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $proId = $request->input('pro_id');
+
         if(!$request->has('pro_discount')){
             return json_encode(['error_code'=>222,'msg'=>'字段pro_discount不存在'],JSON_UNESCAPED_UNICODE);
         }
@@ -232,12 +243,10 @@ class AdminController extends Controller
         $disRes = ProUser::where('pro_id',$proId)->update(['pro_discount'=>$proDiscount]);
 
         if(!$disRes){
-            return json_encode(['error_code'=>222,'msg'=>'同步折扣失败'],JSON_UNESCAPED_UNICODE);
-
+            return json_encode(['error_code'=>222,'msg'=>'修改折扣失败'],JSON_UNESCAPED_UNICODE);
         }
 
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
-
     }
 
 }
