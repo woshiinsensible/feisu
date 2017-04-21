@@ -58,6 +58,8 @@ Route::group(['middleware' => ['web']], function () {
     //显示提号记录
     Route::get('/pickupList', 'User\AdminController@pickupList');
 
+    //显示历史公告
+    Route::get('/noticeList', 'User\AdminController@noticeList');
 
     Route::group(['middleware'=>'check'],function(){
 

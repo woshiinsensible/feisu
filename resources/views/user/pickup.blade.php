@@ -8,7 +8,6 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="css/site.css" rel="stylesheet">
-		<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	</head>
 	<body>
@@ -35,17 +34,11 @@
 								<li>
 									<a href="help.htm">添加游戏</a>
 								</li>
-								<form class="navbar-search pull-left" action="">
-									<input type="text" id="datetimeStart" class="search-query span1" placeholder="代理账号" />
-								</form>
-								<form class="navbar-search pull-left" action="">
-									<input type="text" id="datetimeStart" class="search-query span2" placeholder="开始日期" />
-								</form>
-								<form class="navbar-search pull-left" action="">
-									<input type="text" id="datetimeEnd" class="search-query span2" placeholder="结束日期" />
-								</form>
-								<button type="button" class="btn btn-primary" id="b2">查询</button>
 							</ul>
+							<form class="navbar-search pull-left" action="">
+								<input type="text" class="search-query span2" placeholder="代理账号" />
+							</form>
+							<button type="button" class="btn btn-primary" id="b2">查询</button>
 							<ul class="nav pull-right">
 								<li>
 									<a href="profile.htm">@username</a>
@@ -68,10 +61,10 @@
 							<li>
 								<a href="/proxyList"><i class="icon-home"></i> 代理信息</a>
 							</li>
-							<li  class="active">
+							<li>
 								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
 							</li>
-							<li>
+							<li class="active">
 								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
@@ -95,33 +88,57 @@
 									代理账号
 								</th>
 								<th>
-									充值点数
+									消耗点数
 								</th>
 								<th>
-									充值时间
+									购买账号
 								</th>
 								<th>
-									充值备注
+									购买时间
+								</th>
+								<th>
+									折扣
+								</th>
+								<th>
+									剩余点数
+								</th>
+								<th>
+									提货数量
+								</th>
+								<th>
+									备注
 								</th>
 							</tr>
 						</thead>
 						<tbody id="pro_id">
-						@forelse ($rechargeList as $k=>$v)
+						@forelse ($pickupList as $k=>$v)
 							<tr>
 								<td>
-									{{$v['rec_id']}}
+									{{$v['p_id']}}
 								</td>
 								<td>
 									{{$v['pro_name']}}
 								</td>
 								<td>
-									{{$v['rec_count']}}
+									{{$v['p_used']}}
 								</td>
 								<td>
-									{{$v['rec_time']}}
+									{{$v['p_account']}}
 								</td>
 								<td>
-									{{$v['rec_com']}}
+									{{$v['p_time']}}
+								</td>
+								<td>
+									{{$v['pro_discount']}}
+								</td>
+								<td>
+									{{$v['pro_surplus']}}
+								</td>
+								<td>
+									{{$v['pro_pick']}}
+								</td>
+								<td>
+									{{$v['p_com']}}
 								</td>
 							</tr>
 						@empty
@@ -132,48 +149,34 @@
 					<div class="pagination">
 						<ul>
 							<li class="disabled">
-								{!! $rechargeList->links() !!}
+								{!! $pickupList->links() !!}
 							</li>
 						</ul>
 					</div>
-					{{--<input type="hidden" id="pro_id" value="{{$v['pro_id']}}">--}}
-					{{--<ul class="pager">--}}
-						{{--<li class="next">--}}
-							{{--<a href="activity.htm">More &rarr;</a>--}}
-						{{--</li>--}}
-					{{--</ul>--}}
-                    {{--<ul class="pager">--}}
-						{{--<li class="next">--}}
-							{{--More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>--}}
-						{{--</li>--}}
-					{{--</ul>--}}
 				</div>
 			</div>
 		</div>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/site.js"></script>
-		<script src="js/bootstrap-datetimepicker.js"></script>
 		<script type="text/javascript">
-            $("#datetimeStart").datetimepicker({
-                format: "yyyy-mm-dd hh:ii",
-                autoclose: true,
-                todayBtn: true,
-                minView: 0,
-                minuteStep:10,
-            }).on("click",function(){
-                $("#datetimeStart").datetimepicker("setEndDate",$("#datetimeEnd").val())
-            });
-            $("#datetimeEnd").datetimepicker({
-                format: "yyyy-mm-dd hh:ii",
-                autoclose: true,
-                todayBtn: true,
-                minView: 0,
-                minuteStep:1,
-                startDate:new Date()
-            }).on("click",function(){
-                $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart").val())
-            });
+            $(document).ready(function(){
+                $('.hh1').click(function () {
+                    var proId = $(this).attr('id');
+                    $.get(
+                        '/changeSta',
+                        {pro_id:proId},
+                        function (res) {
+                            if(res.msg === ''){
+                                history.go(0);
+                            }else{
+                                alert(res.msg);
+                            }
+                        },
+                        'json'
+                    )
+                })
+            })
 		</script>
 	</body>
 </html>

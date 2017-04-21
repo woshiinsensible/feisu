@@ -36,8 +36,9 @@
 								</li>
 							</ul>
 							<form class="navbar-search pull-left" action="">
-								<input type="text" class="search-query span2" placeholder="Search" />
+								<input type="text" class="search-query span2" placeholder="代理账号" />
 							</form>
+							<button type="button" class="btn btn-primary" id="b2">查询</button>
 							<ul class="nav pull-right">
 								<li>
 									<a href="profile.htm">@username</a>
@@ -58,26 +59,25 @@
 								飞速手游
 							</li>
 							<li class="active">
-								<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
+								<a href="/proxyList"><i class="icon-home"></i> 代理信息</a>
 							</li>
 							<li>
 								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
 							</li>
 							<li>
-								<a href="tasks.htm"><i class="icon-check"></i> 提号记录</a>
+								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
 								<a href="messages.htm"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
 							<li>
-								<a href="files.htm"><i class="icon-file"></i> 历史公告</a>
+								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
 							</li>
 
 						</ul>
 					</div>
 				</div>
 				<div class="span10">
-					<h3>代理信息</h3>
 					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>

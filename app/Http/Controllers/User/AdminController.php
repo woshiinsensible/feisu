@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Model\Notice;
 use App\Model\Pickup;
 use App\Model\ProUser;
 use App\Model\Recharge;
@@ -282,10 +283,22 @@ class AdminController extends Controller
             'fs_pro_users.pro_pick',
             'fs_pickup.p_com'
             ]);
-
-        var_dump($pickupList->toArray());
-
         return view('user.pickup')->with('pickupList',$pickupList);
+    }
+
+    //显示历史公告
+    public function noticeList(Request $request)
+    {
+        $pageSize = $request->input('page_size',10);
+
+        $noticeList = Notice::orderBy('no_up')->paginate($pageSize,[
+            'no_id',
+            'no_title',
+            'no_time',
+            'no_up'
+        ]);
+
+        return view('user.notice')->with('noticeList',$noticeList);
     }
 
 }

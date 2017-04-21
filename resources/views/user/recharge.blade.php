@@ -55,20 +55,20 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
+							<li>
+								<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
+							</li>
 							<li class="active">
-								<a href="index.htm"><i class="icon-white icon-home"></i> 代理信息</a>
+								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
 							</li>
 							<li>
-								<a href="projects.htm"><i class="icon-folder-open"></i> 充值记录</a>
-							</li>
-							<li>
-								<a href="tasks.htm"><i class="icon-check"></i> 提号记录</a>
+								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
 								<a href="messages.htm"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
 							<li>
-								<a href="files.htm"><i class="icon-file"></i> 历史公告</a>
+								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
 							</li>
 
 						</ul>

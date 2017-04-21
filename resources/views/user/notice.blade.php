@@ -8,7 +8,6 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="css/site.css" rel="stylesheet">
-		<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	</head>
 	<body>
@@ -35,16 +34,6 @@
 								<li>
 									<a href="help.htm">添加游戏</a>
 								</li>
-								<form class="navbar-search pull-left" action="">
-									<input type="text" id="datetimeStart" class="search-query span1" placeholder="代理账号" />
-								</form>
-								<form class="navbar-search pull-left" action="">
-									<input type="text" id="datetimeStart" class="search-query span2" placeholder="开始日期" />
-								</form>
-								<form class="navbar-search pull-left" action="">
-									<input type="text" id="datetimeEnd" class="search-query span2" placeholder="结束日期" />
-								</form>
-								<button type="button" class="btn btn-primary" id="b2">查询</button>
 							</ul>
 							<ul class="nav pull-right">
 								<li>
@@ -68,16 +57,16 @@
 							<li>
 								<a href="/proxyList"><i class="icon-home"></i> 代理信息</a>
 							</li>
-							<li  class="active">
+							<li>
 								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
 							</li>
 							<li>
 								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
-								<a href="messages.htm"><i class="icon-envelope"></i> 发布公告</a>
+								<a href="/noticeList"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
-							<li>
+							<li class="active">
 								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
 							</li>
 
@@ -92,36 +81,54 @@
 									ID
 								</th>
 								<th>
-									代理账号
+									标题
 								</th>
 								<th>
-									充值点数
+									发布时间
 								</th>
 								<th>
-									充值时间
+									是否置顶
 								</th>
 								<th>
-									充值备注
+									查看
+								</th>
+								<th>
+									修改
+								</th>
+								<th>
+									删除
 								</th>
 							</tr>
 						</thead>
 						<tbody id="pro_id">
-						@forelse ($rechargeList as $k=>$v)
+						@forelse ($noticeList as $k=>$v)
 							<tr>
 								<td>
-									{{$v['rec_id']}}
+									{{$v['no_id']}}
 								</td>
 								<td>
-									{{$v['pro_name']}}
+									{{$v['no_title']}}
 								</td>
 								<td>
-									{{$v['rec_count']}}
+									{{$v['no_time']}}
+								</td>
+								@if ($v['no_up'] == 1)
+									<td>
+										置顶
+									</td>
+								@elseif ($v['no_up'] == 0)
+									<td>
+										不置顶
+									</td>
+								@endif
+								<td>
+									<a href="/change_pwd?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">修改密码</a>
 								</td>
 								<td>
-									{{$v['rec_time']}}
+									<a href="/change_com?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">修改备注</a>
 								</td>
 								<td>
-									{{$v['rec_com']}}
+									<a href="/rec_show?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}&pro_discount={{$v['pro_discount']}}&pro_total={{$v['pro_total']}}" class="view-link">充值</a>
 								</td>
 							</tr>
 						@empty
@@ -132,48 +139,34 @@
 					<div class="pagination">
 						<ul>
 							<li class="disabled">
-								{!! $rechargeList->links() !!}
+								{!! $noticeList->links() !!}
 							</li>
 						</ul>
 					</div>
-					{{--<input type="hidden" id="pro_id" value="{{$v['pro_id']}}">--}}
-					{{--<ul class="pager">--}}
-						{{--<li class="next">--}}
-							{{--<a href="activity.htm">More &rarr;</a>--}}
-						{{--</li>--}}
-					{{--</ul>--}}
-                    {{--<ul class="pager">--}}
-						{{--<li class="next">--}}
-							{{--More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>--}}
-						{{--</li>--}}
-					{{--</ul>--}}
 				</div>
 			</div>
 		</div>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/site.js"></script>
-		<script src="js/bootstrap-datetimepicker.js"></script>
 		<script type="text/javascript">
-            $("#datetimeStart").datetimepicker({
-                format: "yyyy-mm-dd hh:ii",
-                autoclose: true,
-                todayBtn: true,
-                minView: 0,
-                minuteStep:10,
-            }).on("click",function(){
-                $("#datetimeStart").datetimepicker("setEndDate",$("#datetimeEnd").val())
-            });
-            $("#datetimeEnd").datetimepicker({
-                format: "yyyy-mm-dd hh:ii",
-                autoclose: true,
-                todayBtn: true,
-                minView: 0,
-                minuteStep:1,
-                startDate:new Date()
-            }).on("click",function(){
-                $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart").val())
-            });
+            $(document).ready(function(){
+                $('.hh1').click(function () {
+                    var proId = $(this).attr('id');
+                    $.get(
+                        '/changeSta',
+                        {pro_id:proId},
+                        function (res) {
+                            if(res.msg === ''){
+                                history.go(0);
+                            }else{
+                                alert(res.msg);
+                            }
+                        },
+                        'json'
+                    )
+                })
+            })
 		</script>
 	</body>
 </html>
