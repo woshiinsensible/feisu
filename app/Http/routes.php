@@ -35,6 +35,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/test','User\LoginController@test');
 
     Route::get('/proxyList', 'User\AdminController@proxyList');
+    //充值记录列表
+    Route::get('/rechargeList', 'User\AdminController@rechargeList');
+
     //上线改成post
     Route::get('/changePwd', 'User\AdminController@changePwd');
     Route::get('/change_pwd','User\AdminController@showPwd');

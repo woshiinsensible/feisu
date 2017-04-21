@@ -40,6 +40,20 @@ class AdminController extends Controller
         return view('user.admin')->with('proList',$proList)->with('proRes',$proRes);
     }
 
+    //显示充值信息
+    public function rechargeList(Request $request)
+    {
+        $pageSize = $request->input('page_size',10);
+        $rechargeList = Recharge::paginate($pageSize,[
+            'rec_id',
+            'pro_name',
+            'rec_count',
+            'rec_time',
+            'rec_com'
+        ]);
+        return view('user.reshow')->with('rechargeList',$rechargeList);
+    }
+
     //跳转修改密码页面，并携带参数
     public function showPwd(Request $request)
     {
@@ -175,6 +189,7 @@ class AdminController extends Controller
         );
         return view('user.recharge')->with('data',$data);
     }
+
     //充值
     public function recharge(Request $request)
     {
@@ -248,5 +263,7 @@ class AdminController extends Controller
 
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
     }
+
+
 
 }

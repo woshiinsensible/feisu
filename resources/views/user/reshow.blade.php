@@ -35,6 +35,16 @@
 								<li>
 									<a href="help.htm">添加游戏</a>
 								</li>
+								<form class="navbar-search pull-left" action="">
+									<input type="text" id="datetimeStart" class="search-query span1" placeholder="代理账号" />
+								</form>
+								<form class="navbar-search pull-left" action="">
+									<input type="text" id="datetimeStart" class="search-query span2" placeholder="开始日期" />
+								</form>
+								<form class="navbar-search pull-left" action="">
+									<input type="text" id="datetimeEnd" class="search-query span2" placeholder="结束日期" />
+								</form>
+								<button type="button" class="btn btn-primary" id="b2">查询</button>
 							</ul>
 							<ul class="nav pull-right">
 								<li>
@@ -56,10 +66,10 @@
 								飞速手游
 							</li>
 							<li class="active">
-								<a href="index.htm"><i class="icon-white icon-home"></i> 代理信息</a>
+								<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
 							</li>
 							<li>
-								<a href="projects.htm"><i class="icon-folder-open"></i> 充值记录</a>
+								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
 							</li>
 							<li>
 								<a href="tasks.htm"><i class="icon-check"></i> 提号记录</a>
@@ -75,41 +85,69 @@
 					</div>
 				</div>
 				<div class="span10">
-					<form id="edit-profile" class="form-horizontal">
-						<fieldset>
-							<legend>充值信息</legend>
-							<div class="control-group">
-								<label class="control-label" for="input01">代理账号</label>
-								<div class="controls">
-									<input type="text" class="input-xlarge" id="pro_name" name="pro_name" value="{{$data['pro_name']}}" readonly>
-									<input type="hidden" id="pro_id" name="pro_id" value="{{$data['pro_id']}}">
-									<input type="hidden" id="pro_total" name="pro_total" value="{{$data['pro_total']}}">
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="input01">充值点数</label>
-								<div class="controls">
-									<input type="number" class="input-xlarge" id="rec_count" name="rec_count" value="">
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="input01">折扣</label>
-								<div class="controls">
-									<input type="text" class="input-xlarge" id="pro_discount" name="pro_discount" placeholder="折扣在0-1之间"   value="{{$data['pro_discount']}}">
-									<button type="button" class="btn btn-danger" id="b2">修改折扣</button>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="input01">充值备注</label>
-								<div class="controls">
-									<input type="text" class="input-xlarge" id="rec_com" name="rec_com" value="">
-								</div>
-							</div>
-							<div class="form-actions">
-								<button type="button" class="btn btn-primary" id="b1">确认充值</button>
-							</div>
-						</fieldset>
-					</form>
+					<h3>充值记录</h3>
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>
+									ID
+								</th>
+								<th>
+									代理账号
+								</th>
+								<th>
+									充值点数
+								</th>
+								<th>
+									充值时间
+								</th>
+								<th>
+									充值备注
+								</th>
+							</tr>
+						</thead>
+						<tbody id="pro_id">
+						@forelse ($rechargeList as $k=>$v)
+							<tr>
+								<td>
+									{{$v['rec_id']}}
+								</td>
+								<td>
+									{{$v['pro_name']}}
+								</td>
+								<td>
+									{{$v['rec_count']}}
+								</td>
+								<td>
+									{{$v['rec_time']}}
+								</td>
+								<td>
+									{{$v['rec_com']}}
+								</td>
+							</tr>
+						@empty
+							nobody
+						@endforelse
+						</tbody>
+					</table>
+					<div class="pagination">
+						<ul>
+							<li class="disabled">
+								{!! $rechargeList->links() !!}
+							</li>
+						</ul>
+					</div>
+					{{--<input type="hidden" id="pro_id" value="{{$v['pro_id']}}">--}}
+					{{--<ul class="pager">--}}
+						{{--<li class="next">--}}
+							{{--<a href="activity.htm">More &rarr;</a>--}}
+						{{--</li>--}}
+					{{--</ul>--}}
+                    {{--<ul class="pager">--}}
+						{{--<li class="next">--}}
+							{{--More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>--}}
+						{{--</li>--}}
+					{{--</ul>--}}
 				</div>
 			</div>
 		</div>
@@ -137,58 +175,6 @@
             }).on("click",function(){
                 $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart").val())
             });
-		</script>
-
-
-		<script type="text/javascript">
-			$(document).ready(function(){
-				$('#b1').click(function () {
-				    var proId = $('#pro_id').val();
-				    var proName = $('#pro_name').val();
-                    var recCount = $('#rec_count').val();
-                    var recCom = $('#rec_com').val();
-                    var proTotal = $('#pro_total').val();
-                    var proDiscount = $('#pro_discount').val();
-					$.get(
-					 '/recharge',
-						{
-						    pro_id:proId,
-                            pro_name:proName,
-                            rec_count:recCount,
-                            rec_com:recCom,
-							pro_total:proTotal,
-                            pro_discount:proDiscount
-						},
-						function (res) {
-					     if(res.msg === ''){
-                             location.href = "/proxyList"
-                         }else{
-					         alert(res.msg);
-						 }
-                        },
-						'json'
-					)
-                });
-                $('#b2').click(function () {
-                    var proId = $('#pro_id').val();
-                    var proDiscount = $('#pro_discount').val();
-                    $.get(
-                        '/changeDis',
-                        {
-                            pro_id:proId,
-                            pro_discount:proDiscount
-                        },
-                        function (res) {
-                            if(res.msg === ''){
-                                alert('修改成功');
-                            }else{
-                                alert(res.msg);
-                            }
-                        },
-                        'json'
-                    )
-                })
-			})
 		</script>
 	</body>
 </html>

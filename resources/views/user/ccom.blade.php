@@ -76,7 +76,7 @@
 				<div class="span10">
 					<form id="edit-profile" class="form-horizontal">
 						<fieldset>
-							<legend>修改密码</legend>
+							<legend>修改备注</legend>
 							<div class="control-group">
 								<label class="control-label" for="input01">ID</label>
 								<div class="controls">

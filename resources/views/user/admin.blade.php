@@ -58,10 +58,10 @@
 								飞速手游
 							</li>
 							<li class="active">
-								<a href="index.htm"><i class="icon-white icon-home"></i> 代理信息</a>
+								<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
 							</li>
 							<li>
-								<a href="projects.htm"><i class="icon-folder-open"></i> 充值记录</a>
+								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
 							</li>
 							<li>
 								<a href="tasks.htm"><i class="icon-check"></i> 提号记录</a>
@@ -77,6 +77,7 @@
 					</div>
 				</div>
 				<div class="span10">
+					<h3>代理信息</h3>
 					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>
@@ -215,17 +216,6 @@
 
 						</ul>
 					</div>
-					{{--<input type="hidden" id="pro_id" value="{{$v['pro_id']}}">--}}
-					{{--<ul class="pager">--}}
-						{{--<li class="next">--}}
-							{{--<a href="activity.htm">More &rarr;</a>--}}
-						{{--</li>--}}
-					{{--</ul>--}}
-                    {{--<ul class="pager">--}}
-						{{--<li class="next">--}}
-							{{--More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>--}}
-						{{--</li>--}}
-					{{--</ul>--}}
 				</div>
 			</div>
 		</div>
