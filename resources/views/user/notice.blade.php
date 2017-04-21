@@ -122,13 +122,13 @@
 									</td>
 								@endif
 								<td>
-									<a href="/change_pwd?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">修改密码</a>
+									<a href="/change_pwd?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">查看</a>
 								</td>
 								<td>
-									<a href="/change_com?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">修改备注</a>
+									<a href="/change_com?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">修改</a>
 								</td>
 								<td>
-									<a href="/rec_show?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}&pro_discount={{$v['pro_discount']}}&pro_total={{$v['pro_total']}}" class="view-link">充值</a>
+									<a href="/rec_show?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}&pro_discount={{$v['pro_discount']}}&pro_total={{$v['pro_total']}}" class="view-link">删除</a>
 								</td>
 							</tr>
 						@empty
