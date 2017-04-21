@@ -55,6 +55,10 @@ Route::group(['middleware' => ['web']], function () {
     //修改折扣
     Route::get('/changeDis', 'User\AdminController@changeDis');
 
+    //显示提号记录
+    Route::get('/pickupList', 'User\AdminController@pickupList');
+
+
     Route::group(['middleware'=>'check'],function(){
 
 

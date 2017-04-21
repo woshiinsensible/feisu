@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Model\Pickup;
 use App\Model\ProUser;
 use App\Model\Recharge;
 use App\Model\User;
@@ -264,6 +265,27 @@ class AdminController extends Controller
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
     }
 
+    //显示提号信息
+    public function pickupList(Request $request)
+    {
+        $pageSize = $request->input('page_size',10);
 
+        $pickupList = Pickup::leftJoin('fs_pro_users', 'fs_pickup.pro_id', '=', 'fs_pro_users.pro_id')
+            ->paginate($pageSize,[
+            'fs_pickup.p_id',
+            'fs_pro_users.pro_name',
+            'fs_pickup.p_used',
+            'fs_pickup.p_account',
+            'fs_pickup.p_time',
+            'fs_pro_users.pro_discount',
+            'fs_pro_users.pro_surplus',
+            'fs_pro_users.pro_pick',
+            'fs_pickup.p_com'
+            ]);
+
+        var_dump($pickupList->toArray());
+
+        return view('user.pickup')->with('pickupList',$pickupList);
+    }
 
 }
