@@ -58,6 +58,16 @@ Route::group(['middleware' => ['web']], function () {
     //显示提号记录
     Route::get('/pickupList', 'User\AdminController@pickupList');
 
+    //查看公告跳转页面
+    Route::get('/notice_show', 'User\AdminController@noticeShow');
+    //跳转修改页面
+    Route::get('/notice_mod', 'User\AdminController@noticeModShow');
+    //公告发布
+    Route::get('/pubNotice', 'User\AdminController@pubNotice');
+    //公告删除
+    Route::get('/delNotice', 'User\AdminController@delNotice');
+    //公告修改
+    Route::get('/modNotice', 'User\AdminController@modNotice');
     //显示历史公告
     Route::get('/noticeList', 'User\AdminController@noticeList');
 

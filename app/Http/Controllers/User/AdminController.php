@@ -286,6 +286,21 @@ class AdminController extends Controller
         return view('user.pickup')->with('pickupList',$pickupList);
     }
 
+    //查看公告跳转页面
+    public function noticeShow(Request $request)
+    {
+        $no_id = $request->input('no_id','');
+        $data = Notice::where('no_id',$no_id)->get([
+            'no_title',
+            'no_time',
+            'no_com'
+        ]);
+        if(!$data){
+            return json_encode(['error_code'=>222,'msg'=>'内容不存在'],JSON_UNESCAPED_UNICODE);
+        }
+        return view('user.snotice')->with('data',$data);
+    }
+
     //显示历史公告
     public function noticeList(Request $request)
     {
@@ -300,5 +315,91 @@ class AdminController extends Controller
 
         return view('user.notice')->with('noticeList',$noticeList);
     }
+
+    //发布公告
+    public function pubNotice(Request $request)
+    {
+        if(!$request->has('no_title')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入公告标题'],JSON_UNESCAPED_UNICODE);
+        }
+        $noTitle = $request->input('no_title');
+
+        if(!$request->has('no_com')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入公告内容'],JSON_UNESCAPED_UNICODE);
+        }
+        $noCom = $request->input('no_com');
+
+        $noUp = $request->input('no_up',0);
+
+        $noTime = date('Y-m-d H:i:s',time());
+
+        $noRes = Notice::insert([
+            'no_title'=>$noTitle,
+            'no_com'=>$noCom,
+            'no_up'=>$noUp,
+            'no_time'=>$noTime
+        ]);
+
+        if(!$noRes){
+            return json_encode(['error_code'=>222,'msg'=>'充值失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //删除公告
+    public function delNotice(Request $request)
+    {
+        if(!$request->has('no_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有no_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $noId = $request->input('no_id');
+
+        $delRes = Notice::where('no_id',$noId)->delete();
+        if(!$delRes){
+            return json_encode(['error_code'=>222,'msg'=>'删除公告失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //修改公告
+    public function modNotice(Request $request)
+    {
+        if(!$request->has('no_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有no_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $noId = $request->input('no_id');
+
+        if(!$request->has('no_title')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入公告标题'],JSON_UNESCAPED_UNICODE);
+        }
+        $noTitle = $request->input('no_title');
+
+        if(!$request->has('no_com')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入公告内容'],JSON_UNESCAPED_UNICODE);
+        }
+        $noCom = $request->input('no_com');
+
+        $noUp = $request->input('no_up',0);
+
+        $noTime = date('Y-m-d H:i:s',time());
+
+        $modRes = Notice::where('no_id',$noId)->update([
+            'no_title'=>$noTitle,
+            'no_com'=>$noCom,
+            'no_up'=>$noUp,
+            'no_time'=>$noTime
+        ]);
+
+        if(!$modRes){
+            return json_encode(['error_code'=>222,'msg'=>'修改公告失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+
+
+    }
+
 
 }

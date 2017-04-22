@@ -19,7 +19,7 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li class="active">
-									<a href="index.html">总览</a>
+									<a href="proxyList">总览</a>
 									{{--@foreach ($proList as $u)--}}
 										{{--{{$u['pro_name']}} <br>--}}
 									{{--@endforeach--}}
@@ -54,8 +54,8 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
-							<li>
-								<a href="/proxyList"><i class="icon-home"></i> 代理信息</a>
+							<li class="active">
+								<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
 							</li>
 							<li>
 								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
@@ -64,9 +64,9 @@
 								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
-								<a href="/noticeList"><i class="icon-envelope"></i> 发布公告</a>
+								<a href="messages.htm"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
-							<li class="active">
+							<li>
 								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
 							</li>
 
@@ -74,75 +74,29 @@
 					</div>
 				</div>
 				<div class="span10">
-					<table class="table table-bordered table-striped">
-						<thead>
-							<tr>
-								<th>
-									ID
-								</th>
-								<th>
-									标题
-								</th>
-								<th>
-									发布时间
-								</th>
-								<th>
-									是否置顶
-								</th>
-								<th>
-									查看
-								</th>
-								<th>
-									修改
-								</th>
-								<th>
-									删除
-								</th>
-							</tr>
-						</thead>
-						<tbody id="pro_id">
-						@forelse ($noticeList as $k=>$v)
-							<tr>
-								<td>
-									{{$k+1}}
-								</td>
-								<td>
-									{{$v['no_title']}}
-								</td>
-								<td>
-									{{$v['no_time']}}
-								</td>
-								@if ($v['no_up'] == 1)
-									<td>
-										置顶
-									</td>
-								@elseif ($v['no_up'] == 0)
-									<td>
-										不置顶
-									</td>
-								@endif
-								<td>
-									<a href="/notice_show?no_id={{$v['no_id']}}" class="view-link">查看</a>
-								</td>
-								<td>
-									<a href="/notice_mod?no_id={{$v['no_id']}}" class="view-link">修改</a>
-								</td>
-								<td>
-									<a id="{{$v['no_id']}}" class="view-link hh3" style="cursor:pointer">删除</a>
-								</td>
-							</tr>
-						@empty
-							没有相关内容
-						@endforelse
-						</tbody>
-					</table>
-					<div class="pagination">
-						<ul>
-							<li class="disabled">
-								{!! $noticeList->links() !!}
-							</li>
-						</ul>
-					</div>
+					<form id="edit-profile" class="form-horizontal">
+						<fieldset>
+							<legend>公告信息</legend>
+							<div class="control-group">
+								<label class="control-label" for="input01">标题</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="no_title" name="no_title" value="{{$data[0]['no_title']}}" readonly>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="input01">发布时间</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="no_time" name="no_time" value="{{$data[0]['no_time']}}" readonly>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="input01">内容</label>
+								<div class="controls">
+									<textarea class="input-xlarge" rows="10" id="no_com" name="no_com" readonly>{{$data[0]['no_com']}}</textarea>
+								</div>
+							</div>
+						</fieldset>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -150,24 +104,24 @@
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/site.js"></script>
 		<script type="text/javascript">
-            $(document).ready(function(){
-                $('.hh3').click(function () {
-                    var noId = $(this).attr('id');
-                    $.get(
-                        '/delNotice',
-                        {no_id:noId},
-                        function (res) {
-                            if(res.msg === ''){
-                                alert("删除公告成功");
-                                history.go(0);
-                            }else{
-                                alert(res.msg);
-                            }
+			$(document).ready(function(){
+				$('#b1').click(function () {
+				    var proId = $('#pro_id').val();
+				    var newCom = $('#new_com').val();
+					$.get(
+					 '/changeCom',
+						{pro_id:proId,new_com:newCom},
+						function (res) {
+					     if(res.msg === ''){
+                             location.href = "/proxyList"
+                         }else{
+					         alert(res.msg);
+						 }
                         },
-                        'json'
-                    )
+						'json'
+					)
                 })
-            })
+			})
 		</script>
 	</body>
 </html>

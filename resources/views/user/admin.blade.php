@@ -174,11 +174,11 @@
 
 								@if ($v['pro_status'] == 1)
 									<td>
-										<span class="label label-warning hh1" id="{{$v['pro_id']}}">冻结</span>
+										<span class="label label-warning hh1" id="{{$v['pro_id']}}" style="cursor:pointer">冻结</span>
 									</td>
 								@elseif ($v['pro_status'] == 0)
 									<td id="{{$v['pro_id']}}">
-										<span class="label label-success hh1" id="{{$v['pro_id']}}">激活</span>
+										<span class="label label-success hh1" id="{{$v['pro_id']}}" style="cursor:pointer">激活</span>
 									</td>
 								@endif
 
