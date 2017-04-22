@@ -39,7 +39,7 @@ class AdminController extends Controller
             'pro_used'=>$proUsed
         );
 
-        return view('user.admin')->with('proList',$proList)->with('proRes',$proRes);
+        return view('user.index.admin')->with('proList',$proList)->with('proRes',$proRes);
     }
 
     //显示充值信息
@@ -53,7 +53,7 @@ class AdminController extends Controller
             'rec_time',
             'rec_com'
         ]);
-        return view('user.reshow')->with('rechargeList',$rechargeList);
+        return view('user.index.reshow')->with('rechargeList',$rechargeList);
     }
 
     //跳转修改密码页面，并携带参数
@@ -65,7 +65,7 @@ class AdminController extends Controller
             'pro_id' => $pro_id,
             'pro_name' => $pro_name
         );
-        return view('user.cpwd')->with('data',$data);
+        return view('user.index.cpwd')->with('data',$data);
     }
 
     //修改密码
@@ -115,7 +115,7 @@ class AdminController extends Controller
             'pro_id' => $pro_id,
             'pro_name' => $pro_name
         );
-        return view('user.ccom')->with('data',$data);
+        return view('user.index.ccom')->with('data',$data);
     }
 
     //修改备注
@@ -189,7 +189,7 @@ class AdminController extends Controller
             'pro_discount'=>$pro_discount,
             'pro_total'=>$pro_total
         );
-        return view('user.recharge')->with('data',$data);
+        return view('user.index.recharge')->with('data',$data);
     }
 
     //充值
@@ -283,7 +283,7 @@ class AdminController extends Controller
             'fs_pro_users.pro_pick',
             'fs_pickup.p_com'
             ]);
-        return view('user.pickup')->with('pickupList',$pickupList);
+        return view('user.index.pickup')->with('pickupList',$pickupList);
     }
 
     //查看公告跳转页面
@@ -298,7 +298,7 @@ class AdminController extends Controller
         if(!$data){
             return json_encode(['error_code'=>222,'msg'=>'内容不存在'],JSON_UNESCAPED_UNICODE);
         }
-        return view('user.snotice')->with('data',$data);
+        return view('user.index.snotice')->with('data',$data);
     }
 
     //显示历史公告
@@ -313,7 +313,7 @@ class AdminController extends Controller
             'no_up'
         ]);
 
-        return view('user.notice')->with('noticeList',$noticeList);
+        return view('user.index.notice')->with('noticeList',$noticeList);
     }
 
     //发布公告
@@ -361,6 +361,22 @@ class AdminController extends Controller
         }
 
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //跳转修改页面
+    public function noticeModShow(Request $request)
+    {
+        $no_id = $request->input('no_id','');
+        $data = Notice::where('no_id',$no_id)->get([
+            'no_id',
+            'no_title',
+            'no_time',
+            'no_com'
+        ]);
+        if(!$data){
+            return json_encode(['error_code'=>222,'msg'=>'修改的内容不存在'],JSON_UNESCAPED_UNICODE);
+        }
+        return view('user.index.mnotice')->with('data',$data);
     }
 
     //修改公告

@@ -19,28 +19,28 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li class="active">
-									<a href="index.html">总览</a>
+									<a href="proxyList">总览</a>
 									{{--@foreach ($proList as $u)--}}
 										{{--{{$u['pro_name']}} <br>--}}
 									{{--@endforeach--}}
 								</li>
 {{--								{!! $proList->links() !!}--}}
 								<li>
-									<a href="settings.htm">游戏1</a>
+									<a href="../settings.htm">游戏1</a>
 								</li>
 								<li>
-									<a href="help.htm">游戏2</a>
+									<a href="../help.htm">游戏2</a>
 								</li>
 								<li>
-									<a href="help.htm">添加游戏</a>
+									<a href="../help.htm">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">
 								<li>
-									<a href="profile.htm">@username</a>
+									<a href="../profile.htm">@username</a>
 								</li>
 								<li>
-									<a href="login.htm">Logout</a>
+									<a href="../login.htm">Logout</a>
 								</li>
 							</ul>
 						</div>
@@ -64,7 +64,7 @@
 								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
-								<a href="messages.htm"><i class="icon-envelope"></i> 发布公告</a>
+								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
 							<li>
 								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
@@ -76,27 +76,24 @@
 				<div class="span10">
 					<form id="edit-profile" class="form-horizontal">
 						<fieldset>
-							<legend>修改密码</legend>
+							<legend>公告信息</legend>
 							<div class="control-group">
-								<label class="control-label" for="input01">ID</label>
+								<label class="control-label" for="input01">标题</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="pro_id" name="pro_id" value="{{$data['pro_id']}}" readonly>
+									<input type="text" class="input-xlarge" id="no_title" name="no_title" value="{{$data[0]['no_title']}}" readonly>
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="input01">用户名</label>
+								<label class="control-label" for="input01">发布时间</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="pro_name" name="pro_name" value="{{$data['pro_name']}}" readonly>
+									<input type="text" class="input-xlarge" id="no_time" name="no_time" value="{{$data[0]['no_time']}}" readonly>
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="input01">新密码</label>
+								<label class="control-label" for="input01">内容</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="new_pwd" name="new_pwd" placeholder="新密码的长度6-12位之间" maxlength="12"  value="">
+									<textarea class="input-xlarge" rows="10" id="no_com" name="no_com" readonly>{{$data[0]['no_com']}}</textarea>
 								</div>
-							</div>
-							<div class="form-actions">
-								<button type="button" class="btn btn-primary" id="b1">修改</button>
 							</div>
 						</fieldset>
 					</form>
@@ -110,10 +107,10 @@
 			$(document).ready(function(){
 				$('#b1').click(function () {
 				    var proId = $('#pro_id').val();
-				    var newPwd = $('#new_pwd').val();
+				    var newCom = $('#new_com').val();
 					$.get(
-					 '/changePwd',
-						{pro_id:proId,new_pwd:newPwd},
+					 '/changeCom',
+						{pro_id:proId,new_com:newCom},
 						function (res) {
 					     if(res.msg === ''){
                              location.href = "/proxyList"

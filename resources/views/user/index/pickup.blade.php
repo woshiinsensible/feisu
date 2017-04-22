@@ -26,13 +26,13 @@
 								</li>
 {{--								{!! $proList->links() !!}--}}
 								<li>
-									<a href="settings.htm">游戏1</a>
+									<a href="../settings.htm">游戏1</a>
 								</li>
 								<li>
-									<a href="help.htm">游戏2</a>
+									<a href="../help.htm">游戏2</a>
 								</li>
 								<li>
-									<a href="help.htm">添加游戏</a>
+									<a href="../help.htm">添加游戏</a>
 								</li>
 							</ul>
 							<form class="navbar-search pull-left" action="">
@@ -41,10 +41,10 @@
 							<button type="button" class="btn btn-primary" id="b2">查询</button>
 							<ul class="nav pull-right">
 								<li>
-									<a href="profile.htm">@username</a>
+									<a href="../profile.htm">@username</a>
 								</li>
 								<li>
-									<a href="login.htm">Logout</a>
+									<a href="../login.htm">Logout</a>
 								</li>
 							</ul>
 						</div>
@@ -68,7 +68,7 @@
 								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
-								<a href="messages.htm"><i class="icon-envelope"></i> 发布公告</a>
+								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
 							<li>
 								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>

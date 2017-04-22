@@ -26,21 +26,21 @@
 								</li>
 {{--								{!! $proList->links() !!}--}}
 								<li>
-									<a href="settings.htm">游戏1</a>
+									<a href="../settings.htm">游戏1</a>
 								</li>
 								<li>
-									<a href="help.htm">游戏2</a>
+									<a href="../help.htm">游戏2</a>
 								</li>
 								<li>
-									<a href="help.htm">添加游戏</a>
+									<a href="../help.htm">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">
 								<li>
-									<a href="profile.htm">@username</a>
+									<a href="../profile.htm">@username</a>
 								</li>
 								<li>
-									<a href="login.htm">Logout</a>
+									<a href="../login.htm">Logout</a>
 								</li>
 							</ul>
 						</div>
@@ -64,7 +64,7 @@
 								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
-								<a href="messages.htm"><i class="icon-envelope"></i> 发布公告</a>
+								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
 							<li>
 								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
@@ -76,7 +76,7 @@
 				<div class="span10">
 					<form id="edit-profile" class="form-horizontal">
 						<fieldset>
-							<legend>修改备注</legend>
+							<legend>修改密码</legend>
 							<div class="control-group">
 								<label class="control-label" for="input01">ID</label>
 								<div class="controls">
@@ -90,9 +90,9 @@
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="input01">新备注</label>
+								<label class="control-label" for="input01">新密码</label>
 								<div class="controls">
-									<textarea class="input-xlarge" rows="10" id="new_com" name="new_com" placeholder="备注的内容位最多128个字符" maxlength="128"></textarea>
+									<input type="text" class="input-xlarge" id="new_pwd" name="new_pwd" placeholder="新密码的长度6-12位之间" maxlength="12"  value="">
 								</div>
 							</div>
 							<div class="form-actions">
@@ -110,10 +110,10 @@
 			$(document).ready(function(){
 				$('#b1').click(function () {
 				    var proId = $('#pro_id').val();
-				    var newCom = $('#new_com').val();
+				    var newPwd = $('#new_pwd').val();
 					$.get(
-					 '/changeCom',
-						{pro_id:proId,new_com:newCom},
+					 '/changePwd',
+						{pro_id:proId,new_pwd:newPwd},
 						function (res) {
 					     if(res.msg === ''){
                              location.href = "/proxyList"

@@ -19,28 +19,28 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li class="active">
-									<a href="proxyList">总览</a>
+									<a href="index.html">总览</a>
 									{{--@foreach ($proList as $u)--}}
 										{{--{{$u['pro_name']}} <br>--}}
 									{{--@endforeach--}}
 								</li>
 {{--								{!! $proList->links() !!}--}}
 								<li>
-									<a href="settings.htm">游戏1</a>
+									<a href="../settings.htm">游戏1</a>
 								</li>
 								<li>
-									<a href="help.htm">游戏2</a>
+									<a href="../help.htm">游戏2</a>
 								</li>
 								<li>
-									<a href="help.htm">添加游戏</a>
+									<a href="../help.htm">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">
 								<li>
-									<a href="profile.htm">@username</a>
+									<a href="../profile.htm">@username</a>
 								</li>
 								<li>
-									<a href="login.htm">Logout</a>
+									<a href="../login.htm">Logout</a>
 								</li>
 							</ul>
 						</div>
@@ -64,7 +64,7 @@
 								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
-								<a href="messages.htm"><i class="icon-envelope"></i> 发布公告</a>
+								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
 							<li>
 								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
@@ -76,24 +76,27 @@
 				<div class="span10">
 					<form id="edit-profile" class="form-horizontal">
 						<fieldset>
-							<legend>公告信息</legend>
+							<legend>修改备注</legend>
 							<div class="control-group">
-								<label class="control-label" for="input01">标题</label>
+								<label class="control-label" for="input01">ID</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="no_title" name="no_title" value="{{$data[0]['no_title']}}" readonly>
+									<input type="text" class="input-xlarge" id="pro_id" name="pro_id" value="{{$data['pro_id']}}" readonly>
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="input01">发布时间</label>
+								<label class="control-label" for="input01">用户名</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="no_time" name="no_time" value="{{$data[0]['no_time']}}" readonly>
+									<input type="text" class="input-xlarge" id="pro_name" name="pro_name" value="{{$data['pro_name']}}" readonly>
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="input01">内容</label>
+								<label class="control-label" for="input01">新备注</label>
 								<div class="controls">
-									<textarea class="input-xlarge" rows="10" id="no_com" name="no_com" readonly>{{$data[0]['no_com']}}</textarea>
+									<textarea class="input-xlarge" rows="10" id="new_com" name="new_com" placeholder="备注的内容位最多128个字符" maxlength="128"></textarea>
 								</div>
+							</div>
+							<div class="form-actions">
+								<button type="button" class="btn btn-primary" id="b1">修改</button>
 							</div>
 						</fieldset>
 					</form>
