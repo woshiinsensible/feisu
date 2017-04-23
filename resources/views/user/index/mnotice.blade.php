@@ -54,8 +54,8 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
-							<li class="active">
-								<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
+							<li>
+								<a href="/proxyList"><i class="icon-home"></i> 代理信息</a>
 							</li>
 							<li>
 								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
@@ -66,7 +66,7 @@
 							<li>
 								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
-							<li>
+							<li class="active">
 								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
 							</li>
 

@@ -54,7 +54,7 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
-							<li class="active">
+							<li>
 								<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
 							</li>
 							<li>
@@ -66,7 +66,7 @@
 							<li>
 								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
-							<li>
+							<li class="active">
 								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
 							</li>
 
@@ -92,7 +92,7 @@
 							<div class="control-group">
 								<label class="control-label" for="input01">内容</label>
 								<div class="controls">
-									<textarea class="input-xlarge" rows="10" id="no_com" name="no_com" readonly>{{$data[0]['no_com']}}</textarea>
+									<textarea class="input-xlarge" style="width:90%" rows="20" id="no_com" name="no_com" readonly>{{$data[0]['no_com']}}</textarea>
 								</div>
 							</div>
 						</fieldset>

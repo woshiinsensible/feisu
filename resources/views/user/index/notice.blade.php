@@ -153,19 +153,22 @@
             $(document).ready(function(){
                 $('.hh3').click(function () {
                     var noId = $(this).attr('id');
-                    $.get(
-                        '/delNotice',
-                        {no_id:noId},
-                        function (res) {
-                            if(res.msg === ''){
-                                alert("删除公告成功");
-                                history.go(0);
-                            }else{
-                                alert(res.msg);
-                            }
-                        },
-                        'json'
-                    )
+                    if(confirm('确认是否删除？')){
+                        $.get(
+                            '/delNotice',
+                            {no_id:noId},
+                            function (res) {
+                                if(res.msg === ''){
+                                    alert("删除公告成功");
+                                    history.go(0);
+                                }else{
+                                    alert(res.msg);
+                                }
+                            },
+                            'json'
+                        )
+					}
+
                 })
             })
 		</script>

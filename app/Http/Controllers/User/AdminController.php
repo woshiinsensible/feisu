@@ -306,7 +306,7 @@ class AdminController extends Controller
     {
         $pageSize = $request->input('page_size',10);
 
-        $noticeList = Notice::orderBy('no_up')->paginate($pageSize,[
+        $noticeList = Notice::orderBy('no_up')->orderBy('no_time','desc')->paginate($pageSize,[
             'no_id',
             'no_title',
             'no_time',
@@ -331,7 +331,11 @@ class AdminController extends Controller
 
         $noUp = $request->input('no_up',0);
 
-        $noTime = date('Y-m-d H:i:s',time());
+
+        if(!$request->has('no_time')){
+            return json_encode(['error_code'=>222,'msg'=>'没有时间传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $noTime = $request->input('no_time');
 
         $noRes = Notice::insert([
             'no_title'=>$noTitle,
@@ -341,7 +345,7 @@ class AdminController extends Controller
         ]);
 
         if(!$noRes){
-            return json_encode(['error_code'=>222,'msg'=>'充值失败'],JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code'=>222,'msg'=>'发布公告失败'],JSON_UNESCAPED_UNICODE);
         }
 
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
@@ -399,7 +403,10 @@ class AdminController extends Controller
 
         $noUp = $request->input('no_up',0);
 
-        $noTime = date('Y-m-d H:i:s',time());
+        if(!$request->has('no_time')){
+            return json_encode(['error_code'=>222,'msg'=>'没有时间传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $noTime = $request->input('no_time');
 
         $modRes = Notice::where('no_id',$noId)->update([
             'no_title'=>$noTitle,

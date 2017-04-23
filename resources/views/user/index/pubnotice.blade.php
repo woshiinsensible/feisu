@@ -8,6 +8,7 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link href="css/site.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="wE/dist/css/wangEditor.min.css">
 	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
 <body>
@@ -54,8 +55,8 @@
 					<li class="nav-header">
 						飞速手游
 					</li>
-					<li class="active">
-						<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
+					<li>
+						<a href="/proxyList"><i class="icon-home"></i> 代理信息</a>
 					</li>
 					<li>
 						<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
@@ -63,7 +64,7 @@
 					<li>
 						<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 					</li>
-					<li>
+					<li class="active">
 						<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
 					</li>
 					<li>
@@ -95,7 +96,7 @@
 					<div class="control-group">
 						<label class="control-label" for="input01">内容</label>
 						<div class="controls">
-							<textarea class="input-xlarge" rows="10" id="no_com" name="no_com"></textarea>
+							<textarea class="input-xlarge" rows="20" id="no_com" name="no_com"></textarea>
 						</div>
 					</div>
 					<div class="form-actions">
@@ -109,6 +110,8 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/site.js"></script>
+<script type="text/javascript" src="wE/dist/js/lib/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="wE/dist/js/wangEditor.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#b1').click(function () {
@@ -129,15 +132,12 @@
                 + seperator2 + date.getSeconds();
 
 
-
-            var noId = $('#no_id').val();
             var noTitle = $('#no_title').val();
             var noCom = $('#no_com').val();
             var noUp = $('#no_up').val();
             $.get(
-                '/modNotice',
+                '/pubNotice',
                 {
-                    no_id:noId,
                     no_title:noTitle,
                     no_com:noCom,
                     no_up:noUp,
@@ -145,9 +145,9 @@
                 },
                 function (res) {
                     if(res.msg === ''){
-                        alert("修改公告成功");
+                        alert("发布公告成功");
                         //返回上一页并刷新
-                        self.location=document.referrer;
+                        location.href='/noticeList';
                     }else{
                         alert(res.msg);
                     }
@@ -156,6 +156,12 @@
             )
         })
     })
+</script>
+
+//服客户端
+<script type="text/javascript">
+    var editor = new wangEditor('no_com');
+    editor.create();
 </script>
 </body>
 </html>
