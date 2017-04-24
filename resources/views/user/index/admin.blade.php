@@ -19,20 +19,16 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li class="active">
-									<a href="index.html">总览</a>
-									{{--@foreach ($proList as $u)--}}
-										{{--{{$u['pro_name']}} <br>--}}
-									{{--@endforeach--}}
-								</li>
-{{--								{!! $proList->links() !!}--}}
-								<li>
-									<a href="../settings.htm">游戏1</a>
+									<a href="/poxyList">总览</a>
 								</li>
 								<li>
-									<a href="../help.htm">游戏2</a>
+									<a href="/gameShow?no=1">游戏1</a>
 								</li>
 								<li>
-									<a href="../help.htm">添加游戏</a>
+									<a href="/gameShow?no=2">游戏2</a>
+								</li>
+								<li>
+									<a href="/gameShow?no=0">添加游戏</a>
 								</li>
 							</ul>
 							<form class="navbar-search pull-left" action="">

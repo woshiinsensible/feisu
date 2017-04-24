@@ -80,6 +80,16 @@ Route::group(['middleware' => ['web']], function () {
     //显示历史公告
     Route::get('/noticeList', 'User\AdminController@noticeList');
 
+    //游戏界面
+    Route::get('/gameShow','User\GameController@gameShow');
+
+    //大区增删查改
+    //显示大区信息
+    Route::get('/zoneShow','User\GameController@zoneShow');
+    //删除大区信息
+    Route::get('/delZone','User\GameController@delZone');
+    //修改大区信息
+    Route::get('/modZone','User\GameController@modZone');
 
     Route::group(['middleware'=>'check'],function(){
 
