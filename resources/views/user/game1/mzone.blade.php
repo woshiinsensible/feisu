@@ -79,19 +79,19 @@
 							<div class="control-group">
 								<label class="control-label" for="input01">ID</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="z_id" name="z_id" value="{{$data[0]['z_id']}}" readonly>
+									<input type="text" class="input-xlarge" id="z_id" name="z_id" value="{{$data[0]->z_id}}" readonly>
 								</div>
 							</div>
 							<div class="control-group">
 								<label class="control-label" for="input01">全称</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="z_name" name="z_name" value="{{$data[0]['z_name']}}">
+									<input type="text" class="input-xlarge" id="z_name" name="z_name" value="{{$data[0]->z_name}}">
 								</div>
 							</div>
 							<div class="control-group">
 								<label class="control-label" for="input01">简称</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="z_short" name="z_short" value="{{$data[0]['z_short']}}">
+									<input type="text" class="input-xlarge" id="z_short" name="z_short" value="{{$data[0]->z_short}}">
 								</div>
 							</div>
 							<div class="form-actions">
@@ -113,7 +113,7 @@
 				    var zName = $('#z_name').val();
 				    var zShort = $('#z_short').val();
 					$.get(
-					 '/modZone',
+					 '/modZone?t=fs_game_zone1',
 						{
                             z_id:zId,
                             z_name:zName,

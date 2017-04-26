@@ -59,10 +59,10 @@
 							<li>
 								<a href="#"><i class="icon-check"></i> 账号上传</a>
 							</li>
-							<li>
+							<li class="active">
 								<a href="/priceShow?t=fs_game_account1"><i class="icon-envelope"></i> 账号定价</a>
 							</li>
-							<li  class="active">
+							<li>
 								<a href="/zoneShow?t=fs_game_zone1"><i class="icon-file"></i> 大区名称</a>
 							</li>
 						</ul>
@@ -76,36 +76,30 @@
 									ID
 								</th>
 								<th>
-									大区名称
+									名称
 								</th>
 								<th>
-									大区简称
+									价格
 								</th>
 								<th>
 									修改
 								</th>
-								<th>
-									删除
-								</th>
 							</tr>
 						</thead>
-						<tbody id="z_id">
-						@forelse ($zoneList as $k=>$v)
+						<tbody id="a_id">
+						@forelse ($priceList as $k=>$v)
 							<tr>
 								<td>
 									{{$k+1}}
 								</td>
 								<td>
-									{{$v->z_name}}
+									{{$v->a_name}}
 								</td>
 								<td>
-									{{$v->z_short}}
+									{{$v->a_price}}
 								</td>
 								<td>
-									<a href="/modZoneShow?z_id={{$v->z_id}}&t=fs_game_zone1" class="view-link">修改</a>
-								</td>
-								<td>
-									<a id="{{$v->z_id}}" class="view-link hh3" style="cursor:pointer">删除</a>
+									<a href="/modPriceShow?a_id={{$v->a_id}}&t=fs_game_account1" class="view-link">修改</a>
 								</td>
 							</tr>
 						@empty
@@ -119,7 +113,7 @@
 					<div class="pagination">
 						<ul>
 							<li class="disabled">
-								{!! $zoneList->links() !!}
+								{!! $priceList->links() !!}
 							</li>
 						</ul>
 					</div>

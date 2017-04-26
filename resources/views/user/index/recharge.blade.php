@@ -27,13 +27,13 @@
 								</li>
 {{--								{!! $proList->links() !!}--}}
 								<li>
-									<a href="../settings.htm">游戏1</a>
+									<a href="/gameShow?no=1">游戏1</a>
 								</li>
 								<li>
-									<a href="../help.htm">游戏2</a>
+									<a href="/gameShow?no=2">游戏2</a>
 								</li>
 								<li>
-									<a href="../help.htm">添加游戏</a>
+									<a href="/gameShow?no=3">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">

@@ -19,20 +19,20 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li class="active">
-									<a href="index.html">总览</a>
+									<a href="proxyList">总览</a>
 									{{--@foreach ($proList as $u)--}}
 										{{--{{$u['pro_name']}} <br>--}}
 									{{--@endforeach--}}
 								</li>
 {{--								{!! $proList->links() !!}--}}
 								<li>
-									<a href="/gameShow?no=1">游戏1</a>
+									<a href="../settings.htm">游戏1</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=2">游戏2</a>
+									<a href="../help.htm">游戏2</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=2">添加游戏</a>
+									<a href="../help.htm">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">
@@ -55,48 +55,41 @@
 								飞速手游
 							</li>
 							<li class="active">
-								<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
+								<a href="/proxyList"><i class="icon-home"></i> 暂停销售</a>
 							</li>
 							<li>
-								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
+								<a href="/rechargeList"><i class="icon-folder-open"></i> 账号列表</a>
 							</li>
 							<li>
-								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
+								<a href="/pickupList"><i class="icon-check"></i> 账号上传</a>
 							</li>
 							<li>
-								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
+								<a href="/pub_show"><i class="icon-envelope"></i> 账号定价</a>
 							</li>
 							<li>
-								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
+								<a href="/zoneShow?t=fs_game_zone1"><i class="icon-file"></i> 大区名称</a>
 							</li>
-
 						</ul>
 					</div>
 				</div>
 				<div class="span10">
 					<form id="edit-profile" class="form-horizontal">
 						<fieldset>
-							<legend>修改备注</legend>
+							<legend>添加大区</legend>
 							<div class="control-group">
-								<label class="control-label" for="input01">ID</label>
+								<label class="control-label" for="input01">全称</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="pro_id" name="pro_id" value="{{$data['pro_id']}}" readonly>
+									<input type="text" class="input-xlarge" id="z_name" name="z_name" value="">
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="input01">用户名</label>
+								<label class="control-label" for="input01">简称</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="pro_name" name="pro_name" value="{{$data['pro_name']}}" readonly>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="input01">新备注</label>
-								<div class="controls">
-									<textarea class="input-xlarge" rows="10" id="new_com" name="new_com" placeholder="备注的内容位最多128个字符" maxlength="128"></textarea>
+									<input type="text" class="input-xlarge" id="z_short" name="z_short" value="">
 								</div>
 							</div>
 							<div class="form-actions">
-								<button type="button" class="btn btn-primary" id="b1">修改</button>
+								<button type="button" class="btn btn-primary" id="b1">确认添加</button>
 							</div>
 						</fieldset>
 					</form>
@@ -109,14 +102,20 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('#b1').click(function () {
-				    var proId = $('#pro_id').val();
-				    var newCom = $('#new_com').val();
+
+				    var zName = $('#z_name').val();
+				    var zShort = $('#z_short').val();
 					$.get(
-					 '/changeCom',
-						{pro_id:proId,new_com:newCom},
+					 '/addZone?t=fs_game_zone1',
+						{
+                            z_name:zName,
+                            z_short:zShort
+						},
 						function (res) {
 					     if(res.msg === ''){
-                             location.href = "/proxyList"
+                             alert("添加大区成功");
+                             //返回上一页并刷新
+                             self.location=document.referrer;
                          }else{
 					         alert(res.msg);
 						 }

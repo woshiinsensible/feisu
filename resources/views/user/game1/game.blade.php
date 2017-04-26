@@ -18,8 +18,8 @@
 						<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="#">飞速手游</a>
 						<div class="nav-collapse">
 							<ul class="nav">
-								<li class="active">
-									<a href="/poxyList">总览</a>
+								<li>
+									<a href="/proxyList">总览</a>
 								</li>
 								<li  class="active">
 									<a href="/gameShow?no=1">游戏1</a>

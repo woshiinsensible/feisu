@@ -90,11 +90,26 @@ Route::group(['middleware' => ['web']], function () {
     //删除大区信息
     Route::get('/delZone','User\GameController@delZone');
 
-    //修改大区页面
+    //显示大区页面
     Route::get('/modZoneShow','User\GameController@modZoneShow');
 
     //修改大区信息
     Route::get('/modZone','User\GameController@modZone');
+
+    //跳转到添加大区页面
+    Route::get('/addZoneShow',function(){
+        return view('user.game1.addzone');
+    });
+
+    //添加大区
+    Route::get('/addZone','User\GameController@addZone');
+
+    //账号定价列表显示
+    Route::get('/priceShow','User\GameController@priceShow');
+
+    //跳转价格修改页面
+
+    //修改账号价格
 
 
     Route::group(['middleware'=>'check'],function(){
