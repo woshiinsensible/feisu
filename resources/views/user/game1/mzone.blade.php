@@ -19,16 +19,20 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li class="active">
-									<a href="/poxyList">总览</a>
+									<a href="proxyList">总览</a>
+									{{--@foreach ($proList as $u)--}}
+										{{--{{$u['pro_name']}} <br>--}}
+									{{--@endforeach--}}
 								</li>
-								<li  class="active">
-									<a href="/gameShow?no=1">游戏1</a>
+{{--								{!! $proList->links() !!}--}}
+								<li>
+									<a href="../settings.htm">游戏1</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=2">游戏2</a>
+									<a href="../help.htm">游戏2</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=0">添加游戏</a>
+									<a href="../help.htm">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">
@@ -50,7 +54,7 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
-							<li>
+							<li class="active">
 								<a href="/proxyList"><i class="icon-home"></i> 暂停销售</a>
 							</li>
 							<li>
@@ -62,64 +66,39 @@
 							<li>
 								<a href="/pub_show"><i class="icon-envelope"></i> 账号定价</a>
 							</li>
-							<li  class="active">
+							<li>
 								<a href="/zoneShow?t=fs_game_zone1"><i class="icon-file"></i> 大区名称</a>
 							</li>
 						</ul>
 					</div>
 				</div>
 				<div class="span10">
-					<table class="table table-bordered table-striped">
-						<thead>
-							<tr>
-								<th>
-									ID
-								</th>
-								<th>
-									大区名称
-								</th>
-								<th>
-									大区简称
-								</th>
-								<th>
-									修改
-								</th>
-								<th>
-									删除
-								</th>
-							</tr>
-						</thead>
-						<tbody id="z_id">
-						@forelse ($zoneList as $k=>$v)
-							<tr>
-								<td>
-									{{$k+1}}
-								</td>
-								<td>
-									{{$v->z_name}}
-								</td>
-								<td>
-									{{$v->z_short}}
-								</td>
-								<td>
-									<a href="/modZoneShow?z_id={{$v->z_id}}" class="view-link">修改</a>
-								</td>
-								<td>
-									<a id="{{$v->z_id}}" class="view-link hh3" style="cursor:pointer">删除</a>
-								</td>
-							</tr>
-						@empty
-							没有相关内容
-						@endforelse
-						</tbody>
-					</table>
-					<div class="pagination">
-						<ul>
-							<li class="disabled">
-								{!! $zoneList->links() !!}
-							</li>
-						</ul>
-					</div>
+					<form id="edit-profile" class="form-horizontal">
+						<fieldset>
+							<legend>修改大区</legend>
+							<div class="control-group">
+								<label class="control-label" for="input01">ID</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="z_id" name="z_id" value="{{$data[0]['z_id']}}" readonly>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="input01">全称</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="z_name" name="z_name" value="{{$data[0]['z_name']}}">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="input01">简称</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="z_short" name="z_short" value="{{$data[0]['z_short']}}">
+								</div>
+							</div>
+							<div class="form-actions">
+								<button type="button" class="btn btn-primary" id="b1">确认修改</button>
+							</div>
+						</fieldset>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -127,27 +106,32 @@
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/site.js"></script>
 		<script type="text/javascript">
-            $(document).ready(function(){
-                $('.hh3').click(function () {
-                    var zId = $(this).attr('id');
-                    if(confirm('确认是否删除？')){
-                        $.get(
-                            '/delZone',
-                            {z_id:zId},
-                            function (res) {
-                                if(res.msg === ''){
-                                    alert("删除公告成功");
-                                    history.go(0);
-                                }else{
-                                    alert(res.msg);
-                                }
-                            },
-                            'json'
-                        )
-					}
+			$(document).ready(function(){
+				$('#b1').click(function () {
 
+				    var zId = $('#z_id').val();
+				    var zName = $('#z_name').val();
+				    var zShort = $('#z_short').val();
+					$.get(
+					 '/modZone',
+						{
+                            z_id:zId,
+                            z_name:zName,
+                            z_short:zShort
+						},
+						function (res) {
+					     if(res.msg === ''){
+                             alert("修改大区成功");
+                             //返回上一页并刷新
+                             self.location=document.referrer;
+                         }else{
+					         alert(res.msg);
+						 }
+                        },
+						'json'
+					)
                 })
-            })
+			})
 		</script>
 	</body>
 </html>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GameZone1 extends Model
 {
-    protected $table = 'fs_game1_zone';
+    protected $table = 'fs_game_zone1';
 
     protected $primaryKey = 'z_id';
 

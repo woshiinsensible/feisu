@@ -49,22 +49,62 @@ class GameController extends Controller
     //删除大区信息
     public function delZone(Request $request)
     {
+        if(!$request->has('z_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有z_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $noId = $request->input('z_id');
 
+        $delRes = GameZone1::where('z_id',$noId)->delete();
+        if(!$delRes){
+            return json_encode(['error_code'=>222,'msg'=>'删除大区失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
     }
 
+    //修改大区跳转的页面
+    public function modZoneShow(Request $request)
+    {
+        $no_id = $request->input('z_id','');
+        $data = GameZone1::where('z_id',$no_id)->get([
+            'z_id',
+            'z_name',
+            'z_short'
+        ]);
+        if(!$data){
+            return json_encode(['error_code'=>222,'msg'=>'修改的内容不存在'],JSON_UNESCAPED_UNICODE);
+        }
+        return view('user.game1.mzone')->with('data',$data);
+    }
     //修改大区信息
     public function modZone(Request $request)
     {
         if(!$request->has('z_id')){
             return json_encode(['error_code'=>222,'msg'=>'没有z_id传入'],JSON_UNESCAPED_UNICODE);
         }
-        $noId = $request->input('z_id');
+        $zId = $request->input('z_id');
 
-        $delRes = Notice::where('z_id',$noId)->delete();
-        if(!$delRes){
-            return json_encode(['error_code'=>222,'msg'=>'删除大区失败'],JSON_UNESCAPED_UNICODE);
+        if(!$request->has('z_name')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入大区全称'],JSON_UNESCAPED_UNICODE);
+        }
+        $zName = $request->input('z_name');
+
+        if(!$request->has('z_short')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入大区简称'],JSON_UNESCAPED_UNICODE);
+        }
+        $zShort = $request->input('z_short');
+
+
+        $modRes = GameZone1::where('z_id',$zId)->update([
+            'z_name'=>$zName,
+            'z_short'=>$zShort
+        ]);
+
+        if(!$modRes){
+            return json_encode(['error_code'=>222,'msg'=>'修改大区失败'],JSON_UNESCAPED_UNICODE);
         }
 
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+
     }
 }
