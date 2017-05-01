@@ -173,5 +173,94 @@ class GameController extends Controller
         return view('user.game1.price')->with('priceList',$priceList);
     }
 
+    //调转到修改价格页面
+    public function modPriceShow(Request $request)
+    {
+        if(!$request->has('t')){
+            return json_encode(['error_code'=>113,'msg'=>'没有表名传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $tName = $request->input('t');
+
+        $a_id = $request->input('a_id','');
+        $data = DB::table($tName)->where('a_id',$a_id)->get([
+            'a_id',
+            'a_name',
+            'a_price'
+        ]);
+
+        if(!$data){
+            return json_encode(['error_code'=>222,'msg'=>'修改的内容不存在'],JSON_UNESCAPED_UNICODE);
+        }
+        return view('user.game1.mprice')->with('data',$data);
+    }
+
+    //修改账号价格
+    public function modPrice(Request $request)
+    {
+        if(!$request->has('t')){
+            return json_encode(['error_code'=>113,'msg'=>'没有表名传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $tName = $request->input('t');
+
+        if(!$request->has('a_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有a_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $zId = $request->input('a_id');
+
+        if(!$request->has('a_name')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入名称'],JSON_UNESCAPED_UNICODE);
+        }
+        $zName = $request->input('a_name');
+
+        if(!$request->has('a_price')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入价格'],JSON_UNESCAPED_UNICODE);
+        }
+        $zShort = $request->input('a_price');
+
+
+        $modRes = DB::table($tName)->where('a_id',$zId)->update([
+            'a_name'=>$zName,
+            'a_price'=>$zShort
+        ]);
+
+        if(!$modRes){
+            return json_encode(['error_code'=>222,'msg'=>'修改价格失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //添加账号
+    public function addPrice(Request $request)
+    {
+        if(!$request->has('t')){
+            return json_encode(['error_code'=>113,'msg'=>'没有表名传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $tName = $request->input('t');
+
+        if(!$request->has('a_name')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入名称'],JSON_UNESCAPED_UNICODE);
+        }
+        $aName = $request->input('a_name');
+
+        if(!$request->has('a_price')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入价格'],JSON_UNESCAPED_UNICODE);
+        }
+        $aPrice = $request->input('a_price');
+
+        $zRes = DB::table($tName)->insert([
+            'a_name'=>$aName,
+            'a_price'=>$aPrice
+        ]);
+
+        if(!$zRes){
+            return json_encode(['error_code'=>222,'msg'=>'添加价格失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
 
 }

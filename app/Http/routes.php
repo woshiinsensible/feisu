@@ -108,8 +108,19 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/priceShow','User\GameController@priceShow');
 
     //跳转价格修改页面
+    Route::get('/modPriceShow','User\GameController@modPriceShow');
 
     //修改账号价格
+    Route::get('/modPrice','User\GameController@modPrice');
+
+    //跳转到添加账号价格
+    Route::get('/addPriceShow',function(){
+        return view('user.game1.addprice');
+    });
+
+    //添加账号价格
+    Route::get('/addPrice','User\GameController@addPrice');
+
 
 
     Route::group(['middleware'=>'check'],function(){

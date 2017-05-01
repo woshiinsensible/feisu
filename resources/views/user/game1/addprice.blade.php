@@ -18,17 +18,17 @@
 						<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="#">飞速手游</a>
 						<div class="nav-collapse">
 							<ul class="nav">
-								<li>
-									<a href="/proxyList">总览</a>
-								</li>
-								<li  class="active">
-									<a href="/gameShow?no=1">游戏1</a>
+								<li class="active">
+									<a href="proxyList">总览</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=2">游戏2</a>
+									<a href="../settings.htm">游戏1</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=0">添加游戏</a>
+									<a href="../help.htm">游戏2</a>
+								</li>
+								<li>
+									<a href="../help.htm">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">
@@ -50,17 +50,17 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
-							<li>
-								<a href="/gameShow?no=1"><i class="icon-home"></i> 暂停销售</a>
-							</li>
-							<li>
-								<a href="#"><i class="icon-folder-open"></i> 账号列表</a>
-							</li>
-							<li>
-								<a href="#"><i class="icon-check"></i> 账号上传</a>
-							</li>
 							<li class="active">
-								<a href="/priceShow?t=fs_game_account1"><i class="icon-envelope"></i> 账号定价</a>
+								<a href="/proxyList"><i class="icon-home"></i> 暂停销售</a>
+							</li>
+							<li>
+								<a href="/rechargeList"><i class="icon-folder-open"></i> 账号列表</a>
+							</li>
+							<li>
+								<a href="/pickupList"><i class="icon-check"></i> 账号上传</a>
+							</li>
+							<li>
+								<a href="/pub_show"><i class="icon-envelope"></i> 账号定价</a>
 							</li>
 							<li>
 								<a href="/zoneShow?t=fs_game_zone1"><i class="icon-file"></i> 大区名称</a>
@@ -69,54 +69,26 @@
 					</div>
 				</div>
 				<div class="span10">
-					<table class="table table-bordered table-striped">
-						<thead>
-							<tr>
-								<th>
-									ID
-								</th>
-								<th>
-									名称
-								</th>
-								<th>
-									价格
-								</th>
-								<th>
-									修改
-								</th>
-							</tr>
-						</thead>
-						<tbody id="a_id">
-						@forelse ($priceList as $k=>$v)
-							<tr>
-								<td>
-									{{$k+1}}
-								</td>
-								<td>
-									{{$v->a_name}}
-								</td>
-								<td>
-									{{$v->a_price}}
-								</td>
-								<td>
-									<a href="/modPriceShow?a_id={{$v->a_id}}&t=fs_game_account1" class="view-link">修改</a>
-								</td>
-							</tr>
-						@empty
-							没有相关内容
-						@endforelse
-						</tbody>
-					</table>
-					<div class="form-actions">
-						<button type="button" class="btn btn-primary" id="b1">添加账号定价</button>
-					</div>
-					<div class="pagination">
-						<ul>
-							<li class="disabled">
-								{!! $priceList->links() !!}
-							</li>
-						</ul>
-					</div>
+					<form id="edit-profile" class="form-horizontal">
+						<fieldset>
+							<legend>添加账号定价</legend>
+							<div class="control-group">
+								<label class="control-label" for="input01">名称</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="a_name" name="a_name" value="">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="input01">价格</label>
+								<div class="controls">
+									<input type="number" class="input-xlarge" id="a_price" name="a_price" value="">
+								</div>
+							</div>
+							<div class="form-actions">
+								<button type="button" class="btn btn-primary" id="b1">确认添加</button>
+							</div>
+						</fieldset>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -124,11 +96,30 @@
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/site.js"></script>
 		<script type="text/javascript">
-            $(document).ready(function(){
-                $('#b1').click(function () {
-					location.href="/addPriceShow";
+			$(document).ready(function(){
+				$('#b1').click(function () {
+
+				    var aName = $('#a_name').val();
+				    var aPrice = $('#a_price').val();
+					$.get(
+					 '/addPrice?t=fs_game_account1',
+						{
+                            a_name:aName,
+                            a_price:aPrice
+						},
+						function (res) {
+					     if(res.msg === ''){
+                             alert("添加账号定价成功");
+                             //返回上一页并刷新
+                             self.location=document.referrer;
+                         }else{
+					         alert(res.msg);
+						 }
+                        },
+						'json'
+					)
                 })
-            })
+			})
 		</script>
 	</body>
 </html>
