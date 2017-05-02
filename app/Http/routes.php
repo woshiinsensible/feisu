@@ -121,7 +121,8 @@ Route::group(['middleware' => ['web']], function () {
     //添加账号价格
     Route::get('/addPrice','User\GameController@addPrice');
 
-
+    //excel
+    Route::get('/readExcel','User\GameController@readExcel');
 
     Route::group(['middleware'=>'check'],function(){
 

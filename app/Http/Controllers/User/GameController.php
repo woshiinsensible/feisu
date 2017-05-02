@@ -8,6 +8,10 @@ use App\Model\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+
+require_once './PHPExcel.php';
+require_once './PHPExcel/IOFactory.php';
+
 class GameController extends Controller
 {
     //显示游戏主界面
@@ -261,6 +265,54 @@ class GameController extends Controller
         }
 
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //excel
+    public function readExcel(Request $request)
+    {
+        $objPHPExcel = \PHPExcel_IOFactory::load('C:\Users\wuyanjun\Desktop\yys1.xls');
+        $dataArray = $objPHPExcel->getActiveSheet()->toArray();
+
+        $res = DB::table('fs_game_bank1')->first(['b_id']);
+        //获取大区的种类
+        $zoneRes = array();
+        foreach ($dataArray as $v){
+            $zoneRes[] = $v[2];
+        }
+
+        array_shift($zoneRes);
+        $zones = array_unique($zoneRes);
+        dd($zones);
+        //获取大区自动编码的起始值
+        $noStart = DB::table('fs_game_bank1')->where('b_terminal','ios')->orderBy('b_no', 'desc')->first(['b_no']);
+
+        if(!$noStart){
+            $bNo = '000001';
+        }
+        $bNo = $noStart->b_no+1;
+        $bNo = sprintf("%'06d", $bNo);
+        var_dump($bNo);
+        die;
+
+        $excelDate = array();
+        //如果数据库为空，第一次上传excel文件，直接插入
+        if(!$res){
+            foreach ($dataArray as $key=>$val){
+                $excelDate[$key]['b_terminal'] = $val[2];
+                $excelDate[$key]['b_terminal'] = $val[2];
+                $excelDate[$key]['b_user'] = $val[0];
+                $excelDate[$key]['b_pwd'] = $val[1];
+
+                $excelDate[$key]['b_group'] = $val[4];
+
+            }
+        }
+
+        //删除第一个抬头
+        array_shift($excelDate);
+
+        echo "<pre>";
+        var_dump($excelDate);
     }
 
 }

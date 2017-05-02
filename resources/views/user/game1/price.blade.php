@@ -90,7 +90,7 @@
 						@forelse ($priceList as $k=>$v)
 							<tr>
 								<td>
-									{{$k+1}}
+									{{$v->a_id}}
 								</td>
 								<td>
 									{{$v->a_name}}
