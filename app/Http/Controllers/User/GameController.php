@@ -270,49 +270,124 @@ class GameController extends Controller
     //excel
     public function readExcel(Request $request)
     {
-        $objPHPExcel = \PHPExcel_IOFactory::load('C:\Users\wuyanjun\Desktop\yys1.xls');
+        $objPHPExcel = \PHPExcel_IOFactory::load('C:\Users\wuyanjun\Desktop\yys2.xls');
         $dataArray = $objPHPExcel->getActiveSheet()->toArray();
+        array_shift($dataArray);
 
-        $res = DB::table('fs_game_bank1')->first(['b_id']);
-        //获取大区的种类
-        $zoneRes = array();
-        foreach ($dataArray as $v){
-            $zoneRes[] = $v[2];
+        $resUser = DB::table('fs_game_bank1')->where('b_used',0)->get(['b_user']);
+
+//        dd($zones);
+//        //获取大区自动编码的起始值
+//        $noStart = DB::table('fs_game_bank1')->where('b_terminal','ios')->orderBy('b_no', 'desc')->first(['b_no']);
+//
+//        if(!$noStart){
+//            $bNo = '000001';
+//        }
+//        $bNo = $noStart->b_no+1;
+//        $bNo = sprintf("%'06d", $bNo);
+//        var_dump($bNo);
+//        die;
+
+        //获取账号定价
+        $resAccount = DB::table('fs_game_account1')->get(['a_name','a_price']);
+
+        //组合成名字=>价格数组,计价使用
+        $nameArray = array();
+        $priceArray = array();
+        foreach ($resAccount as $valPrice){
+            $nameArray[] = $valPrice->a_name;
+            $priceArray[] = $valPrice->a_price;
         }
-
-        array_shift($zoneRes);
-        $zones = array_unique($zoneRes);
-        dd($zones);
-        //获取大区自动编码的起始值
-        $noStart = DB::table('fs_game_bank1')->where('b_terminal','ios')->orderBy('b_no', 'desc')->first(['b_no']);
-
-        if(!$noStart){
-            $bNo = '000001';
-        }
-        $bNo = $noStart->b_no+1;
-        $bNo = sprintf("%'06d", $bNo);
-        var_dump($bNo);
-        die;
+        $combine = array_combine($nameArray,$priceArray);
 
         $excelDate = array();
         //如果数据库为空，第一次上传excel文件，直接插入
-        if(!$res){
+        if(!$resUser){
             foreach ($dataArray as $key=>$val){
-                $excelDate[$key]['b_terminal'] = $val[2];
-                $excelDate[$key]['b_terminal'] = $val[2];
+                $price = 0;
                 $excelDate[$key]['b_user'] = $val[0];
                 $excelDate[$key]['b_pwd'] = $val[1];
-
+                $excelDate[$key]['b_terminal'] = $val[2];
+                $excelDate[$key]['b_zone'] = $val[3];
                 $excelDate[$key]['b_group'] = $val[4];
+                $pArray = explode('+',$val[4]);
 
+                foreach ($pArray as $pVal){
+                    $price += $combine[$pVal];
+                }
+                $excelDate[$key]['b_price'] = $price;
+
+            }
+            //插入数据库
+            $resInsert = DB::table('fs_game_bank1')->insert($excelDate);
+            if($resInsert){
+                return json_encode(['error_code'=>0,'msg'=>'导入excel文件成功'],JSON_UNESCAPED_UNICODE);
             }
         }
 
-        //删除第一个抬头
-        array_shift($excelDate);
 
-        echo "<pre>";
-        var_dump($excelDate);
+        //如果数据库不为空,拼装用户名数组
+        $resU = 0;
+        $resI = 0;
+        $userArray = array();
+        foreach ($resUser as $userVal){
+            $userArray[] = $userVal->b_user;
+        }
+
+        foreach ($dataArray as $key=>$val){
+            //如果导入的文件中用户名存在，进行更新
+            if(in_array($val[0],$userArray)){
+                $price = 0;
+                $pArray = explode('+',$val[4]);
+
+                foreach ($pArray as $pVal){
+                    $price += $combine[$pVal];
+                }
+
+                $resUpdeta = DB::table('fs_game_bank1')->where('b_user',$val[0])->update([
+                    'b_pwd'=>$val[1],
+                    'b_zone'=>$val[3],
+                    'b_group'=>$val[4],
+                    'b_price'=>$price,
+                    'b_com'=>$val[6],
+                    'b_status'=>1
+                ]);
+
+
+                if($resUpdeta){
+                    $resU = 1;
+                }
+
+            }else{
+
+                //如果导入的文件中用户名不存在，进行插入
+                $price = 0;
+                $excelDate[$key]['b_user'] = $val[0];
+                $excelDate[$key]['b_pwd'] = $val[1];
+                $excelDate[$key]['b_terminal'] = $val[2];
+                $excelDate[$key]['b_zone'] = $val[3];
+                $excelDate[$key]['b_group'] = $val[4];
+                $excelDate[$key]['b_com'] = $val[6];
+                $pArray = explode('+',$val[4]);
+
+                foreach ($pArray as $pVal){
+                    $price += $combine[$pVal];
+                }
+                $excelDate[$key]['b_price'] = $price;
+                //插入数据库
+                $resInsert = DB::table('fs_game_bank1')->insert($excelDate);
+                if($resInsert){
+                    $resI = 1;
+                }
+            }
+
+            //如果更新和插入都成功，提示上传excel文件成功
+            if($resI+$resU>1){
+                return json_encode(['error_code'=>0,'msg'=>'excel文件上传成功'],JSON_UNESCAPED_UNICODE);
+            }
+
+        }
+
     }
 
 }

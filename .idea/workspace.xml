@@ -2,264 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f5caffe-9eae-4758-81f6-30df7f2f2e1a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Autoloader.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/APC.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/CacheBase.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/DiscISAM.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/ICache.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/Igbinary.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/Memcache.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/Memory.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/MemoryGZip.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/MemorySerialized.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/PHPTemp.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/SQLite.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/SQLite3.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorage/Wincache.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CachedObjectStorageFactory.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CalcEngine/CyclicReferenceStack.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/CalcEngine/Logger.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/Database.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/DateTime.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/Engineering.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/Exception.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/ExceptionHandler.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/Financial.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/FormulaParser.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/FormulaToken.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/Function.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/Functions.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/Logical.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/LookupRef.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/MathTrig.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/Statistical.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/TextData.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/Token/Stack.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Calculation/functionlist.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Cell.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Cell/AdvancedValueBinder.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Cell/DataType.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Cell/DataValidation.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Cell/DefaultValueBinder.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Cell/Hyperlink.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Cell/IValueBinder.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/Axis.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/DataSeries.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/DataSeriesValues.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/Exception.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/GridLines.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/Layout.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/Legend.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/PlotArea.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/Properties.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/Renderer/PHP Charting Libraries.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/Renderer/jpgraph.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Chart/Title.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Comment.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/DocumentProperties.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/DocumentSecurity.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Exception.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/HashTable.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Helper/HTML.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/IComparable.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/IOFactory.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/NamedRange.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Abstract.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/CSV.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/DefaultReadFilter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel2003XML.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel2007.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel2007/Chart.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel2007/Theme.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/Color.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/Color/BIFF5.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/Color/BIFF8.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/Color/BuiltIn.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/ErrorCode.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/Escher.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/MD5.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/RC4.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/Style/Border.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Excel5/Style/FillPattern.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Exception.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/Gnumeric.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/HTML.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/IReadFilter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/IReader.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/OOCalc.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Reader/SYLK.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/ReferenceHelper.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/RichText.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/RichText/ITextElement.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/RichText/Run.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/RichText/TextElement.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Settings.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/CodePage.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Date.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Drawing.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Escher.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Escher/DgContainer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Escher/DgContainer/SpgrContainer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Escher/DgContainer/SpgrContainer/SpContainer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Escher/DggContainer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Escher/DggContainer/BstoreContainer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Escher/DggContainer/BstoreContainer/BSE.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Escher/DggContainer/BstoreContainer/BSE/Blip.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Excel5.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/File.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/Font.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/JAMA/CHANGELOG.TXT" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/JAMA/CholeskyDecomposition.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/JAMA/EigenvalueDecomposition.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/JAMA/LUDecomposition.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/JAMA/Matrix.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/JAMA/QRDecomposition.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/JAMA/SingularValueDecomposition.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/JAMA/utils/Error.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/JAMA/utils/Maths.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/OLE.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/OLE/ChainedBlockStream.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/OLE/PPS.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/OLE/PPS/File.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/OLE/PPS/Root.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/OLERead.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/PCLZip/gnu-lgpl.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/PCLZip/pclzip.lib.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/PCLZip/readme.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/PasswordHasher.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/String.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/TimeZone.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/XMLWriter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/ZipArchive.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/ZipStreamWrapper.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/trend/bestFitClass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/trend/exponentialBestFitClass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/trend/linearBestFitClass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/trend/logarithmicBestFitClass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/trend/polynomialBestFitClass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/trend/powerBestFitClass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Shared/trend/trendClass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/Alignment.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/Border.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/Borders.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/Color.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/Conditional.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/Fill.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/Font.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/NumberFormat.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/Protection.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Style/Supervisor.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/AutoFilter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/AutoFilter/Column.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/AutoFilter/Column/Rule.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/BaseDrawing.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/CellIterator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/Column.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/ColumnCellIterator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/ColumnDimension.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/ColumnIterator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/Dimension.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/Drawing.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/Drawing/Shadow.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/HeaderFooter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/HeaderFooterDrawing.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/MemoryDrawing.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/PageMargins.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/PageSetup.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/Protection.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/Row.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/RowCellIterator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/RowDimension.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/RowIterator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Worksheet/SheetView.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/WorksheetIterator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Abstract.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/CSV.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/Chart.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/Comments.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/ContentTypes.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/DocProps.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/Drawing.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/Rels.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/RelsRibbon.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/RelsVBA.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/StringTable.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/Style.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/Theme.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/Workbook.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/Worksheet.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel2007/WriterPart.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel5.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel5/BIFFwriter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel5/Escher.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel5/Font.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel5/Parser.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel5/Workbook.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel5/Worksheet.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Excel5/Xf.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/Exception.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/HTML.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/IWriter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument/Cell/Comment.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument/Content.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument/Meta.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument/MetaInf.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument/Mimetype.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument/Settings.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument/Styles.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument/Thumbnails.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/OpenDocument/WriterPart.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/PDF.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/PDF/Core.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/PDF/DomPDF.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/PDF/mPDF.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/Writer/PDF/tcPDF.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/bg/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/cs/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/cs/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/da/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/da/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/de/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/de/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/en/uk/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/es/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/es/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/fi/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/fi/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/fr/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/fr/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/hu/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/hu/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/it/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/it/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/nl/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/nl/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/no/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/no/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/pl/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/pl/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/pt/br/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/pt/br/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/pt/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/pt/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/ru/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/ru/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/sv/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/sv/functions" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/tr/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/PHPExcel/locale/tr/functions" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/User/GameController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/GameController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/user/game1/price.blade.php" afterPath="$PROJECT_DIR$/resources/views/user/game1/price.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -284,8 +28,8 @@
       <file leaf-file-name="GameController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/User/GameController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="289" column="28" lean-forward="true" selection-start-line="289" selection-start-column="28" selection-end-line="289" selection-end-column="28" />
+            <state relative-caret-position="-1872">
+              <caret line="272" column="80" lean-forward="false" selection-start-line="272" selection-start-column="80" selection-end-line="272" selection-end-column="80" />
               <folding>
                 <element signature="e#389#908#0#PHP" expanded="false" />
                 <element signature="e#942#1355#0#PHP" expanded="false" />
@@ -652,14 +396,16 @@
       <workItem from="1493600380242" duration="1532000" />
       <workItem from="1493702121641" duration="3300000" />
       <workItem from="1493710170581" duration="6572000" />
+      <workItem from="1493727679462" duration="9305000" />
+      <workItem from="1493775671366" duration="3784000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157105000" />
+    <option name="totallyTimeSpent" value="170194000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1037,8 +783,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/User/GameController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="289" column="28" lean-forward="true" selection-start-line="289" selection-start-column="28" selection-end-line="289" selection-end-column="28" />
+        <state relative-caret-position="-1872">
+          <caret line="272" column="80" lean-forward="false" selection-start-line="272" selection-start-column="80" selection-end-line="272" selection-end-column="80" />
           <folding>
             <element signature="e#389#908#0#PHP" expanded="false" />
             <element signature="e#942#1355#0#PHP" expanded="false" />
