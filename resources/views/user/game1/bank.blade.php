@@ -53,7 +53,7 @@
 							<li>
 								<a href="/gameShow?no=1"><i class="icon-home"></i> 暂停销售</a>
 							</li>
-							<li>
+							<li class="active">
 								<a href="/bankShow?t=fs_game_bank1"><i class="icon-folder-open"></i> 账号列表</a>
 							</li>
 							<li>
@@ -62,13 +62,18 @@
 							<li>
 								<a href="/priceShow?t=fs_game_account1"><i class="icon-envelope"></i> 账号定价</a>
 							</li>
-							<li  class="active">
+							<li>
 								<a href="/zoneShow?t=fs_game_zone1"><i class="icon-file"></i> 大区名称</a>
 							</li>
 						</ul>
 					</div>
 				</div>
 				<div class="span10">
+						<span class="badge badge-info" style="cursor:pointer" id="s1">全选</span>
+						<span class="badge badge-info" style="cursor:pointer" id="s2">全不选</span>
+						<span class="badge badge-info" style="cursor:pointer" id="s3">反选</span>
+						<span class="badge badge-info" style="cursor:pointer" id="s4">选择没有卖出的</span>
+					<h6></h6>
 					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>
@@ -76,10 +81,37 @@
 									ID
 								</th>
 								<th>
-									大区名称
+									编号
 								</th>
 								<th>
-									大区简称
+									账号组合
+								</th>
+								<th>
+									大区
+								</th>
+								<th>
+									账号
+								</th>
+								<th>
+									密码
+								</th>
+								<th>
+									原价
+								</th>
+								<th>
+									提货时间
+								</th>
+								<th>
+									消耗点数
+								</th>
+								<th>
+									代理账号
+								</th>
+								<th>
+									定价
+								</th>
+								<th>
+									<button type="button" class="btn btn-mini btn-danger" id="b1">删除</button>
 								</th>
 								<th>
 									修改
@@ -89,23 +121,50 @@
 								</th>
 							</tr>
 						</thead>
-						<tbody id="z_id">
-						@forelse ($zoneList as $k=>$v)
+						<tbody id="b_id">
+						@forelse ($bankList as $k=>$v)
 							<tr>
 								<td>
 									{{$k+1}}
 								</td>
 								<td>
-									{{$v->z_name}}
+									{{$v->b_no}}
 								</td>
 								<td>
-									{{$v->z_short}}
+									{{$v->b_group}}
 								</td>
 								<td>
-									<a href="/modZoneShow?z_id={{$v->z_id}}&t=fs_game_zone1" class="view-link">修改</a>
+									{{$v->b_zone}}
 								</td>
 								<td>
-									<a id="{{$v->z_id}}" class="view-link hh3" style="cursor:pointer">删除</a>
+									{{$v->b_user}}
+								</td>
+								<td>
+									{{$v->b_pwd}}
+								</td>
+								<td>
+									{{$v->b_price}}
+								</td>
+								<td>
+									{{$v->b_pickup_time}}
+								</td>
+								<td>
+									{{$v->b_used}}
+								</td>
+								<td>
+									{{$v->b_proxy_user}}
+								</td>
+								<td>
+									<a href="/#?b_id={{$v->b_id}}&t=fs_game_bank1" class="view-link">定价</a>
+								</td>
+								<td>
+									<input type="checkbox" name="del" id="{{$v->b_id}}" value="{{$v->b_id}}">
+								</td>
+								<td>
+									<a id="{{$v->b_id}}" class="view-link hh1" style="cursor:pointer">修改</a>
+								</td>
+								<td>
+									<a id="{{$v->b_id}}" class="view-link hh1" style="cursor:pointer">删除</a>
 								</td>
 							</tr>
 						@empty
@@ -113,13 +172,23 @@
 						@endforelse
 						</tbody>
 					</table>
-					<div class="form-actions">
-						<button type="button" class="btn btn-primary" id="b1">添加大区</button>
+					<div class="well-small summary">
+						<ul>
+							<li>
+								<a href="#">总代码数: <span class="badge badge-info">{{$countArray['bankCount']}}</span></a>
+							</li>
+							<li>
+								<a href="#">提取代码数: <span class="badge badge-info">{{$countArray['usedCount']}}</span></a>
+							</li>
+							<li>
+								<a href="#">剩余代码数: <span class="badge badge-info">{{$countArray['nousedCount']}}</span></a>
+							</li>
+						</ul>
 					</div>
 					<div class="pagination">
 						<ul>
 							<li class="disabled">
-								{!! $zoneList->links() !!}
+								{!! $bankList->appends(['t' => 'fs_game_bank1'])->links() !!}
 							</li>
 						</ul>
 					</div>
@@ -158,6 +227,32 @@
                 $('#b1').click(function () {
 					location.href="/addZoneShow";
                 })
+            })
+		</script>
+
+		<script type="text/javascript">
+            $(document).ready(function(){
+                var chk_value =[];
+                $('#s1').click(function () {
+                    $("#b_id :checkbox").prop("checked", true);
+                });
+                $('#s2').click(function () {
+                    $("#b_id :checkbox").prop("checked", false);
+                });
+                $('#s3').click(function () {
+                    $("#b_id :checkbox").each(function () {
+                        $(this).prop("checked", !$(this).prop("checked"));
+                    });
+                });
+                $('#s4').click(function () {
+                    $('input[name="del"]:checked').each(function(){
+                        chk_value.push($(this).val());
+                    });
+                    console.log(chk_value);
+                });
+
+
+
             })
 		</script>
 	</body>

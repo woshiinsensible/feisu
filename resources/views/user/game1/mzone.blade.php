@@ -18,21 +18,17 @@
 						<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="#">飞速手游</a>
 						<div class="nav-collapse">
 							<ul class="nav">
-								<li class="active">
+								<li>
 									<a href="proxyList">总览</a>
-									{{--@foreach ($proList as $u)--}}
-										{{--{{$u['pro_name']}} <br>--}}
-									{{--@endforeach--}}
 								</li>
-{{--								{!! $proList->links() !!}--}}
-								<li>
-									<a href="../settings.htm">游戏1</a>
+								<li class="active">
+									<a href="/gameShow?no=1">游戏1</a>
 								</li>
 								<li>
-									<a href="../help.htm">游戏2</a>
+									<a href="/gameShow?no=2">游戏2</a>
 								</li>
 								<li>
-									<a href="../help.htm">添加游戏</a>
+									<a href="/gameShow?no=0">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">
@@ -54,19 +50,19 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
+							<li>
+								<a href="/gameShow?no=1"><i class="icon-home"></i> 暂停销售</a>
+							</li>
+							<li>
+								<a href="/bankShow?t=fs_game_bank1"><i class="icon-folder-open"></i> 账号列表</a>
+							</li>
+							<li>
+								<a href="#"><i class="icon-check"></i> 账号上传</a>
+							</li>
+							<li>
+								<a href="/priceShow?t=fs_game_account1"><i class="icon-envelope"></i> 账号定价</a>
+							</li>
 							<li class="active">
-								<a href="/proxyList"><i class="icon-home"></i> 暂停销售</a>
-							</li>
-							<li>
-								<a href="/rechargeList"><i class="icon-folder-open"></i> 账号列表</a>
-							</li>
-							<li>
-								<a href="/pickupList"><i class="icon-check"></i> 账号上传</a>
-							</li>
-							<li>
-								<a href="/pub_show"><i class="icon-envelope"></i> 账号定价</a>
-							</li>
-							<li>
 								<a href="/zoneShow?t=fs_game_zone1"><i class="icon-file"></i> 大区名称</a>
 							</li>
 						</ul>

@@ -55,21 +55,20 @@
 								飞速手游
 							</li>
 							<li class="active">
-								<a href="/proxyList"><i class="icon-home"></i> 暂停销售</a>
+								<a href="/gameShow?no=1"><i class="icon-home"></i> 暂停销售</a>
 							</li>
 							<li>
-								<a href="/rechargeList"><i class="icon-folder-open"></i> 账号列表</a>
+								<a href="/bankShow?t=fs_game_bank1"><i class="icon-folder-open"></i> 账号列表</a>
 							</li>
 							<li>
-								<a href="/pickupList"><i class="icon-check"></i> 账号上传</a>
+								<a href="#"><i class="icon-check"></i> 账号上传</a>
 							</li>
 							<li>
-								<a href="/pub_show"><i class="icon-envelope"></i> 账号定价</a>
+								<a href="/priceShow?t=fs_game_account1"><i class="icon-envelope"></i> 账号定价</a>
 							</li>
 							<li>
 								<a href="/zoneShow?t=fs_game_zone1"><i class="icon-file"></i> 大区名称</a>
 							</li>
-
 						</ul>
 					</div>
 				</div>

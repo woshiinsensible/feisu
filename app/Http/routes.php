@@ -124,6 +124,11 @@ Route::group(['middleware' => ['web']], function () {
     //excel
     Route::get('/readExcel','User\GameController@readExcel');
 
+    //显示账号列表
+    Route::get('/bankShow','User\GameController@bankShow');
+
+
+
     Route::group(['middleware'=>'check'],function(){
 
 
