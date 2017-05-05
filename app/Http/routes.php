@@ -27,10 +27,14 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
+    //首页
+    Route::get('/index ',function(){
+        return view('user.index');
+    });
     //上线改成post
     Route::get('/login', 'User\LoginController@login');
 
-    Route::get('/test2', 'User\LoginController@test2');
+    Route::get('/test2/{tmp}', 'User\LoginController@test2');
 
     Route::get('/test','User\LoginController@test');
 
