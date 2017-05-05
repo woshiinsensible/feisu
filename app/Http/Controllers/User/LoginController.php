@@ -146,7 +146,7 @@ class LoginController extends Controller
             }
 
             $userPasswordMd5 = md5($userPassword);
-            $res = ProUser::where('pro_pwd',$userPasswordMd5)->where('pro_is',$proId)->get(['pro_id']);
+            $res = ProUser::where('pro_pwd',$userPasswordMd5)->where('pro_id',$proId)->get(['pro_id']);
             if($res->isEmpty()){
                 return json_encode(['error_code'=>332,'msg'=>'密码不正确'],JSON_UNESCAPED_UNICODE);
             }
