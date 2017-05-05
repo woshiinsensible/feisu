@@ -122,7 +122,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/addPrice','User\GameController@addPrice');
 
     //excel
-    Route::get('/readExcel','User\GameController@readExcel');
+    Route::post('/readExcel','User\GameController@readExcel');
 
     //显示账号列表
     Route::get('/bankShow','User\GameController@bankShow');

@@ -69,7 +69,7 @@
 					</div>
 				</div>
 				<div class="span10">
-					<form id="edit-profile" class="form-horizontal" action="/upload?t=fs_game_bank1" method="post" enctype="multipart/form-data">
+					<form id="edit-profile" class="form-horizontal" action="/readExcel?t=fs_game_bank1" method="post" enctype="multipart/form-data">
 						<fieldset>
 							<legend>上传组合账号</legend>
 							<div class="control-group">

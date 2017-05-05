@@ -270,6 +270,27 @@ class GameController extends Controller
     //excel
     public function readExcel(Request $request)
     {
+        $ext = $request->file('excel')->getClientOriginalExtension();
+        if($ext != 'xls'){
+            return json_encode(['error_code'=>113,'msg'=>'上传的文件必须师.xls文件'],JSON_UNESCAPED_UNICODE);
+
+        }
+
+        //php.ini上传最大文件大小
+        $phpSize = $request->file('excel')->getMaxFilesize();
+        //上传文件的大小
+        $uploadSize = $request->file('excel')->getClientSize();
+
+        if($uploadSize > $phpSize){
+            return json_encode(['error_code'=>113,'msg'=>'上传的文件大小不能超过4m'],JSON_UNESCAPED_UNICODE);
+        }
+
+
+
+        if ($request->file('excel')->isValid()){
+            $request->file('excel')->move('./excel/','excel1.xls');
+        }
+
         $objPHPExcel = \PHPExcel_IOFactory::load('./excel/excel1.xls');
         $dataArray = $objPHPExcel->getActiveSheet()->toArray();
         array_shift($dataArray);
@@ -355,7 +376,13 @@ class GameController extends Controller
             //插入数据库
             $resInsert = DB::table('fs_game_bank1')->insert($excelDate);
             if($resInsert){
-                return json_encode(['error_code'=>0,'msg'=>'导入excel文件成功'],JSON_UNESCAPED_UNICODE);
+                echo <<<EOT
+"<script type="text/javascript">
+        alert("上传文件成功");
+        self.location=document.referrer;
+    </script>"
+EOT;
+//                return json_encode(['error_code'=>0,'msg'=>'导入excel文件成功'],JSON_UNESCAPED_UNICODE);
             }
         }
 
@@ -461,7 +488,13 @@ class GameController extends Controller
         }
         //如果更新和插入都成功，提示上传excel文件成功
             if($resI+$resU>1){
-                return json_encode(['error_code'=>0,'msg'=>'excel文件上传成功'],JSON_UNESCAPED_UNICODE);
+                echo <<<EOT
+"<script type="text/javascript">
+        alert("上传文件成功");
+        self.location=document.referrer;
+    </script>"
+EOT;
+//                return json_encode(['error_code'=>0,'msg'=>'excel文件上传成功'],JSON_UNESCAPED_UNICODE);
             }
 
     }
@@ -687,9 +720,31 @@ class GameController extends Controller
     //批量上传组合账号
     public function upload(Request $request)
     {
+        $ext = $request->file('excel')->getClientOriginalExtension();
+        if($ext != 'xls'){
+            return json_encode(['error_code'=>113,'msg'=>'上传的文件必须师.xls文件'],JSON_UNESCAPED_UNICODE);
+
+        }
+
+        //php.ini上传最大文件大小
+        $phpSize = $request->file('excel')->getMaxFilesize();
+        //上传文件的大小
+        $uploadSize = $request->file('excel')->getClientSize();
+
+        if($uploadSize > $phpSize){
+            return json_encode(['error_code'=>113,'msg'=>'上传的文件大小不能超过4m'],JSON_UNESCAPED_UNICODE);
+        }
+
+
 
         if ($request->file('excel')->isValid()){
             $request->file('excel')->move('./excel/','excel1.xls');
+            echo <<<EOT
+"<script type="text/javascript">
+        alert("上传文件成功");
+        self.location=document.referrer;
+    </script>"
+EOT;
         }
 
     }
