@@ -127,6 +127,26 @@ Route::group(['middleware' => ['web']], function () {
     //显示账号列表
     Route::get('/bankShow','User\GameController@bankShow');
 
+    //更新组合账号的价格
+    Route::get('/updatePrice','User\GameController@updatePrice');
+
+    //单个删除组合账号
+    Route::get('/delSingle','User\GameController@delSingle');
+
+    //批量删除组合账号
+    Route::get('/delBatch','User\GameController@delBatch');
+
+    //跳转组合账号修改页面
+    Route::get('/modGroupShow','User\GameController@modGroupShow');
+
+    //修改组合账号
+    Route::get('/modGroup','User\GameController@modGroup');
+
+    //调转到上传组合账号页面
+    Route::get('/uploadShow','User\GameController@uploadShow');
+
+    //批量上传组合账号
+    Route::post('/upload','User\GameController@upload');
 
 
     Route::group(['middleware'=>'check'],function(){

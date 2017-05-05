@@ -57,7 +57,7 @@
 								<a href="/bankShow?t=fs_game_bank1"><i class="icon-folder-open"></i> 账号列表</a>
 							</li>
 							<li>
-								<a href="#"><i class="icon-check"></i> 账号上传</a>
+								<a href="/uploadShow?t=fs_game_bank1"><i class="icon-check"></i> 账号上传</a>
 							</li>
 							<li>
 								<a href="/priceShow?t=fs_game_account1"><i class="icon-envelope"></i> 账号定价</a>
@@ -85,6 +85,9 @@
 								</th>
 								<th>
 									账号组合
+								</th>
+								<th>
+									备注
 								</th>
 								<th>
 									大区
@@ -134,6 +137,9 @@
 									{{$v->b_group}}
 								</td>
 								<td>
+									{{$v->b_com}}
+								</td>
+								<td>
 									{{$v->b_zone}}
 								</td>
 								<td>
@@ -155,16 +161,17 @@
 									{{$v->b_proxy_user}}
 								</td>
 								<td>
-									<a href="/#?b_id={{$v->b_id}}&t=fs_game_bank1" class="view-link">定价</a>
+									{{--<a href="/#?b_id={{$v->b_id}}&t=fs_game_bank1" class="view-link">定价</a>--}}
+									<button type="button" class="btn btn-mini btn-primary dj" id="{{$v->b_id}}">定价</button>
 								</td>
 								<td>
-									<input type="checkbox" name="del" id="{{$v->b_id}}" value="{{$v->b_id}}">
+									<input type="checkbox" name="del" id="{{$v->b_used}}" value="{{$v->b_id}}" class="del">
 								</td>
 								<td>
-									<a id="{{$v->b_id}}" class="view-link hh1" style="cursor:pointer">修改</a>
+									<a id="{{$v->b_id}}" href="/modGroupShow?t=fs_game_bank1&b_id={{$v->b_id}}" class="view-link hh2" style="cursor:pointer"><button type="button" class="btn btn-mini btn-info">修改</button></a>
 								</td>
 								<td>
-									<a id="{{$v->b_id}}" class="view-link hh1" style="cursor:pointer">删除</a>
+									<a id="{{$v->b_id}}" class="view-link hh1" style="cursor:pointer"><button type="button" class="btn btn-mini btn-warning">删除</button></a>
 								</td>
 							</tr>
 						@empty
@@ -200,15 +207,16 @@
 		<script src="js/site.js"></script>
 		<script type="text/javascript">
             $(document).ready(function(){
-                $('.hh3').click(function () {
-                    var zId = $(this).attr('id');
+                //单个删除组合账号
+                $('.hh1').click(function () {
+                    var bId = $(this).attr('id');
                     if(confirm('确认是否删除？')){
                         $.get(
-                            '/delZone?t=fs_game_zone1',
-                            {z_id:zId},
+                            '/delSingle?t=fs_game_bank1',
+                            {b_id:bId},
                             function (res) {
                                 if(res.msg === ''){
-                                    alert("删除公告成功");
+                                    alert("删除组合账号成功");
                                     history.go(0);
                                 }else{
                                     alert(res.msg);
@@ -224,35 +232,90 @@
 
 		<script type="text/javascript">
             $(document).ready(function(){
+                //批量删除
+                var chk_value =[];
                 $('#b1').click(function () {
-					location.href="/addZoneShow";
+                    $('input[name="del"]:checked').each(function(){
+                        chk_value.push($(this).val());
+                    });
+                    if(confirm('确认是否删除？')){
+                        //发送ajax请求更新价格
+                        $.get(
+                            '/delBatch?t=fs_game_bank1',
+                            {
+                                b_ids:chk_value
+                            },
+                            function (res) {
+                                if(res.msg === ''){
+                                    alert("批量删除成功");
+                                    history.go(0);
+                                }else{
+                                    alert(res.msg);
+                                }
+                            },
+                            'json'
+                        )
+					}
                 })
             })
 		</script>
 
 		<script type="text/javascript">
             $(document).ready(function(){
-                var chk_value =[];
+                //全选
                 $('#s1').click(function () {
                     $("#b_id :checkbox").prop("checked", true);
                 });
+                //全部选
                 $('#s2').click(function () {
                     $("#b_id :checkbox").prop("checked", false);
                 });
+                //反选
                 $('#s3').click(function () {
                     $("#b_id :checkbox").each(function () {
                         $(this).prop("checked", !$(this).prop("checked"));
                     });
                 });
+				//选没有卖出的
                 $('#s4').click(function () {
-                    $('input[name="del"]:checked').each(function(){
-                        chk_value.push($(this).val());
-                    });
-                    console.log(chk_value);
+                    $("#b_id :checkbox").each(
+                        function(){
+                            if($(this).attr('id') == 0){
+                                $(this).prop("checked", true);
+							}
+                        }
+                    )
                 });
+            })
+		</script>
 
-
-
+		<script type="text/javascript">
+			//修改定价
+            $(document).ready(function(){
+                $('.dj').click(function () {
+                    var bId = $(this).attr('id');
+                    var val = prompt('重新定价的价格!只能输入数字!');
+                    if(isNaN(val)){
+                        alert('价格不是数字，重新输入');
+					}
+					//发送ajax请求更新价格
+                    $.get(
+                        '/updatePrice?t=fs_game_bank1',
+                        {
+                            b_id:bId,
+							b_price:val
+						},
+                        function (res) {
+                            if(res.msg === ''){
+                                alert("更新价格成功");
+                                history.go(0);
+                            }else{
+                                alert(res.msg);
+                            }
+                        },
+                        'json'
+                    )
+                })
             })
 		</script>
 	</body>

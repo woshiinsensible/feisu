@@ -270,7 +270,7 @@ class GameController extends Controller
     //excel
     public function readExcel(Request $request)
     {
-        $objPHPExcel = \PHPExcel_IOFactory::load('C:\Users\wuyanjun\Desktop\yys2.xls');
+        $objPHPExcel = \PHPExcel_IOFactory::load('./excel/excel1.xls');
         $dataArray = $objPHPExcel->getActiveSheet()->toArray();
         array_shift($dataArray);
 
@@ -494,4 +494,203 @@ class GameController extends Controller
             ->with('countArray',$countArray);
     }
 
+    //更新组合账号的价格
+    public function updatePrice(Request $request)
+    {
+        if(!$request->has('t')){
+            return json_encode(['error_code'=>113,'msg'=>'没有表名传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $tName = $request->input('t');
+
+        if(!$request->has('b_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有b_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $zId = $request->input('b_id');
+
+        if(!$request->has('b_price')){
+            return json_encode(['error_code'=>222,'msg'=>'请输入价格'],JSON_UNESCAPED_UNICODE);
+        }
+        $zShort = $request->input('b_price');
+
+        $zShort = intval($zShort);
+
+        $modRes = DB::table($tName)->where('b_id',$zId)->update([
+            'b_price'=>$zShort
+        ]);
+
+
+        if(!$modRes){
+            return json_encode(['error_code'=>222,'msg'=>'更新价格失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //单个删除组合账号
+    public function delSingle(Request $request)
+    {
+        if(!$request->has('t')){
+            return json_encode(['error_code'=>113,'msg'=>'没有表名传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $tName = $request->input('t');
+
+        if(!$request->has('b_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有b_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $noId = $request->input('b_id');
+
+        $delRes = DB::table($tName)->where('b_id',$noId)->delete();
+        if(!$delRes){
+            return json_encode(['error_code'=>222,'msg'=>'删除组合账号'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //批量删除组合账号
+    public function delBatch(Request $request)
+    {
+        if(!$request->has('t')){
+            return json_encode(['error_code'=>113,'msg'=>'没有表名传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $tName = $request->input('t');
+
+        if(!$request->has('b_ids')){
+            return json_encode(['error_code'=>222,'msg'=>'没有b_ids传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $bIds = $request->input('b_ids');
+
+        //$bIds删除重复元素
+        $newBids = array_unique( $bIds);
+
+        $delRes = DB::table($tName)->whereIn('b_id',$newBids)->delete();
+        if(!$delRes){
+            return json_encode(['error_code'=>222,'msg'=>'删除组合账号'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //跳转组合账号修改页面
+    public function modGroupShow(Request $request)
+    {
+        if(!$request->has('t')){
+            return json_encode(['error_code'=>113,'msg'=>'没有表名传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $tName = $request->input('t');
+
+        $b_id = $request->input('b_id','');
+        $data = DB::table($tName)->where('b_id',$b_id)->get([
+            'b_id',
+            'b_user',
+            'b_pwd',
+            'b_zone',
+            'b_terminal',
+            'b_group',
+            'b_com',
+            'b_price'
+        ]);
+
+        if(!$data){
+            return json_encode(['error_code'=>222,'msg'=>'修改的内容不存在'],JSON_UNESCAPED_UNICODE);
+        }
+
+        //获取所有大区和简称
+        $zoneData = DB::table('fs_game_zone1')->get();
+
+        return view('user.game1.mgroup')->with('data',$data)->with('zoneData',$zoneData);
+    }
+
+    //修改组合账号
+    public function modGroup(Request $request)
+    {
+        if(!$request->has('t')){
+            return json_encode(['error_code'=>113,'msg'=>'没有表名传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $tName = $request->input('t');
+
+        if(!$request->has('b_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有b_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+        $bId = $request->input('b_id');
+
+        if(!$request->has('b_user')){
+            return json_encode(['error_code'=>222,'msg'=>'没有账号'],JSON_UNESCAPED_UNICODE);
+        }
+        $bUser = $request->input('b_user');
+
+        if(!$request->has('b_pwd')){
+            return json_encode(['error_code'=>222,'msg'=>'没有密码'],JSON_UNESCAPED_UNICODE);
+        }
+        $bPwd = $request->input('b_pwd');
+
+        if(!$request->has('b_terminal')){
+            return json_encode(['error_code'=>222,'msg'=>'没有大区简称'],JSON_UNESCAPED_UNICODE);
+        }
+        $bTerminal = $request->input('b_terminal');
+
+        if(!$request->has('b_zone')){
+            return json_encode(['error_code'=>222,'msg'=>'没有大区名称'],JSON_UNESCAPED_UNICODE);
+        }
+        $bZone = $request->input('b_zone');
+
+        if(!$request->has('b_group')){
+            return json_encode(['error_code'=>222,'msg'=>'没有组合'],JSON_UNESCAPED_UNICODE);
+        }
+        $bGroup = $request->input('b_group');
+
+        $bCom = $request->input('b_com','');
+
+        if(!$request->has('b_price')){
+            return json_encode(['error_code'=>222,'msg'=>'没有价格'],JSON_UNESCAPED_UNICODE);
+        }
+        $bPrice = $request->input('b_price');
+
+
+        $modRes = DB::table($tName)->where('b_id',$bId)->update([
+            'b_user'=>$bUser,
+            'b_pwd'=>$bPwd,
+            'b_terminal'=>$bTerminal,
+            'b_zone'=>$bZone,
+            'b_group'=>$bGroup,
+            'b_com'=>$bCom,
+            'b_price'=>$bPrice
+        ]);
+
+        if(!$modRes){
+            return json_encode(['error_code'=>222,'msg'=>'修改组合账号失败'],JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //调转到上传组合账号页面
+    public function uploadShow(Request $request)
+    {
+        if(!$request->has('t')){
+            return json_encode(['error_code'=>113,'msg'=>'没有表名传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $tName = $request->input('t');
+
+        $zoneData = DB::table('fs_game_zone1')->get();
+
+        return view('user.game1.upload')->with('tName',$tName)->with('zoneData',$zoneData);
+
+    }
+
+    //批量上传组合账号
+    public function upload(Request $request)
+    {
+
+        if ($request->file('excel')->isValid()){
+            $request->file('excel')->move('./excel/','excel1.xls');
+        }
+
+    }
 }
