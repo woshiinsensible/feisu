@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Model\GameZone1;
 use App\Model\ProUser;
+use App\Model\Status;
 use App\Model\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,12 +23,18 @@ class GameController extends Controller
         }
 
         $no = $request->input('no');
+
+        $gameStatus = DB::table('fs_status')->where('g_id',$no)->get(['g_sell_status','g_id','g_price_status']);
+
+//        dd($gameStatus);
+
+
         switch ($no) {
             case 0:
                 echo "no = 0";
                 break;
             case 1:
-                return view('user.game1.game');
+                return view('user.game1.game')->with('gameStatus',$gameStatus);
                 break;
             case 2:
                 return view('user.game1.game');
@@ -747,5 +754,69 @@ EOT;
 EOT;
         }
 
+    }
+
+    //修改游戏销售状态
+    public function changeSell(Request $request)
+    {
+        if(!$request->has('g_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有g_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $gId = $request->input('g_id');
+
+        $res = Status::where('g_id',$gId)->get(['g_sell_status']);
+
+        if(!$res->isEmpty()){
+            $resSta = $res->toArray()[0]["g_sell_status"];
+        }
+
+        if($resSta == 1){
+            $res1 = Status::where('g_id',$gId)->update(['g_sell_status' => 0]);
+
+            if(!$res1){
+                return json_encode(['error_code'=>222,'msg'=>'修改状态失败'],JSON_UNESCAPED_UNICODE);
+            }
+        }elseif($resSta == 0){
+            $res1 = Status::where('g_id',$gId)->update(['g_sell_status' => 1]);
+
+            if(!$res1) {
+                return json_encode(['error_code'=>222,'msg'=>'修改状态失败'],JSON_UNESCAPED_UNICODE);
+            }
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //修改价格显示状态
+    public function changePrice(Request $request)
+    {
+        if(!$request->has('g_id')){
+            return json_encode(['error_code'=>222,'msg'=>'没有g_id传入'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $gId = $request->input('g_id');
+
+        $res = Status::where('g_id',$gId)->get(['g_price_status']);
+
+        if(!$res->isEmpty()){
+            $resSta = $res->toArray()[0]["g_price_status"];
+        }
+
+        if($resSta == 1){
+            $res1 = Status::where('g_id',$gId)->update(['g_price_status' => 0]);
+
+            if(!$res1){
+                return json_encode(['error_code'=>222,'msg'=>'修改状态失败'],JSON_UNESCAPED_UNICODE);
+            }
+        }elseif($resSta == 0){
+            $res1 = Status::where('g_id',$gId)->update(['g_price_status' => 1]);
+
+            if(!$res1) {
+                return json_encode(['error_code'=>222,'msg'=>'修改状态失败'],JSON_UNESCAPED_UNICODE);
+            }
+        }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
     }
 }

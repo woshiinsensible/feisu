@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\Validator;
 class ProxyController extends Controller
 {
 
-    //盐值
-    public $solt = 'insensible';
-
-    public function proxyList(Request $request)
+    public function proxyIndex(Request $request)
     {
-        //判断用户token是否存在
-        $token = $request->session()->get('user_token');
+        //中间件已经判断是否存在user_token
+        $res = $request->session()->get('user_token');
+        $puserId = explode('-',base64_decode($res))[0];
+        if (!is_numeric($puserId)){
+            return json_encode(['error_code'=>222,'msg'=>'非法用户'],JSON_UNESCAPED_UNICODE);
+        }
 
     }
 

@@ -82,32 +82,56 @@
 									<td>
 										账号当前状态
 									</td>
-									<td>
-										<span class="label label-success">开启</span>
-									</td>
+									@if ($gameStatus[0]->g_sell_status == 1)
+										<td>
+											<span class="label label-success">开启</span>
+										</td>
+									@elseif ($gameStatus[0]->g_sell_status == 0)
+										<td>
+											<span class="label label-warning">关闭</span>
+										</td>
+									@endif
 								<tr>
 									<td>
 										账号修改状态
 									</td>
-									<td>
-										<span class="label label-warning">关闭</span>
-									</td>
+									@if ($gameStatus[0]->g_sell_status == 1)
+										<td>
+											<span class="label label-warning hh1" id="{{$gameStatus[0]->g_id}}" style="cursor:pointer">关闭</span>
+										</td>
+									@elseif ($gameStatus[0]->g_sell_status == 0)
+										<td id="{{$gameStatus[0]->g_id}}">
+											<span class="label label-success hh1" id="{{$gameStatus[0]->g_id}}" style="cursor:pointer">开启</span>
+										</td>
+									@endif
 								</tr>
 								<tr>
 									<td>
 										价格显示状态
 									</td>
-									<td>
-										<span class="label label-success">开启</span>
-									</td>
+									@if ($gameStatus[0]->g_price_status == 1)
+										<td>
+											<span class="label label-success">开启</span>
+										</td>
+									@elseif ($gameStatus[0]->g_price_status == 0)
+										<td>
+											<span class="label label-warning">关闭</span>
+										</td>
+									@endif
 								</tr>
 								<tr>
 									<td>
 										价格修改状态
 									</td>
-									<td>
-										<span class="label label-warning">关闭</span>
-									</td>
+									@if ($gameStatus[0]->g_price_status == 1)
+										<td>
+											<span class="label label-warning hh2" id="{{$gameStatus[0]->g_id}}" style="cursor:pointer">关闭</span>
+										</td>
+									@elseif ($gameStatus[0]->g_price_status == 0)
+										<td id="{{$gameStatus[0]->g_id}}">
+											<span class="label label-success hh2" id="{{$gameStatus[0]->g_id}}" style="cursor:pointer">开启</span>
+										</td>
+									@endif
 								</tr>
 								<tr>
 									<td>
@@ -136,10 +160,30 @@
 		<script type="text/javascript">
             $(document).ready(function(){
                 $('.hh1').click(function () {
-                    var proId = $(this).attr('id');
+                    var gId = $(this).attr('id');
                     $.get(
-                        '/changeSta',
-                        {pro_id:proId},
+                        '/changeSell',
+                        {g_id:gId},
+                        function (res) {
+                            if(res.msg === ''){
+                                history.go(0);
+                            }else{
+                                alert(res.msg);
+                            }
+                        },
+                        'json'
+                    )
+                })
+            })
+		</script>
+
+		<script type="text/javascript">
+            $(document).ready(function(){
+                $('.hh2').click(function () {
+                    var gId = $(this).attr('id');
+                    $.get(
+                        '/changePrice',
+                        {g_id:gId},
                         function (res) {
                             if(res.msg === ''){
                                 history.go(0);

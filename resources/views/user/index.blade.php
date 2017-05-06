@@ -84,7 +84,7 @@
                                 if(res.role == 1){
                                     location.href= '/proxyList'
 								}else if(res.role == 2){
-                                    location.href= '/2'
+                                    location.href= '/proxyIndex'
 								}
                             }else{
                                 alert(res.msg);

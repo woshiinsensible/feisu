@@ -152,6 +152,15 @@ Route::group(['middleware' => ['web']], function () {
     //批量上传组合账号
     Route::post('/upload','User\GameController@upload');
 
+    //修改游戏销售状态
+    Route::get('/changeSell', 'User\GameController@changeSell');
+
+    //修改价格显示状态
+    Route::get('/changePrice', 'User\GameController@changePrice');
+
+    //代理用户后台界面
+    Route::get('/proxyIndex', 'User\ProxyController@proxyIndex');
+
 
     Route::group(['middleware'=>'check'],function(){
 
