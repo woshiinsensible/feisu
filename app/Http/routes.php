@@ -161,6 +161,9 @@ Route::group(['middleware' => ['web']], function () {
     //代理用户后台界面
     Route::get('/proxyIndex', 'User\ProxyController@proxyIndex');
 
+    //代理用户查看一条公告showNotice
+    Route::get('/showNotice', 'User\ProxyController@showNotice');
+
 
     Route::group(['middleware'=>'check'],function(){
 

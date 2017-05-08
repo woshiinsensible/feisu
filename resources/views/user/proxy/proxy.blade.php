@@ -55,19 +55,10 @@
 								飞速手游
 							</li>
 							<li class="active">
-								<a href="/proxyList"><i class="icon-home"></i> 代理信息</a>
+								<a href="/proxyList"><i class="icon-home"></i> 个人信息</a>
 							</li>
 							<li>
-								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
-							</li>
-							<li>
-								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
-							</li>
-							<li>
-								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
-							</li>
-							<li>
-								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
+								<a href="/noticeList"><i class="icon-file"></i> 充值记录</a>
 							</li>
 
 						</ul>
@@ -78,109 +69,41 @@
 						<thead>
 							<tr>
 								<th>
-									ID
-								</th>
-								<th>
-									代理账号
+									折扣
 								</th>
 								<th>
 									总点数
 								</th>
 								<th>
-									剩余点数
-								</th>
-								<th>
 									消耗点数
 								</th>
 								<th>
-									提货数量
-								</th>
-								<th>
-									加入时间
-								</th>
-								<th>
-									折扣
-								</th>
-								<th>
-									备注
-								</th>
-								<th>
-									状态
-								</th>
-								<th>
-									修改密码
-								</th>
-								<th>
-									修改备注
-								</th>
-								<th>
-									冻结
+									剩余点数
 								</th>
 								<th>
 									充值
 								</th>
+
 							</tr>
 						</thead>
 						<tbody id="pro_id">
-						@forelse ($proList as $k=>$v)
+						@forelse ($resStatus as $k=>$v)
 							<tr>
 								<td>
-									{{$v['pro_id']}}
-								</td>
-								<td>
-									{{$v['pro_name']}}
+									{{$v['pro_discount']}}
 								</td>
 								<td>
 									{{$v['pro_total']}}
 								</td>
 								<td>
-									{{$v['pro_surplus']}}
-								</td>
-								<td>
 									{{$v['pro_used']}}
 								</td>
 								<td>
-									{{$v['pro_pick']}}
+									{{$v['pro_surplus']}}
 								</td>
 								<td>
-									{{$v['pro_time']}}
-								</td>
-								<td>
-									{{$v['pro_discount']}}
-								</td>
-								<td>
-									{{$v['pro_comment']}}
-								</td>
-								@if ($v['pro_status'] == 1)
-								<td>
-									<span class="label label-success">正常</span>
-								</td>
-								@elseif ($v['pro_status'] == 0)
-									<td>
-										<span class="label label-warning">冻结</span>
-									</td>
-									@endif
-
-								<td>
-									<a href="change_pwd?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">修改密码</a>
-								</td>
-								<td>
-									<a href="/change_com?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">修改备注</a>
-								</td>
-
-								@if ($v['pro_status'] == 1)
-									<td>
-										<span class="label label-warning hh1" id="{{$v['pro_id']}}" style="cursor:pointer">冻结</span>
-									</td>
-								@elseif ($v['pro_status'] == 0)
-									<td id="{{$v['pro_id']}}">
-										<span class="label label-success hh1" id="{{$v['pro_id']}}" style="cursor:pointer">激活</span>
-									</td>
-								@endif
-
-
-								<td>
-									<a href="/rec_show?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}&pro_discount={{$v['pro_discount']}}&pro_total={{$v['pro_total']}}" class="view-link">充值</a>
+									<a href="#"><span class="badge badge-info">淘宝充值</span></a>
+									<a href="#"><span class="badge badge-info">自动充值</span></a>
 								</td>
 							</tr>
 						@empty
@@ -188,30 +111,39 @@
 						@endforelse
 						</tbody>
 					</table>
-					<div class="pagination">
-						<ul>
-							<li class="disabled">
-								{!! $proList->links() !!}
-							</li>
-						</ul>
-					</div>
-					<div class="well-small summary">
-						<ul>
-							<li>
-								<a href="#">代理总数: <span class="badge badge-info">{{$proRes['pro_count']}}</span></a>
-							</li>
-							<li>
-								<a href="#">总点数: <span class="badge badge-info">{{$proRes['pro_total']}}</span></a>
-							</li>
-							<li>
-								<a href="#">消耗总数: <span class="badge badge-info">{{$proRes['pro_surplus']}}</span></a>
-							</li>
-							<li>
-								<a href="#">剩余点数: <span class="badge badge-info">{{$proRes['pro_used']}}</span></a>
-							</li>
-
-						</ul>
-					</div>
+					<h3  style="text-align:center;">公告栏</h3>
+					<table class="table table-bordered table-striped">
+						<thead>
+						<tr>
+							<th>
+								标题
+							</th>
+							<th>
+								发布时间
+							</th>
+							<th>
+								查看
+							</th>
+						</tr>
+						</thead>
+						<tbody id="no_id">
+						@forelse ($resNotice as $k=>$v)
+							<tr>
+								<td>
+									{{$v['no_title']}}
+								</td>
+								<td>
+									{{$v['no_time']}}
+								</td>
+								<td>
+									<a href=""><span class="badge badge-info">查看</span></a>
+								</td>
+							</tr>
+						@empty
+							nobody
+						@endforelse
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
