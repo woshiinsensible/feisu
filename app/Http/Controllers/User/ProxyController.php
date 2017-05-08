@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Model\Notice;
 use App\Model\ProUser;
+use App\Model\Recharge;
 use App\Model\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,11 +48,38 @@ class ProxyController extends Controller
 
         $noId = $request->input('no_id');
 
-        $noCom = Notice::where('no_id',$noId)->first(['no_com']);
+        $noCom = Notice::where('no_id',$noId)->first(['no_title','no_time','no_com']);
         if(!empty($noCom)){
             $resNo = $noCom->toArray();
-            var_dump($resNo['no_com']);
         }
+
+        return view('user.proxy.snotice')
+            ->with('data',$resNo);
+    }
+
+    //获取代理用户充值记录
+    public function rechargeRecode(Request $request)
+    {
+        if (!$request->session()->has('user_name')) {
+            return json_encode(['error_code'=>113,'msg'=>'用户不存在'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $proName = $request->session()->get('user_name');
+
+        $res = Recharge::where('pro_name',$proName)->get([
+            'rec_id',
+            'rec_count',
+            'rec_time',
+            'rec_com'
+        ]);
+
+        if(!$res->isEmpty()){
+            $resArray = $res->toArray();
+        }
+
+        return view('user.proxy.recharge')
+            ->with('resArray',$resArray);
+
     }
 
 }

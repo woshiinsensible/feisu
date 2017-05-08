@@ -164,6 +164,9 @@ Route::group(['middleware' => ['web']], function () {
     //代理用户查看一条公告showNotice
     Route::get('/showNotice', 'User\ProxyController@showNotice');
 
+    //获取代理用户充值记录
+    Route::get('/rechargeRecode', 'User\ProxyController@rechargeRecode');
+
 
     Route::group(['middleware'=>'check'],function(){
 

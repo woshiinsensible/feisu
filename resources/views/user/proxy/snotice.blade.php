@@ -8,6 +8,7 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="css/site.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="wE/dist/css/wangEditor.min.css">
 		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	</head>
 	<body>
@@ -54,22 +55,18 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
-							<li>
-								<a href="/proxyList"><i class="icon-white icon-home"></i> 代理信息</a>
-							</li>
-							<li>
-								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
-							</li>
-							<li>
-								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
-							</li>
-							<li>
-								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
-							</li>
 							<li class="active">
-								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
+								<a href="/proxyIndex"><i class="icon-home"></i> 个人信息</a>
 							</li>
-
+							<li>
+								<a href="/rechargeRecode"><i class="icon-file"></i> 充值记录</a>
+							</li>
+							<li>
+								<a href="/proxyIndex"><i class="icon-home"></i> 账号提取</a>
+							</li>
+							<li>
+								<a href="/rechargeRecode"><i class="icon-file"></i> 提货记录</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -80,19 +77,19 @@
 							<div class="control-group">
 								<label class="control-label" for="input01">标题</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="no_title" name="no_title" value="{{$data[0]['no_title']}}" readonly>
+									<input type="text" class="input-xlarge" id="no_title" name="no_title" value="{{$data['no_title']}}" readonly>
 								</div>
 							</div>
 							<div class="control-group">
 								<label class="control-label" for="input01">发布时间</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="no_time" name="no_time" value="{{$data[0]['no_time']}}" readonly>
+									<input type="text" class="input-xlarge" id="no_time" name="no_time" value="{{$data['no_time']}}" readonly>
 								</div>
 							</div>
 							<div class="control-group">
 								<label class="control-label" for="input01">内容</label>
 								<div class="controls">
-									<textarea class="input-xlarge" style="width:90%" rows="20" id="no_com" name="no_com" readonly>{{$data[0]['no_com']}}</textarea>
+									<textarea class="input-xlarge" rows="20" id="no_com" name="no_com" readonly>{{$data['no_com']}}</textarea>
 								</div>
 							</div>
 						</fieldset>
@@ -103,6 +100,8 @@
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/site.js"></script>
+		<script type="text/javascript" src="wE/dist/js/lib/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="wE/dist/js/wangEditor.min.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('#b1').click(function () {
@@ -122,6 +121,12 @@
 					)
                 })
 			})
+		</script>
+		//服客户端
+		<script type="text/javascript">
+            var editor = new wangEditor('no_com');
+            editor.create();
+            editor.disable();
 		</script>
 	</body>
 </html>

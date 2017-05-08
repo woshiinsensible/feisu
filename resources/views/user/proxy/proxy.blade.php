@@ -31,10 +31,10 @@
 									<a href="/gameShow?no=0">添加游戏</a>
 								</li>
 							</ul>
-							<form class="navbar-search pull-left" action="">
-								<input type="text" class="search-query span2" placeholder="代理账号" />
-							</form>
-							<button type="button" class="btn btn-primary" id="b2">查询</button>
+							{{--<form class="navbar-search pull-left" action="">--}}
+								{{--<input type="text" class="search-query span2" placeholder="代理账号" />--}}
+							{{--</form>--}}
+							{{--<button type="button" class="btn btn-primary" id="b2">查询</button>--}}
 							<ul class="nav pull-right">
 								<li>
 									<a><span class="badge">用户:{{ Session::get('user_name')}}</span></a>
@@ -55,12 +55,17 @@
 								飞速手游
 							</li>
 							<li class="active">
-								<a href="/proxyList"><i class="icon-home"></i> 个人信息</a>
+								<a href="/proxyIndex"><i class="icon-home"></i> 个人信息</a>
 							</li>
 							<li>
-								<a href="/noticeList"><i class="icon-file"></i> 充值记录</a>
+								<a href="/rechargeRecode"><i class="icon-file"></i> 充值记录</a>
 							</li>
-
+							<li>
+								<a href="/proxyIndex"><i class="icon-home"></i> 账号提取</a>
+							</li>
+							<li>
+								<a href="/rechargeRecode"><i class="icon-file"></i> 提货记录</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -136,7 +141,7 @@
 									{{$v['no_time']}}
 								</td>
 								<td>
-									<a href=""><span class="badge badge-info">查看</span></a>
+									<a href="/showNotice?no_id={{$v['no_id']}}"><span class="badge badge-info">查看</span></a>
 								</td>
 							</tr>
 						@empty
