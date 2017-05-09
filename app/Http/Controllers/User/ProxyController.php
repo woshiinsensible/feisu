@@ -23,7 +23,7 @@ class ProxyController extends Controller
 
 
         //判断用户是否被禁用,并获取代理用户的相关数据
-        $resStatus = ProUser::where('pro_id',$puserId)->get(['pro_status','pro_discount','pro_total','pro_surplus','pro_used']);
+        $resStatus = ProUser::where('pro_id',$puserId)->get(['pro_status','pro_discount','pro_surplus','pro_used']);
         if(!$resStatus->isEmpty()){
             if($resStatus->toArray()[0]['pro_status'] == 0){
                 echo "<script>alert('代理账号已被冻结，请练习管理员');history.go(-1)</script>";

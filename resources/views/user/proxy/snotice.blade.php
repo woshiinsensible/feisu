@@ -27,13 +27,13 @@
 								</li>
 {{--								{!! $proList->links() !!}--}}
 								<li>
-									<a href="/gameShow?no=1">游戏1</a>
+									<a href="/pickShow?no=1&t=fs_game_bank1">游戏1</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=2">游戏2</a>
+									<a href="/pickShow?no=2">游戏2</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=3">添加游戏</a>
+									<a href="/pickShow?no=3">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">
@@ -60,12 +60,6 @@
 							</li>
 							<li>
 								<a href="/rechargeRecode"><i class="icon-file"></i> 充值记录</a>
-							</li>
-							<li>
-								<a href="/proxyIndex"><i class="icon-home"></i> 账号提取</a>
-							</li>
-							<li>
-								<a href="/rechargeRecode"><i class="icon-file"></i> 提货记录</a>
 							</li>
 						</ul>
 					</div>

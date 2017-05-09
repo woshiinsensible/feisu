@@ -167,6 +167,19 @@ Route::group(['middleware' => ['web']], function () {
     //获取代理用户充值记录
     Route::get('/rechargeRecode', 'User\ProxyController@rechargeRecode');
 
+    //账号提取
+    Route::get('/pickShow', 'User\PgameController@pickShow');
+
+    //跳转执行提号动作
+    Route::get('/pickup', 'User\PgameController@pickup');
+
+    //确认购买账号
+    Route::get('/buy', 'User\PgameController@buy');
+
+    //提货记录
+    Route::get('/pickRecode', 'User\PgameController@pickRecode');
+
+
 
     Route::group(['middleware'=>'check'],function(){
 

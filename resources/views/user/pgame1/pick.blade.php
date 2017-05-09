@@ -19,10 +19,10 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li>
-									<a href="/poxyIndex">总览</a>
+									<a href="/proxyIndex">总览</a>
 								</li>
 								<li  class="active">
-									<a href="/pickShow?no=1">游戏1</a>
+									<a href="/pickShow?no=1&t=fs_game_bank1">游戏1</a>
 								</li>
 								<li>
 									<a href="/pickShow?no=2">游戏2</a>
@@ -31,10 +31,10 @@
 									<a href="/pickShow?no=0">添加游戏</a>
 								</li>
 							</ul>
-							{{--<form class="navbar-search pull-left" action="">--}}
-								{{--<input type="text" class="search-query span2" placeholder="代理账号" />--}}
-							{{--</form>--}}
-							{{--<button type="button" class="btn btn-primary" id="b2">查询</button>--}}
+							<form class="navbar-search pull-left" action="">
+								<input type="text" class="search-query span2" placeholder="编号" />
+							</form>
+							<button type="button" class="btn btn-primary" id="b2">查询</button>
 							<ul class="nav pull-right">
 								<li>
 									<a><span class="badge">用户:{{ Session::get('user_name')}}</span></a>
@@ -54,11 +54,11 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
-							<li>
+							<li class="active">
 								<a href="/proxyIndex"><i class="icon-home"></i> 账号提取</a>
 							</li>
 							<li>
-								<a href="/rechargeRecode"><i class="icon-file"></i> 提货记录</a>
+								<a href="/pickRecode?t=fs_game_bank1"><i class="icon-file"></i> 提货记录</a>
 							</li>
 						</ul>
 					</div>
@@ -68,74 +68,51 @@
 						<thead>
 							<tr>
 								<th>
-									折扣
+									ID
 								</th>
 								<th>
-									总点数
+									编号
 								</th>
 								<th>
-									消耗点数
+									账号组合
 								</th>
 								<th>
-									剩余点数
+									大区
 								</th>
 								<th>
-									充值
+									价格
 								</th>
-
+								<th>
+									状态
+								</th>
+								<th>
+									提取
+								</th>
 							</tr>
 						</thead>
-						<tbody id="pro_id">
-						@forelse ($resStatus as $k=>$v)
+						<tbody id="b_id">
+						@forelse ($resBank as $k=>$v)
 							<tr>
 								<td>
-									{{$v['pro_discount']}}
+									{{$k+1}}
 								</td>
 								<td>
-									{{$v['pro_total']}}
+									{{$v->b_no}}
 								</td>
 								<td>
-									{{$v['pro_used']}}
+									{{$v->b_group}}
 								</td>
 								<td>
-									{{$v['pro_surplus']}}
+									{{$v->b_zone}}
 								</td>
 								<td>
-									<a href="#"><span class="badge badge-info">淘宝充值</span></a>
-									<a href="#"><span class="badge badge-info">自动充值</span></a>
-								</td>
-							</tr>
-						@empty
-							nobody
-						@endforelse
-						</tbody>
-					</table>
-					<h3  style="text-align:center;">公告栏</h3>
-					<table class="table table-bordered table-striped">
-						<thead>
-						<tr>
-							<th>
-								标题
-							</th>
-							<th>
-								发布时间
-							</th>
-							<th>
-								查看
-							</th>
-						</tr>
-						</thead>
-						<tbody id="no_id">
-						@forelse ($resNotice as $k=>$v)
-							<tr>
-								<td>
-									{{$v['no_title']}}
+									{{$v->b_price}}
 								</td>
 								<td>
-									{{$v['no_time']}}
+									<span class="badge badge-success">可提取</span>
 								</td>
 								<td>
-									<a href="/showNotice?no_id={{$v['no_id']}}"><span class="badge badge-info">查看</span></a>
+									<a href="/pickup?b_id={{$v->b_id}}&t=fs_game_bank1"><span class="badge badge-info">提取</span></a>
 								</td>
 							</tr>
 						@empty

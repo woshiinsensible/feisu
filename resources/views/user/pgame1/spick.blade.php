@@ -8,7 +8,6 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="css/site.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="wE/dist/css/wangEditor.min.css">
 		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	</head>
 	<body>
@@ -19,17 +18,17 @@
 						<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="#">飞速手游</a>
 						<div class="nav-collapse">
 							<ul class="nav">
-								<li class="active">
-									<a href="proxyList">总览</a>
-								</li>
 								<li>
+									<a href="/proxyIndex">总览</a>
+								</li>
+								<li  class="active">
 									<a href="/pickShow?no=1&t=fs_game_bank1">游戏1</a>
 								</li>
 								<li>
 									<a href="/pickShow?no=2">游戏2</a>
 								</li>
 								<li>
-									<a href="/pickShow?no=3">添加游戏</a>
+									<a href="/pickShow?no=0">添加游戏</a>
 								</li>
 							</ul>
 							<ul class="nav pull-right">
@@ -52,10 +51,10 @@
 								飞速手游
 							</li>
 							<li>
-								<a href="/proxyIndex"><i class="icon-home"></i> 个人信息</a>
+								<a href="/proxyIndex"><i class="icon-home"></i> 账号提取</a>
 							</li>
 							<li class="active">
-								<a href="/rechargeRecode"><i class="icon-file"></i> 充值记录</a>
+								<a href="/pickRecode?t=fs_game_bank1"><i class="icon-file"></i> 提货记录</a>
 							</li>
 						</ul>
 					</div>
@@ -63,74 +62,87 @@
 				<div class="span10">
 					<table class="table table-bordered table-striped">
 						<thead>
-						<tr>
-							<th>
-								ID
-							</th>
-							<th>
-								充值点数
-							</th>
-							<th>
-								充值时间
-							</th>
-							<th>
-								充值备注
-							</th>
-						</tr>
+							<tr>
+								<th>
+									编号
+								</th>
+								<th>
+									账号组合
+								</th>
+								<th>
+									大区
+								</th>
+								<th>
+									备注
+								</th>
+								<th>
+									价格
+								</th>
+								<th>
+									您的折扣
+								</th>
+								<th>
+									实际价格
+								</th>
+							</tr>
 						</thead>
-						<tbody id="rec_id">
-						@forelse ($resArray as $k=>$v)
+						<tbody id="b_id">
 							<tr>
 								<td>
-									{{$k+1}}
+									{{$bankArray["b_no"]}}
 								</td>
 								<td>
-									{{$v['rec_count']}}
+									{{$bankArray["b_zone"]}}
 								</td>
 								<td>
-									{{$v['rec_time']}}
+									{{$bankArray["b_group"]}}
 								</td>
 								<td>
-									{{$v['rec_com']}}
+									{{$bankArray["b_com"]}}
+								</td>
+								<td>
+									{{$bankArray["b_price"]}}
+								</td>
+								<td>
+									{{$bankArray["pro_discount"]}}
+								</td>
+								<td id="b_used">
+									{{$bankArray["t_price"]}}
 								</td>
 							</tr>
-						@empty
-							nobody
-						@endforelse
 						</tbody>
 					</table>
+					<div>
+						<button type="button" class="btn btn-primary b1" id="{{$bankArray["b_id"]}}">确认购买</button>
+					</div>
 				</div>
 			</div>
 		</div>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/site.js"></script>
-		<script type="text/javascript" src="wE/dist/js/lib/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript" src="wE/dist/js/wangEditor.min.js"></script>
 		<script type="text/javascript">
-			$(document).ready(function(){
-				$('#b1').click(function () {
-				    var proId = $('#pro_id').val();
-				    var newCom = $('#new_com').val();
-					$.get(
-					 '/changeCom',
-						{pro_id:proId,new_com:newCom},
-						function (res) {
-					     if(res.msg === ''){
-                             location.href = "/proxyList"
-                         }else{
-					         alert(res.msg);
-						 }
+            $(document).ready(function(){
+                $('.b1').click(function () {
+                    var bId = $(this).attr('id');
+                    var bused = $('#b_used').text();
+                    $.get(
+                        '/buy',
+                        {
+                            b_id:bId,
+							b_used:bused
+						},
+                        function (res) {
+                            if(res.msg === ''){
+                                history.go(0);
+                            }else{
+                                alert(res.msg);
+                            }
                         },
-						'json'
-					)
+                        'json'
+                    )
                 })
-			})
-		</script>
-		<script type="text/javascript">
-            var editor = new wangEditor('no_com');
-            editor.create();
-            editor.disable();
+            })
 		</script>
 	</body>
 </html>

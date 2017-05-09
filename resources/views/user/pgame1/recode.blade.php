@@ -8,7 +8,6 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="css/site.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="wE/dist/css/wangEditor.min.css">
 		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	</head>
 	<body>
@@ -19,19 +18,23 @@
 						<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="#">飞速手游</a>
 						<div class="nav-collapse">
 							<ul class="nav">
-								<li class="active">
-									<a href="proxyList">总览</a>
-								</li>
 								<li>
+									<a href="/proxyIndex">总览</a>
+								</li>
+								<li  class="active">
 									<a href="/pickShow?no=1&t=fs_game_bank1">游戏1</a>
 								</li>
 								<li>
 									<a href="/pickShow?no=2">游戏2</a>
 								</li>
 								<li>
-									<a href="/pickShow?no=3">添加游戏</a>
+									<a href="/pickShow?no=0">添加游戏</a>
 								</li>
 							</ul>
+							<form class="navbar-search pull-left" action="">
+								<input type="text" class="search-query span2" placeholder="编号" />
+							</form>
+							<button type="button" class="btn btn-primary" id="b2">查询</button>
 							<ul class="nav pull-right">
 								<li>
 									<a><span class="badge">用户:{{ Session::get('user_name')}}</span></a>
@@ -52,10 +55,10 @@
 								飞速手游
 							</li>
 							<li>
-								<a href="/proxyIndex"><i class="icon-home"></i> 个人信息</a>
+								<a href="/proxyIndex"><i class="icon-home"></i> 账号提取</a>
 							</li>
 							<li class="active">
-								<a href="/rechargeRecode"><i class="icon-file"></i> 充值记录</a>
+								<a href="/pickRecode?t=fs_game_bank1"><i class="icon-file"></i> 提货记录</a>
 							</li>
 						</ul>
 					</div>
@@ -63,39 +66,69 @@
 				<div class="span10">
 					<table class="table table-bordered table-striped">
 						<thead>
-						<tr>
-							<th>
-								ID
-							</th>
-							<th>
-								充值点数
-							</th>
-							<th>
-								充值时间
-							</th>
-							<th>
-								充值备注
-							</th>
-						</tr>
+							<tr>
+								<th>
+									ID
+								</th>
+								<th>
+									编号
+								</th>
+								<th>
+									账号组合
+								</th>
+								<th>
+									大区
+								</th>
+								<th>
+									账号
+								</th>
+								<th>
+									密码
+								</th>
+								<th>
+									消耗点数
+								</th>
+								<th>
+									购买时间
+								</th>
+								<th>
+									绑定
+								</th>
+							</tr>
 						</thead>
-						<tbody id="rec_id">
-						@forelse ($resArray as $k=>$v)
+						<tbody id="b_id">
+						@forelse ($resBank as $k=>$v)
 							<tr>
 								<td>
 									{{$k+1}}
 								</td>
 								<td>
-									{{$v['rec_count']}}
+									{{$v->b_no}}
 								</td>
 								<td>
-									{{$v['rec_time']}}
+									{{$v->b_group}}
 								</td>
 								<td>
-									{{$v['rec_com']}}
+									{{$v->b_zone}}
+								</td>
+								<td>
+									{{$v->b_user}}
+								</td>
+								<td>
+									{{$v->b_pwd}}
+								</td>
+								<td>
+									{{$v->b_used}}
+								</td>
+								<td>
+									{{$v->b_pickup_time}}
+								</td>
+								<td>
+									<a href="#"><span class="badge badge-info">绑定</span></a>
 								</td>
 							</tr>
 						@empty
-							nobody
+							没有提货记录
 						@endforelse
 						</tbody>
 					</table>
@@ -105,32 +138,24 @@
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/site.js"></script>
-		<script type="text/javascript" src="wE/dist/js/lib/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript" src="wE/dist/js/wangEditor.min.js"></script>
 		<script type="text/javascript">
-			$(document).ready(function(){
-				$('#b1').click(function () {
-				    var proId = $('#pro_id').val();
-				    var newCom = $('#new_com').val();
-					$.get(
-					 '/changeCom',
-						{pro_id:proId,new_com:newCom},
-						function (res) {
-					     if(res.msg === ''){
-                             location.href = "/proxyList"
-                         }else{
-					         alert(res.msg);
-						 }
+            $(document).ready(function(){
+                $('.hh1').click(function () {
+                    var proId = $(this).attr('id');
+                    $.get(
+                        '/changeSta',
+                        {pro_id:proId},
+                        function (res) {
+                            if(res.msg === ''){
+                                history.go(0);
+                            }else{
+                                alert(res.msg);
+                            }
                         },
-						'json'
-					)
+                        'json'
+                    )
                 })
-			})
-		</script>
-		<script type="text/javascript">
-            var editor = new wangEditor('no_com');
-            editor.create();
-            editor.disable();
+            })
 		</script>
 	</body>
 </html>

@@ -19,16 +19,16 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li class="active">
-									<a href="/poxyList">总览</a>
+									<a href="/proxyIndex">总览</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=1">游戏1</a>
+									<a href="/pickShow?no=1&t=fs_game_bank1">游戏1</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=2">游戏2</a>
+									<a href="/pickShow?no=2">游戏2</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=0">添加游戏</a>
+									<a href="/pickShow?no=0">添加游戏</a>
 								</li>
 							</ul>
 							{{--<form class="navbar-search pull-left" action="">--}}
@@ -59,12 +59,6 @@
 							</li>
 							<li>
 								<a href="/rechargeRecode"><i class="icon-file"></i> 充值记录</a>
-							</li>
-							<li>
-								<a href="/proxyIndex"><i class="icon-home"></i> 账号提取</a>
-							</li>
-							<li>
-								<a href="/rechargeRecode"><i class="icon-file"></i> 提货记录</a>
 							</li>
 						</ul>
 					</div>

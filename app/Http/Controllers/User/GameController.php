@@ -26,7 +26,12 @@ class GameController extends Controller
 
         $gameStatus = DB::table('fs_status')->where('g_id',$no)->get(['g_sell_status','g_id','g_price_status']);
 
-//        dd($gameStatus);
+//        //判断游戏是否维护中
+//        if($gameStatus[0]->g_sell_status == 0){
+//            echo "<script>alert('游戏维护中·····');history.go(-1)</script>";
+//            return;
+//        }
+
 
 
         switch ($no) {
