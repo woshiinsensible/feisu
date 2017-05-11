@@ -83,7 +83,7 @@
 								<div class="controls">
 									<input type="text" class="input-xlarge" id="pro_name" name="pro_name" value="{{$data['pro_name']}}" readonly>
 									<input type="hidden" id="pro_id" name="pro_id" value="{{$data['pro_id']}}">
-									<input type="hidden" id="pro_total" name="pro_total" value="{{$data['pro_total']}}">
+									<input type="hidden" id="pro_surplus" name="pro_surplus" value="{{$data['pro_surplus']}}">
 								</div>
 							</div>
 							<div class="control-group">
@@ -147,7 +147,7 @@
 				    var proName = $('#pro_name').val();
                     var recCount = $('#rec_count').val();
                     var recCom = $('#rec_com').val();
-                    var proTotal = $('#pro_total').val();
+                    var proSurplus = $('#pro_surplus').val();
                     var proDiscount = $('#pro_discount').val();
 					$.get(
 					 '/recharge',
@@ -156,7 +156,7 @@
                             pro_name:proName,
                             rec_count:recCount,
                             rec_com:recCom,
-							pro_total:proTotal,
+                            pro_surplus:proSurplus,
                             pro_discount:proDiscount
 						},
 						function (res) {

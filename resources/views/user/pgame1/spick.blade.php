@@ -51,7 +51,7 @@
 								飞速手游
 							</li>
 							<li>
-								<a href="/proxyIndex"><i class="icon-home"></i> 账号提取</a>
+								<a href="/pickShow?no=1&t=fs_game_bank1"><i class="icon-home"></i> 账号提取</a>
 							</li>
 							<li class="active">
 								<a href="/pickRecode?t=fs_game_bank1"><i class="icon-file"></i> 提货记录</a>
@@ -134,7 +134,8 @@
 						},
                         function (res) {
                             if(res.msg === ''){
-                                history.go(0);
+                                alert('购买成功');
+                                self.location=document.referrer;
                             }else{
                                 alert(res.msg);
                             }

@@ -116,7 +116,6 @@
                 })
 			})
 		</script>
-		//服客户端
 		<script type="text/javascript">
             var editor = new wangEditor('no_com');
             editor.create();

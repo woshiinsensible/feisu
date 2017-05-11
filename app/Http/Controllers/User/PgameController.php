@@ -61,7 +61,7 @@ class PgameController extends Controller
         $userName = $request->session()->get('user_name');
 
         if (!$userName){
-            return json_encode(['error_code'=>222,'msg'=>'非法用户'],JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code'=>222,'msg'=>'时间已过期，请重新登录'],JSON_UNESCAPED_UNICODE);
         }
 
         $resDiscount = ProUser::where('pro_name',$userName)->get(['pro_discount']);
@@ -156,10 +156,12 @@ class PgameController extends Controller
             'pro_pick'=>$pick
         ]);
 
-
         if(!$res1){
             return json_encode(['error_code'=>222,'msg'=>'购买账号失败'],JSON_UNESCAPED_UNICODE);
         }
+
+        return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+
 
     }
 
@@ -169,7 +171,7 @@ class PgameController extends Controller
         $userName = $request->session()->get('user_name');
 
         if (!$userName){
-            return json_encode(['error_code'=>222,'msg'=>'非法用户'],JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code'=>222,'msg'=>'时间已过期，请重新登录'],JSON_UNESCAPED_UNICODE);
         }
 
         if(!$request->has('t')){
@@ -180,7 +182,7 @@ class PgameController extends Controller
 
         $tName = $request->input('t');
 
-        $resBank = DB::table($tName)->where('b_user',$userName)->paginate($page_size);
+        $resBank = DB::table($tName)->where('b_proxy_user',$userName)->paginate($page_size);
 
         return view('user.pgame1.recode')->with('resBank',$resBank);
     }

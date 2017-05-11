@@ -19,7 +19,6 @@ class AdminController extends Controller
         $proList = ProUser::paginate($pageSize,[
             'pro_id',
             'pro_name',
-            'pro_total',
             'pro_surplus',
             'pro_used',
             'pro_pick',
@@ -28,13 +27,11 @@ class AdminController extends Controller
             'pro_comment',
             'pro_status']);
         $proCount = ProUser::count();
-        $proTotal = ProUser::sum('pro_total');
         $proSurplus = ProUser::sum('pro_surplus');
         $proUsed = ProUser::sum('pro_used');
 
         $proRes = array(
             'pro_count'=>$proCount,
-            'pro_total'=>$proTotal,
             'pro_surplus'=>$proSurplus,
             'pro_used'=>$proUsed
         );
@@ -182,12 +179,12 @@ class AdminController extends Controller
         $pro_id = $request->input('pro_id','');
         $pro_name = $request->input('pro_name','');
         $pro_discount = $request->input('pro_discount','');
-        $pro_total = $request->input('pro_total','');
+        $pro_surplus = $request->input('pro_surplus','');
         $data = array(
             'pro_id' => $pro_id,
             'pro_name' => $pro_name,
             'pro_discount'=>$pro_discount,
-            'pro_total'=>$pro_total
+            'pro_surplus'=>$pro_surplus
         );
         return view('user.index.recharge')->with('data',$data);
     }
@@ -226,14 +223,14 @@ class AdminController extends Controller
             return json_encode(['error_code'=>222,'msg'=>'充值失败'],JSON_UNESCAPED_UNICODE);
         }
 
-        if(!$request->has('pro_total')){
-            return json_encode(['error_code'=>222,'msg'=>'没有pro_total传入'],JSON_UNESCAPED_UNICODE);
+        if(!$request->has('pro_surplus')){
+            return json_encode(['error_code'=>222,'msg'=>'没有pro_surplus传入'],JSON_UNESCAPED_UNICODE);
         }
-        $proTotal = $request->input('pro_total');
+        $proTotal = $request->input('pro_surplus');
 
         $resTotal = $proTotal+$recCount;
 
-        $upPro = ProUser::where('pro_id',$proId)->update(['pro_total'=>$resTotal]);
+        $upPro = ProUser::where('pro_id',$proId)->update(['pro_surplus'=>$resTotal]);
 
         if(!$upPro){
             return json_encode(['error_code'=>222,'msg'=>'加入到pro_user表失败'],JSON_UNESCAPED_UNICODE);
@@ -271,17 +268,19 @@ class AdminController extends Controller
     {
         $pageSize = $request->input('page_size',10);
 
-        $pickupList = Pickup::leftJoin('fs_pro_users', 'fs_pickup.pro_id', '=', 'fs_pro_users.pro_id')
+        $pickupList = ProUser::leftJoin('fs_game_bank1', 'fs_pro_users.pro_name', '=', 'fs_game_bank1.b_proxy_user')
+            ->where('fs_game_bank1.b_status',1)
+            ->orderBy('fs_game_bank1.b_pickup_time', 'desc')
             ->paginate($pageSize,[
-            'fs_pickup.p_id',
-            'fs_pro_users.pro_name',
-            'fs_pickup.p_used',
-            'fs_pickup.p_account',
-            'fs_pickup.p_time',
+            'fs_game_bank1.b_id',
+            'fs_game_bank1.b_proxy_user',
             'fs_pro_users.pro_discount',
             'fs_pro_users.pro_surplus',
+            'fs_game_bank1.b_user',
+            'fs_game_bank1.b_pickup_time',
+            'fs_pro_users.pro_used',
             'fs_pro_users.pro_pick',
-            'fs_pickup.p_com'
+            'fs_pro_users.pro_comment'
             ]);
         return view('user.index.pickup')->with('pickupList',$pickupList);
     }

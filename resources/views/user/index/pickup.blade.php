@@ -114,19 +114,19 @@
 						@forelse ($pickupList as $k=>$v)
 							<tr>
 								<td>
-									{{$v['p_id']}}
+									{{$k+1}}
 								</td>
 								<td>
-									{{$v['pro_name']}}
+									{{$v['b_proxy_user']}}
 								</td>
 								<td>
-									{{$v['p_used']}}
+									{{$v['pro_used']}}
 								</td>
 								<td>
-									{{$v['p_account']}}
+									{{$v['pro_user']}}
 								</td>
 								<td>
-									{{$v['p_time']}}
+									{{$v['b_pickup_time']}}
 								</td>
 								<td>
 									{{$v['pro_discount']}}
@@ -138,7 +138,7 @@
 									{{$v['pro_pick']}}
 								</td>
 								<td>
-									{{$v['p_com']}}
+									{{$v['pro_comment']}}
 								</td>
 							</tr>
 						@empty

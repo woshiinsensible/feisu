@@ -18,7 +18,7 @@ class ProxyController extends Controller
         $res = $request->session()->get('user_token');
         $puserId = explode('-',base64_decode($res))[0];
         if (!is_numeric($puserId)){
-            return json_encode(['error_code'=>222,'msg'=>'非法用户'],JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code'=>222,'msg'=>'时间已过期，请重新登录'],JSON_UNESCAPED_UNICODE);
         }
 
 

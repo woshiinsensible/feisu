@@ -131,7 +131,7 @@
 									{{$v['pro_name']}}
 								</td>
 								<td>
-									{{$v['pro_total']}}
+									{{$v['pro_surplus']+$v['pro_used']}}
 								</td>
 								<td>
 									{{$v['pro_surplus']}}
@@ -180,7 +180,7 @@
 
 
 								<td>
-									<a href="/rec_show?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}&pro_discount={{$v['pro_discount']}}&pro_total={{$v['pro_total']}}" class="view-link">充值</a>
+									<a href="/rec_show?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}&pro_discount={{$v['pro_discount']}}&pro_surplus={{$v['pro_surplus']}}" class="view-link">充值</a>
 								</td>
 							</tr>
 						@empty
@@ -201,7 +201,7 @@
 								<a href="#">代理总数: <span class="badge badge-info">{{$proRes['pro_count']}}</span></a>
 							</li>
 							<li>
-								<a href="#">总点数: <span class="badge badge-info">{{$proRes['pro_total']}}</span></a>
+								<a href="#">总点数: <span class="badge badge-info">{{$proRes['pro_surplus']+$proRes['pro_used']}}</span></a>
 							</li>
 							<li>
 								<a href="#">消耗总数: <span class="badge badge-info">{{$proRes['pro_surplus']}}</span></a>

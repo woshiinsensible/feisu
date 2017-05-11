@@ -92,7 +92,7 @@
 									{{$v['pro_discount']}}
 								</td>
 								<td>
-									{{$v['pro_total']}}
+									{{$v['pro_surplus']+$v['pro_used']}}
 								</td>
 								<td>
 									{{$v['pro_used']}}
