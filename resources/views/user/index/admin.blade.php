@@ -35,6 +35,7 @@
 								<input type="text" class="search-query span2" placeholder="代理账号" />
 							</form>
 							<button type="button" class="btn btn-primary" id="b2">查询</button>
+							<button type="button" class="btn btn-primary" id="b3">注册代理账号</button>
 							<ul class="nav pull-right">
 								<li>
 									<a><span class="badge">用户:{{ Session::get('user_name')}}</span></a>
@@ -204,10 +205,10 @@
 								<a href="#">总点数: <span class="badge badge-info">{{$proRes['pro_surplus']+$proRes['pro_used']}}</span></a>
 							</li>
 							<li>
-								<a href="#">消耗总数: <span class="badge badge-info">{{$proRes['pro_surplus']}}</span></a>
+								<a href="#">剩余点数: <span class="badge badge-info">{{$proRes['pro_surplus']}}</span></a>
 							</li>
 							<li>
-								<a href="#">剩余点数: <span class="badge badge-info">{{$proRes['pro_used']}}</span></a>
+								<a href="#">消耗总数: <span class="badge badge-info">{{$proRes['pro_used']}}</span></a>
 							</li>
 
 						</ul>
@@ -234,6 +235,14 @@
                         },
                         'json'
                     )
+                })
+            })
+		</script>
+		<script type="text/javascript">
+            $(document).ready(function(){
+                $('#b3').click(function () {
+					location.href='/loginproxy';
+
                 })
             })
 		</script>

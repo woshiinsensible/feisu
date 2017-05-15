@@ -33,10 +33,10 @@
 							</ul>
 							<ul class="nav pull-right">
 								<li>
-									<a href="../profile.htm">@username</a>
+									<a><span class="badge">用户:{{ Session::get('user_name')}}</span></a>
 								</li>
 								<li>
-									<a href="../login.htm">Logout</a>
+									<a href="/logout"><span class="badge badge-important">退出</span></a>
 								</li>
 							</ul>
 						</div>
@@ -69,6 +69,7 @@
 					</div>
 				</div>
 				<div class="span10">
+					<legend style="color: red">账号的名称必须和上传excel中的账号名称完全一致！</legend>
 					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>

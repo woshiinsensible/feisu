@@ -20,7 +20,7 @@ class CheckUser
         if($request->session()->has('user_token')){
             return $next($request);
         }else{
-            echo '<script>location.href="/login";alert("用户没有登录，请先登录！");</script>';
+            echo '<script>alert("用户没有登录，请先登录！");location.href="/index";</script>';
             exit();
         }
 

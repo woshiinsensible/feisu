@@ -21,11 +21,7 @@
 							<ul class="nav">
 								<li class="active">
 									<a href="index.html">总览</a>
-									{{--@foreach ($proList as $u)--}}
-										{{--{{$u['pro_name']}} <br>--}}
-									{{--@endforeach--}}
 								</li>
-{{--								{!! $proList->links() !!}--}}
 								<li>
 									<a href="/gameShow?no=1">游戏1</a>
 								</li>
@@ -38,10 +34,10 @@
 							</ul>
 							<ul class="nav pull-right">
 								<li>
-									<a href="../profile.htm">@username</a>
+									<a><span class="badge">用户:{{ Session::get('user_name')}}</span></a>
 								</li>
 								<li>
-									<a href="../login.htm">Logout</a>
+									<a href="/logout"><span class="badge badge-important">退出</span></a>
 								</li>
 							</ul>
 						</div>
@@ -89,7 +85,7 @@
 							<div class="control-group">
 								<label class="control-label" for="input01">充值点数</label>
 								<div class="controls">
-									<input type="number" class="input-xlarge" id="rec_count" name="rec_count" value="">
+									<input type="number" class="input-xlarge" id="rec_count" name="rec_count" placeholder="充值点数必须是整数" value="">
 								</div>
 							</div>
 							<div class="control-group">

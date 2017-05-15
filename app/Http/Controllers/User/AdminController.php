@@ -7,6 +7,7 @@ use App\Model\Pickup;
 use App\Model\ProUser;
 use App\Model\Recharge;
 use App\Model\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -423,5 +424,132 @@ class AdminController extends Controller
 
     }
 
+    //退出账号
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        return view('user.index');
+    }
 
+    //代理账号注册
+    public function loginProxyUser(Request $request)
+    {
+        if(!$request->has('pro_name')){
+            return json_encode(['error_code'=>222,'msg'=>'代理账号不能位空'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $pro_name = $request->input('pro_name');
+        if(mb_strlen($pro_name)<4 || mb_strlen($pro_name)>10){
+            return json_encode(['error_code'=>222,'msg'=>'代理账号在4—10位之间'],JSON_UNESCAPED_UNICODE);
+        }
+
+        if(!$request->has('pro_pwd')){
+            return json_encode(['error_code'=>222,'msg'=>'密码不能为空'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $pro_pwd = $request->input('pro_pwd');
+
+
+        if(mb_strlen($pro_pwd)<6 || mb_strlen($pro_name)>20){
+            return json_encode(['error_code'=>222,'msg'=>'密码在6—20位之间'],JSON_UNESCAPED_UNICODE);
+        }
+
+        if(!$request->has('pro_pwd2')){
+            return json_encode(['error_code'=>222,'msg'=>'确认密码不能为空'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $pro_pwd2 = $request->input('pro_pwd2');
+
+        if ($pro_pwd != $pro_pwd2){
+            return json_encode(['error_code'=>222,'msg'=>'密码与确认密码不一致'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $pro_pwd = md5($pro_pwd);
+
+        $pro_com = $request->input('pro_com','');
+
+        $pro_count = $request->input('pro_count',0);
+
+        if(!is_int(intval($pro_count))){
+            return json_encode(['error_code'=>222,'msg'=>'点数必须是整数'],JSON_UNESCAPED_UNICODE);
+        }
+
+        if(!$request->has('pro_discount')){
+            return json_encode(['error_code'=>222,'msg'=>'折扣不能为空'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $pro_discount = $request->input('pro_discount');
+        if($pro_discount<0 || $pro_discount>1){
+            return json_encode(['error_code'=>222,'msg'=>'折扣只能在0-1之间'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $pro_time = date('Y-m-d H:i:s',time());
+        //获取数据库中的代理用户名，判断是否已经存在
+        $pro_name_data = ProUser::get(['pro_name']);
+        if($pro_name_data->isEmpty()){
+            //第一次注册，直接插入数据库
+            $insert = ProUser::insert([
+                'pro_name'=>$pro_name,
+                'pro_pwd' =>$pro_pwd,
+                'pro_surplus'=>$pro_count,
+                'pro_used'=>0,
+                'pro_pick'=>0,
+                'pro_time'=>$pro_time,
+                'pro_discount'=>$pro_discount,
+                'pro_comment'=>$pro_com,
+                'pro_status'=>1
+            ]);
+            if($insert){
+                return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+            }else{
+                return json_encode(['error_code'=>222,'msg'=>'注册代理用户失败'],JSON_UNESCAPED_UNICODE);
+            }
+        }else{
+            $res = $pro_name_data->toArray();
+            foreach ($res as $val){
+                $data[] = $val['pro_name'];
+            }
+            if(in_array($pro_name,$data)){
+                return json_encode(['error_code'=>222,'msg'=>'用户名已经存在，请更换用户名'],JSON_UNESCAPED_UNICODE);
+            }else{
+                //插入数据库
+                $insert = ProUser::insert([
+                    'pro_name'=>$pro_name,
+                    'pro_pwd' =>$pro_pwd,
+                    'pro_surplus'=>$pro_count,
+                    'pro_used'=>0,
+                    'pro_pick'=>0,
+                    'pro_time'=>$pro_time,
+                    'pro_discount'=>$pro_discount,
+                    'pro_comment'=>$pro_com,
+                    'pro_status'=>1
+                ]);
+                if($insert){
+                    return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+                }else{
+                    return json_encode(['error_code'=>222,'msg'=>'注册代理用户失败'],JSON_UNESCAPED_UNICODE);
+                }
+            }
+        }
+    }
+
+    //判断代理用户是否存在
+    public function prouserExist(Request $request)
+    {
+        if(!$request->has('pro_name')){
+            return json_encode(['error_code'=>222,'msg'=>'代理账号不能位空'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $pro_name = $request->input('pro_name');
+        $pro_name_data = ProUser::get(['pro_name']);
+        if(!$pro_name_data->isEmpty()){
+            $res = $pro_name_data->toArray();
+            foreach ($res as $val){
+                $data[] = $val['pro_name'];
+            }
+            if(in_array($pro_name,$data)){
+                return json_encode(['error_code'=>222,'msg'=>'代理用户已经存在'],JSON_UNESCAPED_UNICODE);
+            }
+        }
+    }
 }

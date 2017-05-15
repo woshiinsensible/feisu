@@ -51,7 +51,7 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
-							<li>
+							<li class="active">
 								<a href="/proxyList"><i class="icon-home"></i> 代理信息</a>
 							</li>
 							<li>
@@ -63,7 +63,7 @@
 							<li>
 								<a href="/pub_show"><i class="icon-envelope"></i> 发布公告</a>
 							</li>
-							<li class="active">
+							<li>
 								<a href="/noticeList"><i class="icon-file"></i> 历史公告</a>
 							</li>
 
@@ -73,32 +73,41 @@
 				<div class="span10">
 					<form id="edit-profile" class="form-horizontal">
 						<fieldset>
-							<legend>修改公告</legend>
+							<legend>注册代理用户</legend>
 							<div class="control-group">
-								<label class="control-label" for="input01">ID</label>
+								<label class="control-label" for="input01">代理账号</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="no_id" name="no_id" value="{{$data[0]['no_id']}}" readonly>
+									<input type="text" class="input-xlarge" id="pro_name" name="pro_name" value="" placeholder="代理账号在4-10位之间">
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="input01">标题</label>
+								<label class="control-label" for="input01">密码</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge" id="no_title" name="no_title" value="{{$data[0]['no_title']}}">
+									<input type="password" class="input-xlarge" id="pro_pwd" name="pro_pwd" value="">
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="input01">是否置顶</label>
+								<label class="control-label" for="input01">确认密码</label>
 								<div class="controls">
-									<select id="no_up">
-										<option value = "0">否</option>
-										<option value = "1">是</option>
-									</select>
+									<input type="password" class="input-xlarge" id="pro_pwd2" name="pro_pwd2" value="">
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="input01">内容</label>
+								<label class="control-label" for="input01">备注</label>
 								<div class="controls">
-									<textarea class="input-xlarge" rows="20" id="no_com" name="no_com">{{$data[0]['no_com']}}</textarea>
+									<input type="text" class="input-xlarge" id="pro_comment" name="pro_comment" value="">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="input01">点数</label>
+								<div class="controls">
+									<input type="number" class="input-xlarge" id="pro_surplus" name="pro_surplus" value="" placeholder="必须输入整数">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="input01">折扣</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="pro_discount" name="pro_discount" value="" placeholder="必须0-1之间，小数点必须是英文的">
 								</div>
 							</div>
 							<div class="form-actions">
@@ -115,57 +124,57 @@
 		<script type="text/javascript" src="wE/dist/js/lib/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="wE/dist/js/wangEditor.min.js"></script>
 		<script type="text/javascript">
-			$(document).ready(function(){
-				$('#b1').click(function () {
-				    //格式化时间
-                    var date = new Date();
-                    var seperator1 = "-";
-                    var seperator2 = ":";
-                    var month = date.getMonth() + 1;
-                    var strDate = date.getDate();
-                    if (month >= 1 && month <= 9) {
-                        month = "0" + month;
-                    }
-                    if (strDate >= 0 && strDate <= 9) {
-                        strDate = "0" + strDate;
-                    }
-                    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-                        + " " + date.getHours() + seperator2 + date.getMinutes()
-                        + seperator2 + date.getSeconds();
+                $(document).ready(function(){
+                    $("#pro_name").blur(function(){
+                        var proName = $('#pro_name').val();
+                        $.get(
+                            '/prouserExist',
+                            {
+                                pro_name:proName
 
-
-
-				    var noId = $('#no_id').val();
-				    var noTitle = $('#no_title').val();
-				    var noCom = $('#no_com').val();
-					var noUp = $('#no_up').val();
-					$.get(
-					 '/modNotice',
-						{
-                            no_id:noId,
-                            no_title:noTitle,
-                            no_com:noCom,
-                            no_up:noUp,
-							no_time:currentdate
-						},
-						function (res) {
-					     if(res.msg === ''){
-                             alert("修改公告成功");
-                             //返回上一页并刷新
-                             self.location=document.referrer;
-                         }else{
-					         alert(res.msg);
-						 }
-                        },
-						'json'
-					)
+                            },
+                            function (res) {
+                                if(res.msg !== ''){
+                                    alert(res.msg);
+                                }
+                            },
+                            'json'
+                        )
+                    });
                 })
-			})
 		</script>
-		//服客户端
 		<script type="text/javascript">
-            var editor = new wangEditor('no_com');
-            editor.create();
+            $(document).ready(function(){
+                $("#b1").click(function(){
+                    var proName = $('#pro_name').val();
+                    var proWpd = $('#pro_pwd').val();
+                    var proWpd2 = $('#pro_pwd2').val();
+                    var proComment = $('#pro_comment').val();
+                    var proSurplus = $('#pro_surplus').val();
+                    var proDiscount = $('#pro_discount').val();
+                    $.get(
+                        '/loginProxyUser',
+                        {
+                            pro_name:proName,
+                            pro_pwd:proWpd,
+                            pro_pwd2:proWpd2,
+                            pro_comment:proComment,
+                            pro_count:proSurplus,
+                            pro_discount:proDiscount
+                        },
+                        function (res) {
+                            if(res.msg === ''){
+                                alert("注册代理用户成功");
+                                //返回上一页并刷新
+                                self.location=document.referrer;
+                            }else{
+                                alert(res.msg);
+                            }
+                        },
+                        'json'
+                    )
+                });
+            })
 		</script>
 	</body>
 </html>

@@ -38,10 +38,10 @@
 							</ul>
 							<ul class="nav pull-right">
 								<li>
-									<a href="../profile.htm">@username</a>
+									<a><span class="badge">用户:{{ Session::get('user_name')}}</span></a>
 								</li>
 								<li>
-									<a href="../login.htm">Logout</a>
+									<a href="/logout"><span class="badge badge-important">退出</span></a>
 								</li>
 							</ul>
 						</div>
