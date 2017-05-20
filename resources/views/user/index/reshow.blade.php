@@ -132,17 +132,6 @@
 							</li>
 						</ul>
 					</div>
-					{{--<input type="hidden" id="pro_id" value="{{$v['pro_id']}}">--}}
-					{{--<ul class="pager">--}}
-						{{--<li class="next">--}}
-							{{--<a href="activity.htm">More &rarr;</a>--}}
-						{{--</li>--}}
-					{{--</ul>--}}
-                    {{--<ul class="pager">--}}
-						{{--<li class="next">--}}
-							{{--More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>--}}
-						{{--</li>--}}
-					{{--</ul>--}}
 				</div>
 			</div>
 		</div>

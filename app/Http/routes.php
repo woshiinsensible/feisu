@@ -201,6 +201,15 @@ Route::group(['middleware' => ['web']], function () {
         //执行注册代理用户动作
         Route::get('/loginProxyUser', 'User\AdminController@loginProxyUser');
 
+        //查询代理的信息
+        Route::get('/findProxyList', 'User\FindController@findProxyList');
+
+        //查询提号记录pickupList
+        Route::get('/findPickupList', 'User\FindController@findPickupList');
+
+        //查询充值记录findRechargeList
+        Route::get('/findRechargeList', 'User\FindController@findRechargeList');
+
     });
 });
 

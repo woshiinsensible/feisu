@@ -32,7 +32,7 @@
 								</li>
 							</ul>
 							<form class="navbar-search pull-left" action="">
-								<input type="text" class="search-query span2" placeholder="代理账号" />
+								<input type="text" class="search-query span2" placeholder="代理账号" name="find1" id="find1"/>
 							</form>
 							<button type="button" class="btn btn-primary" id="b2">查询</button>
 							<button type="button" class="btn btn-primary" id="b3">注册代理账号</button>
@@ -243,6 +243,15 @@
                 $('#b3').click(function () {
 					location.href='/loginproxy';
 
+                })
+            })
+		</script>
+
+		<script type="text/javascript">
+            $(document).ready(function(){
+                $('#b2').click(function () {
+                    var proName = $('#find1').val();
+                    location.href='/findProxyList?pro_name='+proName;
                 })
             })
 		</script>

@@ -468,7 +468,17 @@ class AdminController extends Controller
 
         $pro_com = $request->input('pro_com','');
 
-        $pro_count = $request->input('pro_count',0);
+        //判断点数不能为空，必须大于0
+        if(!$request->has('pro_count')){
+            return json_encode(['error_code'=>222,'msg'=>'点数不能为空'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $pro_count = $request->input('pro_count');
+
+        if(intval($pro_count)<=0){
+            return json_encode(['error_code'=>222,'msg'=>'点数必须大于0'],JSON_UNESCAPED_UNICODE);
+
+        }
 
         if(!is_int(intval($pro_count))){
             return json_encode(['error_code'=>222,'msg'=>'点数必须是整数'],JSON_UNESCAPED_UNICODE);
@@ -488,7 +498,7 @@ class AdminController extends Controller
         $pro_name_data = ProUser::get(['pro_name']);
         if($pro_name_data->isEmpty()){
             //第一次注册，直接插入数据库
-            $insert = ProUser::insert([
+            $insertId = ProUser::insertGetId([
                 'pro_name'=>$pro_name,
                 'pro_pwd' =>$pro_pwd,
                 'pro_surplus'=>$pro_count,
@@ -499,7 +509,20 @@ class AdminController extends Controller
                 'pro_comment'=>$pro_com,
                 'pro_status'=>1
             ]);
-            if($insert){
+            //第一次注册，插入充值信息表
+            if($insertId){
+                $recTime = date("Y-m-d H:i:s",time());
+                $rech = Recharge::insertGetId([
+                    'pro_id'=>$insertId,
+                    'pro_name'=>$pro_name,
+                    'rec_count'=>$pro_count,
+                    'rec_time'=>$recTime,
+                    'rec_com'=>'注册成功代理用户，首次充值'
+                ]);
+            }
+
+
+            if($rech){
                 return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
             }else{
                 return json_encode(['error_code'=>222,'msg'=>'注册代理用户失败'],JSON_UNESCAPED_UNICODE);
@@ -513,7 +536,7 @@ class AdminController extends Controller
                 return json_encode(['error_code'=>222,'msg'=>'用户名已经存在，请更换用户名'],JSON_UNESCAPED_UNICODE);
             }else{
                 //插入数据库
-                $insert = ProUser::insert([
+                $insertId = ProUser::insertGetId([
                     'pro_name'=>$pro_name,
                     'pro_pwd' =>$pro_pwd,
                     'pro_surplus'=>$pro_count,
@@ -524,7 +547,18 @@ class AdminController extends Controller
                     'pro_comment'=>$pro_com,
                     'pro_status'=>1
                 ]);
-                if($insert){
+                //第一次注册，插入充值信息表
+                if($insertId){
+                    $recTime = date("Y-m-d H:i:s",time());
+                    $rech = Recharge::insertGetId([
+                        'pro_id'=>$insertId,
+                        'pro_name'=>$pro_name,
+                        'rec_count'=>$pro_count,
+                        'rec_time'=>$recTime,
+                        'rec_com'=>'注册成功代理用户，首次充值'
+                    ]);
+                }
+                if($rech){
                     return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
                 }else{
                     return json_encode(['error_code'=>222,'msg'=>'注册代理用户失败'],JSON_UNESCAPED_UNICODE);

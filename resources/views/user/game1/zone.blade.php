@@ -57,7 +57,7 @@
 								<a href="/bankShow?t=fs_game_bank1"><i class="icon-folder-open"></i> 账号列表</a>
 							</li>
 							<li>
-								<a href="#"><i class="icon-check"></i> 账号上传</a>
+								<a href="/uploadShow?t=fs_game_bank1"><i class="icon-check"></i> 账号上传</a>
 							</li>
 							<li>
 								<a href="/priceShow?t=fs_game_account1"><i class="icon-envelope"></i> 账号定价</a>

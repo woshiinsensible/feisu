@@ -111,7 +111,7 @@
 								</div>
 							</div>
 							<div class="form-actions">
-								<button type="button" class="btn btn-primary" id="b1">确认修改</button>
+								<button type="button" class="btn btn-primary" id="b1">确认注册</button>
 							</div>
 						</fieldset>
 					</form>

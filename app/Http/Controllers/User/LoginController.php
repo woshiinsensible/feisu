@@ -33,9 +33,10 @@ class LoginController extends Controller
 
     public function test(Request $request)
     {
-        $verCodeSession = $request->session()->get('user_token1');
-
-        var_dump($verCodeSession);
+        phpinfo();
+//        $verCodeSession = $request->session()->get('user_token1');
+//
+//        var_dump($verCodeSession);
     }
     //用户登录
     public function login(Request $request)

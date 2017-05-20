@@ -19,7 +19,7 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li class="active">
-									<a href="index.html">总览</a>
+									<a href="/proxyList">总览</a>
 								</li>
 								<li>
 									<a href="/gameShow?no=1">游戏1</a>
@@ -28,13 +28,14 @@
 									<a href="/gameShow?no=2">游戏2</a>
 								</li>
 								<li>
-									<a href="/gameShow?no=3">添加游戏</a>
+									<a href="/gameShow?no=0">添加游戏</a>
 								</li>
 							</ul>
 							<form class="navbar-search pull-left" action="">
 								<input type="text" class="search-query span2" placeholder="代理账号" id="find1"/>
 							</form>
 							<button type="button" class="btn btn-primary" id="b2">查询</button>
+							<button type="button" class="btn btn-primary" id="b3">注册代理账号</button>
 							<ul class="nav pull-right">
 								<li>
 									<a><span class="badge">用户:{{ Session::get('user_name')}}</span></a>
@@ -54,13 +55,13 @@
 							<li class="nav-header">
 								飞速手游
 							</li>
-							<li>
+							<li class="active">
 								<a href="/proxyList"><i class="icon-home"></i> 代理信息</a>
 							</li>
 							<li>
 								<a href="/rechargeList"><i class="icon-folder-open"></i> 充值记录</a>
 							</li>
-							<li class="active">
+							<li>
 								<a href="/pickupList"><i class="icon-check"></i> 提号记录</a>
 							</li>
 							<li>
@@ -84,69 +85,132 @@
 									代理账号
 								</th>
 								<th>
-									消耗点数
-								</th>
-								<th>
-									购买账号
-								</th>
-								<th>
-									购买时间
-								</th>
-								<th>
-									折扣
+									总点数
 								</th>
 								<th>
 									剩余点数
 								</th>
 								<th>
+									消耗点数
+								</th>
+								<th>
 									提货数量
+								</th>
+								<th>
+									加入时间
+								</th>
+								<th>
+									折扣
 								</th>
 								<th>
 									备注
 								</th>
+								<th>
+									状态
+								</th>
+								<th>
+									修改密码
+								</th>
+								<th>
+									修改备注
+								</th>
+								<th>
+									冻结
+								</th>
+								<th>
+									充值
+								</th>
 							</tr>
 						</thead>
 						<tbody id="pro_id">
-						@forelse ($pickupList as $k=>$v)
+						@forelse ($proList as $k=>$v)
 							<tr>
 								<td>
-									{{$k+1}}
+									{{$v['pro_id']}}
 								</td>
 								<td>
-									{{$v['b_proxy_user']}}
+									{{$v['pro_name']}}
 								</td>
 								<td>
-									{{$v['pro_used']}}
-								</td>
-								<td>
-									{{$v['pro_user']}}
-								</td>
-								<td>
-									{{$v['b_pickup_time']}}
-								</td>
-								<td>
-									{{$v['pro_discount']}}
+									{{$v['pro_surplus']+$v['pro_used']}}
 								</td>
 								<td>
 									{{$v['pro_surplus']}}
 								</td>
 								<td>
+									{{$v['pro_used']}}
+								</td>
+								<td>
 									{{$v['pro_pick']}}
+								</td>
+								<td>
+									{{$v['pro_time']}}
+								</td>
+								<td>
+									{{$v['pro_discount']}}
 								</td>
 								<td>
 									{{$v['pro_comment']}}
 								</td>
+								@if ($v['pro_status'] == 1)
+								<td>
+									<span class="label label-success">正常</span>
+								</td>
+								@elseif ($v['pro_status'] == 0)
+									<td>
+										<span class="label label-warning">冻结</span>
+									</td>
+									@endif
+
+								<td>
+									<a href="change_pwd?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">修改密码</a>
+								</td>
+								<td>
+									<a href="/change_com?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}" class="view-link">修改备注</a>
+								</td>
+
+								@if ($v['pro_status'] == 1)
+									<td>
+										<span class="label label-warning hh1" id="{{$v['pro_id']}}" style="cursor:pointer">冻结</span>
+									</td>
+								@elseif ($v['pro_status'] == 0)
+									<td id="{{$v['pro_id']}}">
+										<span class="label label-success hh1" id="{{$v['pro_id']}}" style="cursor:pointer">激活</span>
+									</td>
+								@endif
+
+
+								<td>
+									<a href="/rec_show?pro_id={{$v['pro_id']}}&pro_name={{$v['pro_name']}}&pro_discount={{$v['pro_discount']}}&pro_surplus={{$v['pro_surplus']}}" class="view-link">充值</a>
+								</td>
 							</tr>
 						@empty
-							nobody
+							代理账号不存在
 						@endforelse
 						</tbody>
 					</table>
 					<div class="pagination">
 						<ul>
 							<li class="disabled">
-								{!! $pickupList->links() !!}
+								{!! $proList->links() !!}
 							</li>
+						</ul>
+					</div>
+					<div class="well-small summary">
+						<ul>
+							<li>
+								<a href="#">代理总数: <span class="badge badge-info">{{$proRes['pro_count']}}</span></a>
+							</li>
+							<li>
+								<a href="#">总点数: <span class="badge badge-info">{{$proRes['pro_surplus']+$proRes['pro_used']}}</span></a>
+							</li>
+							<li>
+								<a href="#">剩余点数: <span class="badge badge-info">{{$proRes['pro_surplus']}}</span></a>
+							</li>
+							<li>
+								<a href="#">消耗总数: <span class="badge badge-info">{{$proRes['pro_used']}}</span></a>
+							</li>
+
 						</ul>
 					</div>
 				</div>
@@ -176,9 +240,17 @@
 		</script>
 		<script type="text/javascript">
             $(document).ready(function(){
+                $('#b3').click(function () {
+					location.href='/loginproxy';
+
+                })
+            })
+		</script>
+		<script type="text/javascript">
+            $(document).ready(function(){
                 $('#b2').click(function () {
                     var proName = $('#find1').val();
-                    location.href='/findPickupList?pro_name='+proName;
+                    location.href='/findProxyList?pro_name='+proName;
                 })
             })
 		</script>
