@@ -282,7 +282,13 @@ class GameController extends Controller
     //excel
     public function readExcel(Request $request)
     {
+        //判断文件是否上传成功
+        if (!$request->hasFile('photo')){
+            echo "<script>alert('请先选择文件，然后批量上传');history.go(-1)</script>";
+        }
+
         $ext = $request->file('excel')->getClientOriginalExtension();
+
         if($ext != 'xls'){
             return json_encode(['error_code'=>113,'msg'=>'上传的文件必须师.xls文件'],JSON_UNESCAPED_UNICODE);
 

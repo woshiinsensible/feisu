@@ -53,10 +53,10 @@
 							<li>
 								<a href="/gameShow?no=1"><i class="icon-home"></i> 暂停销售</a>
 							</li>
-							<li class="active">
+							<li>
 								<a href="/bankShow?t=fs_game_bank1"><i class="icon-folder-open"></i> 账号列表</a>
 							</li>
-							<li>
+							<li class="active">
 								<a href="/uploadShow?t=fs_game_bank1"><i class="icon-check"></i> 账号上传</a>
 							</li>
 							<li>

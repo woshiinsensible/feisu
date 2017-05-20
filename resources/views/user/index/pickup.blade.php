@@ -119,7 +119,7 @@
 									{{$v['pro_used']}}
 								</td>
 								<td>
-									{{$v['pro_user']}}
+									{{$v['b_user']}}
 								</td>
 								<td>
 									{{$v['b_pickup_time']}}
