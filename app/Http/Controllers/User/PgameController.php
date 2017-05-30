@@ -36,7 +36,7 @@ class PgameController extends Controller
         $tName = $request->input('t');
 
         //显示可以提取的账号
-        $resBank = DB::table($tName)->where('b_used',0)->paginate($page_size);
+        $resBank = DB::table($tName)->where('b_used',0)->where('b_status',0)->paginate($page_size);
 
         return view('user.pgame1.pick')->with('resBank',$resBank);
 

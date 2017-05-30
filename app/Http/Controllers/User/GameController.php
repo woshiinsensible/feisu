@@ -529,8 +529,8 @@ EOT;
         $countArray = array();
         $tName = $request->input('t');
 
-        $bankCount = DB::table($tName)->count();
-        $nousedCount = DB::table($tName)->where('b_used',0)->count();
+        $bankCount = DB::table($tName)->whereIn('b_status',[0,1])->count();
+        $nousedCount = DB::table($tName)->whereIn('b_status',[0,1])->where('b_used',0)->count();
 
         $usedCount = $bankCount - $nousedCount;
         $countArray['bankCount'] = $bankCount;
@@ -538,7 +538,7 @@ EOT;
         $countArray['usedCount'] = $usedCount;
 
 
-        $bankList = DB::table($tName)->paginate($page_size);
+        $bankList = DB::table($tName)->whereIn('b_status',[0,1])->paginate($page_size);
 
         return view('user.game1.bank')
             ->with('bankList',$bankList)
@@ -592,10 +592,29 @@ EOT;
         }
         $noId = $request->input('b_id');
 
-        $delRes = DB::table($tName)->where('b_id',$noId)->delete();
-        if(!$delRes){
-            return json_encode(['error_code'=>222,'msg'=>'删除组合账号'],JSON_UNESCAPED_UNICODE);
+        //判断代售账号的状态
+        $resStatus = DB::table($tName)->where('b_id',$noId)->first(['b_status']);
+        if(!$resStatus){
+            return json_encode(['error_code'=>222,'msg'=>'代理用户id出现错误'],JSON_UNESCAPED_UNICODE);
         }
+
+        //b_status=0,没有卖出就删除，状态改为3
+        if($resStatus->b_status == 0){
+            $delRes = DB::table($tName)->where('b_id',$noId)->update(['b_status'=>2]);
+            if(!$delRes){
+                return json_encode(['error_code'=>222,'msg'=>'删除组合账号失败'],JSON_UNESCAPED_UNICODE);
+            }
+            //b_status=1,已经卖出就删除，状态改为4
+        }elseif ($resStatus->b_status == 1){
+            $delRes = DB::table($tName)->where('b_id',$noId)->update(['b_status'=>3]);
+            if(!$delRes){
+                return json_encode(['error_code'=>222,'msg'=>'删除组合账号失败'],JSON_UNESCAPED_UNICODE);
+            }
+        } else{
+            return json_encode(['error_code'=>222,'msg'=>'b_status错误，删除组合账号失败'],JSON_UNESCAPED_UNICODE);
+
+        }
+
 
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
     }
@@ -615,11 +634,37 @@ EOT;
         $bIds = $request->input('b_ids');
 
         //$bIds删除重复元素
-        $newBids = array_unique( $bIds);
+        $newBids = array_unique($bIds);
 
-        $delRes = DB::table($tName)->whereIn('b_id',$newBids)->delete();
-        if(!$delRes){
-            return json_encode(['error_code'=>222,'msg'=>'删除组合账号'],JSON_UNESCAPED_UNICODE);
+        //判断代售账号的状态
+        $resStatus = DB::table($tName)->whereIn('b_id',$newBids)->get(['b_id','b_status']);
+        if(!$resStatus){
+            return json_encode(['error_code'=>222,'msg'=>'代理用户id出现错误'],JSON_UNESCAPED_UNICODE);
+        }
+
+        $statuZone = array();
+        $statuOne  = array();
+        foreach ($resStatus as $val){
+            if($val->b_status == 0){
+                $statuZone[] = $val->b_id;
+            }elseif ($val->b_status == 1){
+                $statuOne[] = $val->b_id;
+            }
+        }
+
+        //如果数组不为空，则更新
+        if(!empty($statuZone)){
+            $delRes = DB::table($tName)->whereIn('b_id',$statuZone)->update(['b_status'=>2]);
+            if(!$delRes){
+                return json_encode(['error_code'=>222,'msg'=>'删除组合账号失败'],JSON_UNESCAPED_UNICODE);
+            }
+        }
+
+        if(!empty($statuOne)){
+            $delRes = DB::table($tName)->whereIn('b_id',$statuOne)->update(['b_status'=>3]);
+            if(!$delRes){
+                return json_encode(['error_code'=>222,'msg'=>'删除组合账号失败'],JSON_UNESCAPED_UNICODE);
+            }
         }
 
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
@@ -829,5 +874,55 @@ EOT;
         }
 
         return json_encode(['error_code'=>0,'msg'=>''],JSON_UNESCAPED_UNICODE);
+    }
+
+    //test
+    public function testexcel(Request $request)
+    {
+        $objPHPExcel = new \PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+//        $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'Hello');
+//        $objPHPExcel->getActiveSheet()->SetCellValue('B2', 'world!');
+//        $objPHPExcel->getActiveSheet()->SetCellValue('C1', 'Hello');
+//        $objPHPExcel->getActiveSheet()->SetCellValue('D2', 'world!');
+//
+//        $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
+//        $objWriter->save("C:\Users\wuyanjun\Desktop\xxx.xlsx");
+//        die;
+
+        static $tcount = 1;
+//        $tcount = $count;
+
+        $res = DB::select('show tables');
+        foreach ($res as $key=>$val){
+            $tableName = $val->Tables_in_msdnew;
+            $res2 = DB::select("desc $tableName");
+            foreach ($res2 as $key2=>$val2){
+                if($key2 == 0){
+                    $objPHPExcel->getActiveSheet()->SetCellValue('A'.($tcount+$key2), ($key+1).'.表名：('.$tableName.')');
+                    $objPHPExcel->getActiveSheet()->SetCellValue('A'.($tcount+$key2+1), '字段名');
+                    $objPHPExcel->getActiveSheet()->SetCellValue('B'.($tcount+$key2+1), '类型');
+                    $objPHPExcel->getActiveSheet()->SetCellValue('C'.($tcount+$key2+1), '空值');
+                    $objPHPExcel->getActiveSheet()->SetCellValue('D'.($tcount+$key2+1), '主键');
+                    $objPHPExcel->getActiveSheet()->SetCellValue('E'.($tcount+$key2+1), '默认');
+                    $objPHPExcel->getActiveSheet()->SetCellValue('F'.($tcount+$key2+1), '备注');
+
+                }
+
+
+                    $objPHPExcel->getActiveSheet()->SetCellValue('A'.($tcount+$key2+2), $res2[$key2]->Field);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('B'.($tcount+$key2+2), $res2[$key2]->Type);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('C'.($tcount+$key2+2), $res2[$key2]->Null);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('D'.($tcount+$key2+2), $res2[$key2]->Key);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('E'.($tcount+$key2+2), $res2[$key2]->Default);
+                    $objPHPExcel->getActiveSheet()->SetCellValue('F'.($tcount+$key2+2), $res2[$key2]->Extra);
+
+
+
+            }
+            $tcount = $tcount + count($res2)+3;
+        }
+        $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
+        $objWriter->save("C:\Users\wuyanjun\Desktop\xxx.xlsx");
     }
 }

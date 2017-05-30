@@ -27,6 +27,10 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
+
+    //testexcel
+    Route::get('/testexcel', 'User\GameController@testexcel');
+
     //首页
     Route::get('/index ',function(){
         return view('user.index');

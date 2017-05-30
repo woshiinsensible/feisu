@@ -135,6 +135,7 @@
 								<label class="control-label" for="input01">批量上传</label>
 								<div class="controls">
 										<input type="file" name="excel"/>
+									<button type="button" class="btn btn-success" id="up">上传模板下载</button>
 										<button type="submit" class="btn btn-primary">批量上传</button>
 								</div>
 							</div>
@@ -183,6 +184,14 @@
 					)
                 })
 			})
+		</script>
+
+		<script type="text/javascript">
+            $(document).ready(function(){
+                $('#up').click(function () {
+					location.href='/excel/yys.xls'
+                })
+            })
 		</script>
 	</body>
 </html>
