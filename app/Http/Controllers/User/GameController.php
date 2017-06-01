@@ -899,7 +899,7 @@ EOT;
             $res2 = DB::select("desc $tableName");
             foreach ($res2 as $key2=>$val2){
                 if($key2 == 0){
-                    $objPHPExcel->getActiveSheet()->SetCellValue('A'.($tcount+$key2), ($key+1).'.表名：('.$tableName.')');
+                    $objPHPExcel->getActiveSheet()->SetCellValue('A'.($tcount+$key2), ($key+1).'.('.$tableName.')表');
                     $objPHPExcel->getActiveSheet()->SetCellValue('A'.($tcount+$key2+1), '字段名');
                     $objPHPExcel->getActiveSheet()->SetCellValue('B'.($tcount+$key2+1), '类型');
                     $objPHPExcel->getActiveSheet()->SetCellValue('C'.($tcount+$key2+1), '空值');

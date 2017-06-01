@@ -28,6 +28,14 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
 
+    //获取信息插入表7
+    Route::get('/getInfo', 'Other\HandleController@getInfo');
+    //info index
+    Route::get('/info ',function(){
+        return view('user.other.info');
+    });
+
+
     //testexcel
     Route::get('/testexcel', 'User\GameController@testexcel');
 
