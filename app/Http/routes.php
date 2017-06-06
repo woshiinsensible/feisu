@@ -30,6 +30,8 @@ Route::group(['middleware' => ['web']], function () {
 
     //获取信息插入表7
     Route::get('/getInfo', 'Other\HandleController@getInfo');
+    //删除按钮功能delInfo
+    Route::get('/delInfo', 'Other\HandleController@delInfo');
     //info index
     Route::get('/info ',function(){
         return view('user.other.info');

@@ -44,7 +44,8 @@
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						<button type="button" class="btn btn-primary" id="b1">更新</button>
+						<button type="button" class="btn btn-primary" id="b2">删除</button>
+						<button style="margin-left: 80px" type="button" class="btn btn-primary" id="b1">更新</button>
 					</div>
 				</div>
 			</form>
@@ -78,6 +79,30 @@
                         function (res) {
                             if(res.msg === ''){
                                 alert('更新成功');
+                                history.go(0);
+                            }else{
+                                alert(res.msg);
+                                history.go(0);
+                            }
+                        },
+                        'json'
+                    )
+                })
+            })
+		</script>
+		<script type="text/javascript">
+            //del
+            $(document).ready(function(){
+                $('#b2').click(function () {
+                    var iname = $('#t1').val();
+                    $.get(
+                        '/delInfo',
+                        {
+                            reg_code:iname
+                        },
+                        function (res) {
+                            if(res.msg === ''){
+                                alert('删除成功');
                                 history.go(0);
                             }else{
                                 alert(res.msg);
