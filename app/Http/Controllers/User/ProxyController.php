@@ -73,6 +73,8 @@ class ProxyController extends Controller
             'rec_com'
         ]);
 
+        $resArray = array();
+
         if(!$res->isEmpty()){
             $resArray = $res->toArray();
         }

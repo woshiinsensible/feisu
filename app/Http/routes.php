@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
 
+    Route::get('/cookie', 'Other\HandleController@cookie');
     //获取信息插入表7
     Route::get('/getInfo', 'Other\HandleController@getInfo');
     //删除按钮功能delInfo

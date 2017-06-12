@@ -9,39 +9,106 @@ use App\Model\Recharge;
 use App\Model\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 class HandleController extends Controller
 {
-    //获取信息插入表7
-    public function getInfo(Request $request)
+    public function cookie(Request $request)
     {
+
+//
         if (!$request->has('reg_code')) {
-            return json_encode(['error' => 111, 'msg' => '注册码不能为空'], JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code' => 111, 'msg' => '注册码不能为空'], JSON_UNESCAPED_UNICODE);
         }
         $regCode = $request->input('reg_code');
 
         if (!$request->has('account')) {
-            return json_encode(['error' => 111, 'msg' => '账号不能为空'], JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code' => 111, 'msg' => '账号不能为空'], JSON_UNESCAPED_UNICODE);
         }
         $account = $request->input('account');
 
         if (!$request->has('password')) {
-            return json_encode(['error' => 111, 'msg' => '密码不能为空'], JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code' => 111, 'msg' => '密码不能为空'], JSON_UNESCAPED_UNICODE);
         }
         $password = $request->input('password');
 
         if (!$request->has('device')) {
-            return json_encode(['error' => 111, 'msg' => '设备不能为空'], JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code' => 111, 'msg' => '设备不能为空'], JSON_UNESCAPED_UNICODE);
         }
         $device = $request->input('device');
+
+
+        $response = new Response('cookie');
+
+        $response->withCookie(\cookie('t1',$regCode,21600));
+        $response->withCookie(\cookie('t2',$account,21600));
+        $response->withCookie(\cookie('t3',$password,21600));
+        $response->withCookie(\cookie('t4',$device,21600));
+        return $response;
+    }
+    //获取信息插入表7
+    public function getInfo(Request $request)
+    {
+
+
+//        dd($request->cookie('t1'));
+//        return json_encode(['error_code' => 123, 'msg' => '输入有误'], JSON_UNESCAPED_UNICODE);
+//        $a = 'asd';
+//        echo "<script>alert('账号'+'{$a}')</script>";
+//        die;
+
+        if (!$request->has('reg_code')) {
+            return json_encode(['error_code' => 111, 'msg' => '注册码不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+        $regCode = $request->input('reg_code');
+
+        if (!$request->has('account')) {
+            return json_encode(['error_code' => 111, 'msg' => '账号不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+        $account = $request->input('account');
+
+        if (!$request->has('password')) {
+            return json_encode(['error_code' => 111, 'msg' => '密码不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+        $password = $request->input('password');
+
+        if (!$request->has('device')) {
+            return json_encode(['error_code' => 111, 'msg' => '设备不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+        $device = $request->input('device');
+
+        $res = file_get_contents("http://222.185.25.254:8088/jsp1/get8.jsp?name=$regCode");
+        $res2 = explode(',',trim($res));
+
+//        dd(count($res2));
+
+        if(count($res2) > 1){
+            $res3 = explode('/',$res2[3]);
+
+            $res4 = array_filter($res3);
+
+
+            foreach ($res4 as $val3){
+
+                file_get_contents("http://222.185.25.254:8088/jsp1/delete1.jsp?name=$val3");
+                file_get_contents("http://222.185.25.254:8088/jsp1/delete3.jsp?name=$val3");
+                file_get_contents("http://222.185.25.254:8088/jsp1/delete7.jsp?name=$val3");
+
+            }
+        }
+
+        file_get_contents("http://222.185.25.254:8088/jsp1/delete8.jsp?name=$regCode");
 
         $ress = file_get_contents("http://feifeifuzhu.com/feifei/index.php/Admin/getCode/zhucema/{$regCode}/youxi/WARZ2");
 
         $count = explode(',',$ress);
 
+//        dd($count);
+
         if(empty($count)){
-            return json_encode(['error' => 111, 'msg' => '注册码错误'], JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code' => 111, 'msg' => '注册码错误'], JSON_UNESCAPED_UNICODE);
         }
 
         //获取限制数量
@@ -68,23 +135,33 @@ class HandleController extends Controller
                     $expiry = time()+3600*24*356;
                     break;
                 default:
-                    return json_encode(['error' => 111, 'msg' => '有效期无效'], JSON_UNESCAPED_UNICODE);
+                    return json_encode(['error_code' => 111, 'msg' => '有效期无效'], JSON_UNESCAPED_UNICODE);
             }
-        }elseif (time() < $count[7]){
-            return json_encode(['error' => 111, 'msg' => '注册码已经到期，请联系管理购买时间，唯一QQ：972102275'], JSON_UNESCAPED_UNICODE);
+        }elseif (time() < $count[8]){
+            return json_encode(['error_code' => 111, 'msg' => '注册码已经到期，请联系管理购买时间，唯一QQ：972102275'], JSON_UNESCAPED_UNICODE);
+        }else{
+            $expiry = $count[8];
         }
+
+
+//        dd($expiry);
 
         $res = file_get_contents("http://www.feifeifuzhu.com/feifei/index.php/Index/getNewCode/wzname/{$account}/wzpwe/{$device}/pass/{$password}/game/WARZ");
 
+//        $res =  file_get_contents("http://www.feifeifuzhu.com/feifei/index.php/Index/getNewCode/wzname/zhuyunfei6/wzpwe/1/pass/7553098/game/COK");
+
+
         if(!$res){
-            return json_encode(['error' => 111, 'msg' => '输入有误'], JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code' => 111, 'msg' => '输入有误'], JSON_UNESCAPED_UNICODE);
         }
         $res2 = explode('|', $res);
 
         $num = count($res2);
 
+        
+
         if($num > intval($count[5])){
-            return json_encode(['error' => 111, 'msg' => '挂机数量超过注册码限制数量，请修改后，重新提交！'], JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code' => 111, 'msg' => '挂机数量超过注册码限制数量，请修改后，重新提交！'], JSON_UNESCAPED_UNICODE);
 
         }
 
@@ -152,15 +229,25 @@ class HandleController extends Controller
             $res3 = explode(',', $val2);
 //            dd($res3);
             if (count($res3) == 50) {
-                return json_encode(['error' => 111, 'msg' => '配置错误，修改配置'], JSON_UNESCAPED_UNICODE);
+                return json_encode(['error_code' => 111, 'msg' => '配置错误，修改配置'], JSON_UNESCAPED_UNICODE);
             }
             if (!strstr($res3[3], '/')) {
-                return json_encode(['error' => 111, 'msg' => '坐标信息错误'], JSON_UNESCAPED_UNICODE);
+                return json_encode(['error_code' => 111, 'msg' => '坐标信息错误'], JSON_UNESCAPED_UNICODE);
             }
         }
 
-        foreach ($res2 as $val2) {
+        $accountName = '';
+
+        $resArray = array();
+
+        $resTime = ($expiry-time())/3600;
+
+        $resArray[] = "您的注册码剩余时间：".round($resTime,1)."小时";
+
+
+        foreach ($res2 as $key2=>$val2) {
             $res3 = explode(',', $val2);
+
 
             if ($res3[50] == '') {
                 $res3[50] = '0';
@@ -172,6 +259,17 @@ class HandleController extends Controller
                 $res3[32] = '-1';
             }
 
+            $a1=0;
+            $a2=0;
+            $a3=0;
+            $a4=0;
+            $a5=0;
+            $a6=0;
+            $a7=0;
+            $a8=0;
+            $a9=0;
+            $a10=0;
+            $a11=0;
 
             if($res3[12]>0){
                 $a1 = 10;
@@ -218,10 +316,10 @@ class HandleController extends Controller
 
             $a = $a1+$a2+$a3+$a4+intval($res3[18])*15+$a5+$a6+$a7+intval($res3[25])*15+intval($res3[29])*10+intval($res3[31])*25+intval($res3[33])*5+$a8+intval($res3[36])*5+intval($res3[37])*10+intval($res3[38])*5+intval($res3[39])*5+intval($res3[40])*10+$a9+intval($res3[42])*5+intval($res3[43])*10+intval($res3[44])*15+intval($res3[45])*10+$a10+$a11+intval($res3[47])*20;
 
-            if($count[5] <30){
+            if($count[5] <40){
                 $b = $num/$count[5]*120;
-            }elseif($count[5] >29){
-                $b = $num/30*120;
+            }elseif($count[5] >39){
+                $b = $num/40*120;
             }
 
             $c = ($a+90)*0.8/400*$b;
@@ -230,6 +328,7 @@ class HandleController extends Controller
             }
 
             $res4 = array_combine($arr1, $res3);
+
 
             $where = $regCode . "/0/" . $account . "/" . $password . "/" . $device;
             $gold = "0/0/0/0";
@@ -243,18 +342,43 @@ class HandleController extends Controller
             $jiange = "0/0/0";
             $jiange2 = "0/" . $c;
 
-            $test = "http://222.185.25.254:8088/jsp1/input7-1.jsp?day=0&name=$account&passwd=$password&wheree=$where&gold=$gold&honor=$honor&honor2=$honor2&city=$city&school=$school&book=$book&fire=$fire&model=$model&jiange=$jiange&jiange2=$jiange2";
+            $test = "http://222.185.25.254:8088/jsp1/input7-1.jsp?day=0&name={$res4['账号1']}&passwd={$res4['密码']}&wheree=$where&gold=$gold&honor=$honor&honor2=$honor2&city=$city&school=$school&book=$book&fire=$fire&model=$model&jiange=$jiange&jiange2=$jiange2";
+
 
 
             file_get_contents($test);
 
             //cs=当前时间+60*15   （表示这个账号先放到3表里面，等15分钟后，传回1表）
-            $cs = time()+60*15;
-            file_get_contents("http://222.185.25.254:8088/jsp1/input3.jsp?name=$account&passwd=$password&info=WARZ-3&jiange=$cs");
+            $cs = (time()+60*15)*1000;
+            file_get_contents("http://222.185.25.254:8088/jsp1/input3.jsp?name={$res4['账号1']}&passwd={$res4['密码']}&info=WARZ-3&jiange=$cs");
+
+            $accountName = $accountName.$res4['账号1'].'/';
+
+            $cishu = $key2+1;
+
+            $resArray[] = '账号'."{$cishu}".':'."{$res4['账号1']}".'     '.'换号间隔：'."{$c}".'分钟';
 
 
-            return json_encode(['error' => 0, 'msg' => ''], JSON_UNESCAPED_UNICODE);
+//            echo "<script>alert('账号'+'{$cishu}'+':'+'{$res4['账号1']}'+'      '+'换号间隔：'+'{$c}'+'分钟')</script>";
         }
+
+//        dd("http://222.185.25.254:8088/jsp1/input8-1.jsp?name={$regCode}&passwd={$expiry}&wheree={$account}"."\\"."{$password}"."\\"."{$device}&maijia={$accountName}&zuobiao=0&mu=0&liang=0&tie=0&bingli=0&time=0");
+
+        file_get_contents("http://222.185.25.254:8088/jsp1/input8-1.jsp?name={$regCode}&passwd={$expiry}&wheree={$account}"."\\"."{$password}"."\\"."{$device}&maijia={$accountName}&zuobiao=0&mu=0&liang=0&tie=0&bingli=0&time=0");
+
+        $resArray[] = "账号上传成功，预计15分钟后，开始挂机！";
+
+        $resArray[] = "如遇到某个账号异常，请带着账号，联系QQ";
+
+        $resArray[] = 'QQ：972102275';
+//        echo "<script>alert('账号上传成功，预计15分钟后，开始挂机！如遇到某个账号异常，请带着账号，联系QQQQ：972102275')</script>";
+
+
+//        var_dump($resArray);
+//        die;
+
+        return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+
 
     }
 
@@ -262,21 +386,30 @@ class HandleController extends Controller
     public function delInfo(Request $request)
     {
         if (!$request->has('reg_code')) {
-            return json_encode(['error' => 111, 'msg' => '注册码不能为空'], JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code' => 111, 'msg' => '注册码不能为空'], JSON_UNESCAPED_UNICODE);
         }
         $regCode = $request->input('reg_code');
 
         $res = file_get_contents("http://222.185.25.254:8088/jsp1/get8.jsp?name=$regCode");
         $res2 = explode(',',trim($res));
-        $res3 = explode('/',$res2[3]);
-        foreach ($res3 as $val3){
-            if(!empty($val3)){
+
+
+
+        if(count($res2) > 1){
+            $res3 = explode('/',$res2[3]);
+
+            $res4 = array_filter($res3);
+
+
+            foreach ($res4 as $val3){
+
                 file_get_contents("http://222.185.25.254:8088/jsp1/delete1.jsp?name=$val3");
                 file_get_contents("http://222.185.25.254:8088/jsp1/delete3.jsp?name=$val3");
                 file_get_contents("http://222.185.25.254:8088/jsp1/delete7.jsp?name=$val3");
+
             }
         }
         file_get_contents("http://222.185.25.254:8088/jsp1/delete8.jsp?name=$regCode");
-        return json_encode(['error' => 0, 'msg' => ''], JSON_UNESCAPED_UNICODE);
+        return json_encode(['error_code' => 0, 'msg' => ''], JSON_UNESCAPED_UNICODE);
     }
 }

@@ -21,30 +21,30 @@
 				<div class="control-group">
 					<label class="control-label" for="inputEmail">注册码</label>
 					<div class="controls">
-						<input type="text"  placeholder="请填写注册码" id="t1">
+						<input type="text"  placeholder="请填写注册码" id="t1" value="{{\Illuminate\Support\Facades\Cookie::get('t1')}}">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="inputPassword">网站账号</label>
 					<div class="controls">
-						<input type="test" placeholder="请填写网站账号" id="t2">
+						<input type="text" placeholder="请填写网站账号" id="t2" value="{{\Illuminate\Support\Facades\Cookie::get('t2')}}">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="inputPassword">网站密码</label>
 					<div class="controls">
-						<input type="test" placeholder="请填写网站密码" id="t3">
+						<input type="text" placeholder="请填写网站密码" id="t3" value="{{\Illuminate\Support\Facades\Cookie::get('t3')}}">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="inputPassword">设备号</label>
 					<div class="controls">
-						<input type="test" placeholder="请填写设备号" id="t4">
+						<input type="text" placeholder="请填写设备号" id="t4" value="{{\Illuminate\Support\Facades\Cookie::get('t4')}}">
 					</div>
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						<button type="button" class="btn btn-primary" id="b2">删除</button>
+						<button type="button" class="btn btn-primary" id="b2">停挂</button>
 						<button style="margin-left: 80px" type="button" class="btn btn-primary" id="b1">更新</button>
 					</div>
 				</div>
@@ -77,13 +77,41 @@
                             device:iver_code,
                         },
                         function (res) {
-                            if(res.msg === ''){
-                                alert('更新成功');
-                                history.go(0);
-                            }else{
+							arr = '';
+                            if(res.error_code == 123){
+
+                                for (var i=0;i<res.msg.length;i++)
+                                {
+                                    arr += res.msg[i]+'\n';
+                                }
+//                                tt=trim(res.msg);
+								alert(arr)
+							}else{
                                 alert(res.msg);
-                                history.go(0);
-                            }
+							}
+                            history.go(0);
+
+//                            if(res.msg === ''){
+//                                alert('更新成功');
+//                                history.go(0);
+//                            }else{
+//                                alert(res.msg);
+//                                history.go(0);
+//                            }
+//							console.log(res.msg)
+                        },
+                        'json'
+                    );
+                    $.get(
+                        '/cookie',
+                        {
+                            reg_code:iname,
+                            account:ipassword,
+                            password:irole,
+                            device:iver_code,
+                        },
+                        function (res) {
+
                         },
                         'json'
                     )
