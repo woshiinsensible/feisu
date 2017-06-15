@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 class HandleController extends Controller
 {
+
     public function cookie(Request $request)
     {
 
+        set_time_limit(60);
 //
         if (!$request->has('reg_code')) {
             return json_encode(['error_code' => 111, 'msg' => '注册码不能为空'], JSON_UNESCAPED_UNICODE);
@@ -51,8 +53,12 @@ class HandleController extends Controller
     //获取信息插入表7
     public function getInfo(Request $request)
     {
+//        echo "<img src=\"http://qr.liantu.com/api.php?text=http://www.hellojun.cn:8080/info\"/>";
+//        die;
+        set_time_limit(60);
 
-
+        $qian=array(" ","　","\t","\n","\r");
+        $hou=array("","","","","");
 //        dd($request->cookie('t1'));
 //        return json_encode(['error_code' => 123, 'msg' => '输入有误'], JSON_UNESCAPED_UNICODE);
 //        $a = 'asd';
@@ -63,21 +69,27 @@ class HandleController extends Controller
             return json_encode(['error_code' => 111, 'msg' => '注册码不能为空'], JSON_UNESCAPED_UNICODE);
         }
         $regCode = $request->input('reg_code');
+        $regCode = str_replace($qian,$hou,$regCode);
 
         if (!$request->has('account')) {
             return json_encode(['error_code' => 111, 'msg' => '账号不能为空'], JSON_UNESCAPED_UNICODE);
         }
         $account = $request->input('account');
+        $account =  str_replace($qian,$hou,$account);
 
         if (!$request->has('password')) {
             return json_encode(['error_code' => 111, 'msg' => '密码不能为空'], JSON_UNESCAPED_UNICODE);
         }
         $password = $request->input('password');
+        $password = str_replace($qian,$hou,$password);
 
         if (!$request->has('device')) {
             return json_encode(['error_code' => 111, 'msg' => '设备不能为空'], JSON_UNESCAPED_UNICODE);
         }
         $device = $request->input('device');
+        $device = str_replace($qian,$hou,$device);
+
+//        dd($regCode,$account,$password,$device);
 
         $res = file_get_contents("http://222.185.25.254:8088/jsp1/get8.jsp?name=$regCode");
         $res2 = explode(',',trim($res));
@@ -104,8 +116,8 @@ class HandleController extends Controller
         $ress = file_get_contents("http://feifeifuzhu.com/feifei/index.php/Admin/getCode/zhucema/{$regCode}/youxi/WARZ2");
 
         $count = explode(',',$ress);
-
 //        dd($count);
+
 
         if(empty($count)){
             return json_encode(['error_code' => 111, 'msg' => '注册码错误'], JSON_UNESCAPED_UNICODE);
@@ -137,7 +149,7 @@ class HandleController extends Controller
                 default:
                     return json_encode(['error_code' => 111, 'msg' => '有效期无效'], JSON_UNESCAPED_UNICODE);
             }
-        }elseif (time() < $count[8]){
+        }elseif (time() > $count[8]){
             return json_encode(['error_code' => 111, 'msg' => '注册码已经到期，请联系管理购买时间，唯一QQ：972102275'], JSON_UNESCAPED_UNICODE);
         }else{
             $expiry = $count[8];
@@ -156,6 +168,8 @@ class HandleController extends Controller
         }
         $res2 = explode('|', $res);
 
+//        dd($res2);
+
         $num = count($res2);
 
         
@@ -163,6 +177,14 @@ class HandleController extends Controller
         if($num > intval($count[5])){
             return json_encode(['error_code' => 111, 'msg' => '挂机数量超过注册码限制数量，请修改后，重新提交！'], JSON_UNESCAPED_UNICODE);
 
+        }
+
+        $success = file_get_contents("http://feifeifuzhu.com/feifei/index.php/Admin/uploadNumber/bh1/1/bh2/1/bh3/1/bh4/1/youxi/warz2/shuliang/{$count[5]}/zhucema/{$regCode}/leixing/{$count[7]}/daoqishijian/{$expiry}");
+
+//        dd($success);
+
+        if($success != ' success'){
+            return json_encode(['error_code' => 111, 'msg' => '激活注册码失败，联系作者QQ：972102275'], JSON_UNESCAPED_UNICODE);
         }
 
         $arr1 = array(
@@ -241,6 +263,8 @@ class HandleController extends Controller
         $resArray = array();
 
         $resTime = ($expiry-time())/3600;
+
+//        dd($expiry);
 
         $resArray[] = "您的注册码剩余时间：".round($resTime,1)."小时";
 
@@ -322,10 +346,17 @@ class HandleController extends Controller
                 $b = $num/40*120;
             }
 
-            $c = ($a+90)*0.8/400*$b;
+            $c = round(($a+90)*0.8/400*$b);
+
+            if($res3[50] >$c){
+                $c = $res3[50];
+            }
+
             if($c < 45){
                 $c =45;
             }
+
+
 
             $res4 = array_combine($arr1, $res3);
 
@@ -345,18 +376,41 @@ class HandleController extends Controller
             $test = "http://222.185.25.254:8088/jsp1/input7-1.jsp?day=0&name={$res4['账号1']}&passwd={$res4['密码']}&wheree=$where&gold=$gold&honor=$honor&honor2=$honor2&city=$city&school=$school&book=$book&fire=$fire&model=$model&jiange=$jiange&jiange2=$jiange2";
 
 
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $test);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            //执行并获取HTML文档内容
+            $output = curl_exec($ch);
+            //释放curl句柄
+            curl_close($ch);
 
-            file_get_contents($test);
+//            dd($test);
+
+//            $rrr = file_get_contents($test);
+//            dd($rrr);
 
             //cs=当前时间+60*15   （表示这个账号先放到3表里面，等15分钟后，传回1表）
             $cs = (time()+60*15)*1000;
-            file_get_contents("http://222.185.25.254:8088/jsp1/input3.jsp?name={$res4['账号1']}&passwd={$res4['密码']}&info=WARZ-3&jiange=$cs");
+
+            $ch1 = curl_init();
+            curl_setopt($ch1, CURLOPT_URL, "http://222.185.25.254:8088/jsp1/input3.jsp?name={$res4['账号1']}&passwd={$res4['密码']}&info=WARZ-3&jiange=$cs");
+            curl_setopt($ch1, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch1, CURLOPT_HEADER, 0);
+            //执行并获取HTML文档内容
+            $output = curl_exec($ch1);
+            //释放curl句柄
+            curl_close($ch1);
+
+//            file_get_contents("http://222.185.25.254:8088/jsp1/input3.jsp?name={$res4['账号1']}&passwd={$res4['密码']}&info=WARZ-3&jiange=$cs");
 
             $accountName = $accountName.$res4['账号1'].'/';
 
             $cishu = $key2+1;
 
-            $resArray[] = '账号'."{$cishu}".':'."{$res4['账号1']}".'     '.'换号间隔：'."{$c}".'分钟';
+            $x = $a+90;
+
+            $resArray[] = '账号'."{$cishu}".':'."{$res4['账号1']}".'    '.'城内耗时:'."{$x}".'     '.'换号间隔：'."{$c}".'分钟';
 
 
 //            echo "<script>alert('账号'+'{$cishu}'+':'+'{$res4['账号1']}'+'      '+'换号间隔：'+'{$c}'+'分钟')</script>";
@@ -364,7 +418,16 @@ class HandleController extends Controller
 
 //        dd("http://222.185.25.254:8088/jsp1/input8-1.jsp?name={$regCode}&passwd={$expiry}&wheree={$account}"."\\"."{$password}"."\\"."{$device}&maijia={$accountName}&zuobiao=0&mu=0&liang=0&tie=0&bingli=0&time=0");
 
-        file_get_contents("http://222.185.25.254:8088/jsp1/input8-1.jsp?name={$regCode}&passwd={$expiry}&wheree={$account}"."\\"."{$password}"."\\"."{$device}&maijia={$accountName}&zuobiao=0&mu=0&liang=0&tie=0&bingli=0&time=0");
+        $ch2 = curl_init();
+        curl_setopt($ch2, CURLOPT_URL, "http://222.185.25.254:8088/jsp1/input8-1.jsp?name={$regCode}&passwd={$expiry}&wheree={$account}"."\\"."{$password}"."\\"."{$device}&maijia={$accountName}&zuobiao=0&mu=0&liang=0&tie=0&bingli=0&time=0");
+        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch2, CURLOPT_HEADER, 0);
+        //执行并获取HTML文档内容
+        $output = curl_exec($ch2);
+        //释放curl句柄
+        curl_close($ch2);
+
+//        file_get_contents("http://222.185.25.254:8088/jsp1/input8-1.jsp?name={$regCode}&passwd={$expiry}&wheree={$account}"."\\"."{$password}"."\\"."{$device}&maijia={$accountName}&zuobiao=0&mu=0&liang=0&tie=0&bingli=0&time=0");
 
         $resArray[] = "账号上传成功，预计15分钟后，开始挂机！";
 
@@ -385,6 +448,8 @@ class HandleController extends Controller
     //添加删除按钮的功能
     public function delInfo(Request $request)
     {
+        set_time_limit(60);
+
         if (!$request->has('reg_code')) {
             return json_encode(['error_code' => 111, 'msg' => '注册码不能为空'], JSON_UNESCAPED_UNICODE);
         }

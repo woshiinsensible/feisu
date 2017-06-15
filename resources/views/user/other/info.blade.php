@@ -68,6 +68,8 @@
                     var ipassword = $('#t2').val();
                     var irole = $('#t3').val();
                     var iver_code = $('#t4').val();
+                    $('#b1').attr('disabled',true);
+                    $('#b2').attr('disabled',true);
                     $.get(
                         '/getInfo',
                         {
@@ -123,6 +125,8 @@
             $(document).ready(function(){
                 $('#b2').click(function () {
                     var iname = $('#t1').val();
+                    $('#b1').attr('disabled',true);
+                    $('#b2').attr('disabled',true);
                     $.get(
                         '/delInfo',
                         {
