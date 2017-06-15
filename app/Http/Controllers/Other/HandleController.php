@@ -6,6 +6,7 @@ use App\Model\Notice;
 use App\Model\Pickup;
 use App\Model\ProUser;
 use App\Model\Recharge;
+use App\Model\Recode;
 use App\Model\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use BrowserDetect;
 class HandleController extends Controller
 {
 
@@ -20,6 +22,20 @@ class HandleController extends Controller
     {
 
         set_time_limit(60);
+        $resNew = array();
+
+        foreach ($request->server as $kk=>$vv){
+            $resNew[$kk] = $vv;
+        }
+
+        $recode = array();
+        $recode['IP'] = $resNew['REMOTE_ADDR'];
+        $recode['HTTP_USER_AGENT'] = $resNew['HTTP_USER_AGENT'];
+        $recode['REQUEST_TIME'] = $resNew['REQUEST_TIME'];
+
+        if(!empty($resNew)){
+            Recode::insert($recode);
+        }
 //
         if (!$request->has('reg_code')) {
             return json_encode(['error_code' => 111, 'msg' => '注册码不能为空'], JSON_UNESCAPED_UNICODE);
@@ -53,7 +69,11 @@ class HandleController extends Controller
     //获取信息插入表7
     public function getInfo(Request $request)
     {
-//        dd($request);
+//        dd(BrowserDetect::detect());
+//        dd($request->server);
+
+
+
 //        echo "<img src=\"http://qr.liantu.com/api.php?text=http://www.hellojun.cn:8080/info\"/>";
 //        die;
         set_time_limit(60);
