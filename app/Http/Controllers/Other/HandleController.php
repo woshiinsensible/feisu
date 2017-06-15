@@ -53,6 +53,7 @@ class HandleController extends Controller
     //获取信息插入表7
     public function getInfo(Request $request)
     {
+//        dd($request);
 //        echo "<img src=\"http://qr.liantu.com/api.php?text=http://www.hellojun.cn:8080/info\"/>";
 //        die;
         set_time_limit(60);
@@ -114,6 +115,11 @@ class HandleController extends Controller
         file_get_contents("http://222.185.25.254:8088/jsp1/delete8.jsp?name=$regCode");
 
         $ress = file_get_contents("http://feifeifuzhu.com/feifei/index.php/Admin/getCode/zhucema/{$regCode}/youxi/WARZ2");
+
+
+        if($ress == ' error'){
+            return json_encode(['error_code' => 111, 'msg' => '注册码错误'], JSON_UNESCAPED_UNICODE);
+        }
 
         $count = explode(',',$ress);
 //        dd($count);
