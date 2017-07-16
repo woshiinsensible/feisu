@@ -28,6 +28,16 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
 
+    //test
+    Route::get('/testqq', 'Other\HandleController@test');
+    //数据可视化
+    //ajax
+    Route::get('/ajax', 'Other\HandleController@ajax');
+    //数据可视化
+    Route::get('/echarts', 'Other\HandleController@echarts');
+    //统计登录用户信息
+    Route::get('/recode', 'Other\HandleController@recode');
+    //保存用户信息
     Route::get('/cookie', 'Other\HandleController@cookie');
     //获取信息插入表7
     Route::get('/getInfo', 'Other\HandleController@getInfo');
@@ -37,6 +47,31 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/info ',function(){
         return view('user.other.info');
     });
+
+
+    /*wang---充值*/
+    Route::get('/wang_test', 'Other\WangController@wang_test');
+
+    Route::get('/wang_recharge',function(){
+        return view('wang.recharge');
+    });
+
+    Route::get('/wang_recharge_do', 'Other\WangController@wang_recharge_do');
+
+    //wang_cookie
+    Route::get('/wang_cookie', 'Other\WangController@wang_cookie');
+
+    Route::get('/wang_recharge_submit', 'Other\WangController@wang_recharge_submit');
+
+    Route::get('/wang_yes', 'Other\WangController@wang_yes');
+
+    /*wang---代挂*/
+    Route::get('/wang_dai',function(){
+        return view('wang.dai');
+    });
+
+
+
 
 
     //testexcel

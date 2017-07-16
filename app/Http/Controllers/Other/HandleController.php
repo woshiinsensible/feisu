@@ -17,7 +17,65 @@ use Illuminate\Support\Facades\Validator;
 use BrowserDetect;
 class HandleController extends Controller
 {
+    //test
+    public function test()
+    {
+        $t = json_decode('{"errcode":40001,"errmsg":"invalid credential, access_token is invalid or not latest, hints: [ req_id: kaZ3Ga0698ns84 ]"}',1);
+        echo "<pre>";
+        var_dump($t);
+    }
 
+    //ajax
+    public function ajax(Request $request)
+    {
+        $res = DB::table('recode')
+            ->select(DB::raw('DISTINCT(IP),r_id'))
+            ->groupBy('IP')
+            ->get();
+
+        if(empty($res)){
+            return json_encode(['error_code' => 111, 'msg' => '数据不存在'], JSON_UNESCAPED_UNICODE);
+        }
+
+
+        $idArr = array();
+        foreach ($res as $val){
+            $idArr[] = $val->r_id;
+
+        }
+
+        $res2 = DB::table('recode')
+            ->select(DB::raw('ADDRESS as name, count(*) as value'))
+            ->whereIn('r_id',$idArr)
+            ->groupBy('ADDRESS')
+            ->get();
+
+
+//        dd($res2);
+        $city = array();
+
+        foreach ($res2 as $val2){
+            $city[] = $val2;
+        }
+        return json_encode(['error_code' => '', 'msg' => $city], JSON_UNESCAPED_UNICODE);
+    }
+
+    //数据可视化
+    public function echarts(Request $request)
+    {
+        return view('echarts.echarts');
+    }
+
+    //统计用户登录信息
+    public function recode(Request $request)
+    {
+//        $ip = @file_get_contents("http://ip.taobao.com/service/getIpInfo.php?ip="."222.185.25.254");
+//        $ipData = json_decode($ip,true);
+        $res = Recode::paginate(8);
+        return view('user.other.recode')->with('data',$res);
+    }
+
+    //保存用户信息
     public function cookie(Request $request)
     {
 
@@ -30,6 +88,17 @@ class HandleController extends Controller
 
         $recode = array();
         $recode['IP'] = $resNew['REMOTE_ADDR'];
+
+        $ip = @file_get_contents("http://ip.taobao.com/service/getIpInfo.php?ip="."{$resNew['REMOTE_ADDR']}");
+
+        $ipData = json_decode($ip,true);
+
+        if($ipData['code'] == 1){
+            $recode['ADDRESS'] = '0';
+        }else{
+            $recode['ADDRESS'] = mb_substr($ipData['data']["city"],0,-1);
+        }
+
         $recode['HTTP_USER_AGENT'] = $resNew['HTTP_USER_AGENT'];
         $recode['REQUEST_TIME'] = $resNew['REQUEST_TIME'];
 
@@ -66,6 +135,7 @@ class HandleController extends Controller
         $response->withCookie(\cookie('t4',$device,21600));
         return $response;
     }
+
     //获取信息插入表7
     public function getInfo(Request $request)
     {
