@@ -310,5 +310,445 @@ class WangController extends Controller
 
     /*--代挂--*/
 
+    public function wang_dai_stop(Request $request)
+    {
+        set_time_limit(60);
+
+        $qian=array(" ","　","\t","\n","\r");
+        $hou=array("","","","","");
+
+        if (!$request->has('zhanqu') || $request->input('zhanqu')=== '0') {
+            return json_encode(['error_code' => 111, 'msg' => '战区不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('zhanghao')) {
+            return json_encode(['error_code' => 111, 'msg' => '账号不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('mima')) {
+            return json_encode(['error_code' => 111, 'msg' => '密码不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('shuatu') || $request->input('shuatu')=== '0') {
+            return json_encode(['error_code' => 111, 'msg' => '刷图选择不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('cishu')) {
+            return json_encode(['error_code' => 111, 'msg' => '次数不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('shanghao')) {
+            return json_encode(['error_code' => 111, 'msg' => '上号不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        $zhanqu = str_replace($qian,$hou,$request->input('zhanqu'));
+        $zhanghao = str_replace($qian,$hou,$request->input('zhanghao'));
+        $mima = str_replace($qian,$hou,$request->input('mima'));
+        $shuatu = str_replace($qian,$hou,$request->input('shuatu'));
+        $cishu = str_replace($qian,$hou,$request->input('cishu'));
+        $shanghao = str_replace($qian,$hou,$request->input('shanghao'));
+
+        $parm = $zhanqu.$zhanghao;
+
+        //http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name=AZQQ-972102275
+
+        $res = file('http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name='.$parm)[0];
+
+//        $res = file('http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name=AZQQ-972102275')[0];
+
+        $res1 = str_replace($qian,$hou,$res);
+
+        if(empty($res1)){
+            return json_encode(['error_code' => 111, 'msg' => '账号错误！'], JSON_UNESCAPED_UNICODE);
+        }
+
+        $res2 = explode(',',$res1);
+
+        $rz = explode('/',$res2[3])[0];
+
+        if($res2[2] === '0'){
+            return json_encode(['error_code' => 111, 'msg' => '您的账号，并没有挂机！'], JSON_UNESCAPED_UNICODE);
+        }else{
+            file_put_contents('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$res2[0].'&pwe='.$res2[1].'&wheree=0&beizhu1='.$rz.'/0&beizhu2=0');
+            return json_encode(['error_code' => 111, 'msg' => '停挂成功，请5分钟之后再登陆游戏'], JSON_UNESCAPED_UNICODE);
+
+        }
+
+    }
+
+    public function wang_dai_start(Request $request)
+    {
+        set_time_limit(60);
+
+        $qian=array(" ","　","\t","\n","\r");
+        $hou=array("","","","","");
+
+        if (!$request->has('zhanqu') || $request->input('zhanqu')=== '0') {
+            return json_encode(['error_code' => 111, 'msg' => '战区不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('zhanghao')) {
+            return json_encode(['error_code' => 111, 'msg' => '账号不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('mima')) {
+            return json_encode(['error_code' => 111, 'msg' => '密码不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('shuatu') || $request->input('shuatu')=== '0') {
+            return json_encode(['error_code' => 111, 'msg' => '刷图选择不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('cishu')) {
+            return json_encode(['error_code' => 111, 'msg' => '次数不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('shanghao')) {
+            return json_encode(['error_code' => 111, 'msg' => '上号不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        $zhanqu = str_replace($qian,$hou,$request->input('zhanqu'));
+        $zhanghao = str_replace($qian,$hou,$request->input('zhanghao'));
+        $mima = str_replace($qian,$hou,$request->input('mima'));
+        $shuatu = str_replace($qian,$hou,$request->input('shuatu'));
+        $cishu = str_replace($qian,$hou,$request->input('cishu'));
+        $shanghao = str_replace($qian,$hou,$request->input('shanghao'));
+
+        $parm = $zhanqu.$zhanghao;
+
+        $res = file('http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name='.$parm)[0];
+
+//        $res = file('http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name=AZQQ-972102275')[0];
+
+
+
+        $res1 = str_replace($qian,$hou,$res);
+
+//        dd($res1);
+
+        if(empty($res1)){
+            return json_encode(['error_code' => 111, 'msg' => '账号错误！'], JSON_UNESCAPED_UNICODE);
+        }
+
+        $res2 = explode(',',$res1);
+
+        $rz = explode('/',$res2[3])[0];
+
+        switch ($zhanqu)
+        {
+            case 'AZVX-':
+                $zq2 = '安卓微信';
+                break;
+            case 'AZQQ-':
+                $zq2 = '安卓QQ';
+                break;
+            case 'IOSVX-':
+                $zq2 = '苹果微信';
+                break;
+            case 'IOSQQ-':
+                $zq2 = '苹果QQ';
+                break;
+        }
+
+
+        switch ($shuatu)
+        {
+            case '3':
+                $zq = '大师魔女回忆';
+                break;
+            case '2':
+                $zq = '精英魔女回忆';
+                break;
+            case '1':
+                $zq = '普通魔女回忆';
+                break;
+        }
+
+//        dd($res2[2]);
+
+        if($res2[2] !== '0'){
+            $resArray = [
+                '您的账号'.$res2[2].'挂机中',
+                '剩余次数:'.$rz,
+                '挂机地图:'.$zq,
+                '确认要修改么？',
+                $res2[0]
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+
+        if($res2[2] === '0'){
+            $shijian = (time()+$shanghao*60)*1000;
+            file_get_contents('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$res2[0].'&pwe='.$res2[1].'&wheree=0&beizhu1='.$res2[1].'&beizhu2='.$shuatu.'');
+            file_get_contents('http://222.185.25.254:8088/jsp1/delete3.jsp?name='.$res2[0].'');
+            file_get_contents('http://222.185.25.254:8088/jsp1/input3.jsp?name='.$res2[0].'&passwd='.$res2[1].'&info=WZRY-2&jiange='.$shijian.'');
+            $resArray = [
+                '游戏战区:'.$zq2,
+              '游戏账号：'.$zhanghao,
+              '游戏密码：'.$res2[1],
+              '当前剩余点数：'.$rz,
+                '本次代刷耗费：'.$cishu,
+                '预计登陆：'.$shanghao
+
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+
+    }
+
+    public function wang_yes2(Request $request)
+    {
+
+        set_time_limit(60);
+
+        $qian=array(" ","　","\t","\n","\r");
+        $hou=array("","","","","");
+
+
+        $zhanghao = $request->input('zhanghao');
+
+        $res = file('http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name='.$zhanghao)[0];
+
+//        $res = file('http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name=AZQQ-972102275')[0];
+
+        $res1 = str_replace($qian,$hou,$res);
+
+
+
+        $res2 = explode(',',$res1);
+
+//        dd($res2);
+
+//        $rz = explode('/',$res2[3])[0];
+
+
+
+        //http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name=(游戏战区&游戏账号)&pwe=游戏密码&wheree=几号机器登陆&beizhu1=总点数/刷图次数&beizhu2=刷图选择
+        $res2 = file('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$res2[0].'&pwe='.$res2[1].'&wheree='.$res2[2].'&beizhu1='.$res2[3].'&beizhu2='.$res2[4].'');
+
+//        dd($res2);
+
+        echo "<script>alert('修改成功');history.go(-1)</script>";
+
+
+    }
+
+
+    public function wang_sheng(Request $request)
+    {
+        set_time_limit(60);
+
+        $qian=array(" ","　","\t","\n","\r");
+        $hou=array("","","","","");
+
+        if (!$request->has('zhanqu') || $request->input('zhanqu')=== '0') {
+            return json_encode(['error_code' => 111, 'msg' => '战区不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('zhanghao')) {
+            return json_encode(['error_code' => 111, 'msg' => '账号不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('mima')) {
+            return json_encode(['error_code' => 111, 'msg' => '密码不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+
+
+        $zhanqu = str_replace($qian,$hou,$request->input('zhanqu'));
+        $zhanghao = str_replace($qian,$hou,$request->input('zhanghao'));
+        $mima = str_replace($qian,$hou,$request->input('mima'));
+
+
+        $parm = $zhanqu.$zhanghao;
+
+        $res = file('http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name='.$parm)[0];
+
+        $res1 = str_replace($qian,$hou,$res);
+
+//        $r = explode('/',explode(',',$res1)[3])[0];
+//
+//        dd($r);
+
+
+
+        switch ($zhanqu)
+        {
+            case 'AZVX-':
+                $zq = '安卓微信';
+                break;
+            case 'AZQQ-':
+                $zq = '安卓QQ';
+                break;
+            case 'IOSVX-':
+                $zq = '苹果微信';
+                break;
+            case 'IOSQQ-':
+                $zq = '苹果QQ';
+                break;
+        }
+
+        if(empty($res1)){
+            $resArray = [
+                '游戏战区:'.$zq,
+                '游戏账号:'.$zhanghao,
+                '游戏密码:'.$mima,
+                '新号尚未代挂过，如果有误，请再次获取！',
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }else{
+            $r = explode('/',explode(',',$res1)[3])[0];
+            $resArray = [
+
+                '游戏战区:'.$zq,
+                '游戏账号:'.$zhanghao,
+                '游戏密码:'.$mima,
+                '剩余点数:'.$r
+            ];
+
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    public function wang_status(Request $request)
+    {
+        set_time_limit(60);
+
+        $qian=array(" ","　","\t","\n","\r");
+        $hou=array("","","","","");
+
+        if (!$request->has('zhanqu') || $request->input('zhanqu')=== '0') {
+            return json_encode(['error_code' => 111, 'msg' => '战区不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('zhanghao')) {
+            return json_encode(['error_code' => 111, 'msg' => '账号不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+        if (!$request->has('mima')) {
+            return json_encode(['error_code' => 111, 'msg' => '密码不能为空'], JSON_UNESCAPED_UNICODE);
+        }
+
+
+
+        $zhanqu = str_replace($qian,$hou,$request->input('zhanqu'));
+        $zhanghao = str_replace($qian,$hou,$request->input('zhanghao'));
+        $mima = str_replace($qian,$hou,$request->input('mima'));
+
+
+        $parm = $zhanqu.$zhanghao;
+
+        $res = file('http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name='.$parm)[0];
+
+        $res1 = str_replace($qian,$hou,$res);
+
+        $r = explode('/',explode(',',$res1)[3])[0];
+        $r2 = explode('/',explode(',',$res1)[3])[1];
+//
+//        dd($r);
+
+
+
+        switch ($zhanqu)
+        {
+            case 'AZVX-':
+                $zq = '安卓微信';
+                break;
+            case 'AZQQ-':
+                $zq = '安卓QQ';
+                break;
+            case 'IOSVX-':
+                $zq = '苹果微信';
+                break;
+            case 'IOSQQ-':
+                $zq = '苹果QQ';
+                break;
+        }
+
+        if(empty($res1)){
+            return json_encode(['error_code' => 111, 'msg' => '账号错误！'], JSON_UNESCAPED_UNICODE);
+        }
+
+        $res2 = explode(',',$res1);
+
+        switch ($res2[4])
+        {
+            case '3':
+                $zq2 = '大师魔女回忆';
+                break;
+            case '2':
+                $zq2 = '精英魔女回忆';
+                break;
+            case '1':
+                $zq2 = '普通魔女回忆';
+                break;
+        }
+
+        if($res2[2] !== '0'){
+            $resArray = [
+                '您的账号'.$res2[2].'号机器挂机中',
+                '剩余次数：'.$r2,
+                '挂机地图：'.$zq2
+
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+
+        if($res2[2] === '0' && $res2[4] >0){
+            $resArray = [
+                '您的账号尚未开始',
+                '剩余次数：'.$r2,
+                '挂机地图：'.$zq2
+
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+
+        if($res2[2] === '0' && $res2[4] === '0'){
+            $resArray = [
+                '您的账号，尚未设置挂机',
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+
+        if($res2[2] === '0' && $res2[4] === '-1'){
+            $resArray = [
+                '您的账号，已经手动停止代挂！',
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+
+        if($res2[2] === '0' && $res2[4] === '-2'){
+            $resArray = [
+                '您的账号，密码设置错误！',
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+
+
+        if($res2[2] === '0' && $res2[4] === '-3'){
+        $resArray = [
+            '请保证您要刷的关卡，已经手动成功闯关过一次！',
+        ];
+        return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+    }
+
+        if($res2[2] === '0' && $res2[4] === '-4'){
+            $resArray = [
+                '请输入手机接收到的验证码！',
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+
+        if($res2[2] === '0' && $res2[4] === '-5'){
+            $resArray = [
+                '请打开微信，扫描二维码！',
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }
+
+
+
+    }
 
 }

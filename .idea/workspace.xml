@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f5caffe-9eae-4758-81f6-30df7f2f2e1a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Http/Controllers/Other/WangController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/china.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/echarts.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/user/other/recode.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/wang/recharge.blade.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/resources/views/other/info.blade.php" afterPath="$PROJECT_DIR$/resources/views/echarts/echarts.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/wang/query.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Other/HandleController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Other/HandleController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Other/WangController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Other/WangController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/wang/dai.blade.php" afterPath="$PROJECT_DIR$/resources/views/wang/dai.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,7 +21,7 @@
       <file leaf-file-name="HandleController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Other/HandleController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-164">
+            <state relative-caret-position="0">
               <caret line="78" column="26" lean-forward="false" selection-start-line="78" selection-start-column="20" selection-end-line="78" selection-end-column="26" />
               <folding>
                 <element signature="e#45#81#0#PHP" expanded="true" />
@@ -38,11 +34,9 @@
       <file leaf-file-name="recharge.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/wang/recharge.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
+            <state relative-caret-position="-44">
               <caret line="170" column="63" lean-forward="false" selection-start-line="170" selection-start-column="63" selection-end-line="170" selection-end-column="63" />
-              <folding>
-                <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -50,31 +44,55 @@
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="65" column="58" lean-forward="false" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="58" />
+            <state relative-caret-position="306">
+              <caret line="85" column="67" lean-forward="false" selection-start-line="51" selection-start-column="3" selection-end-line="85" selection-end-column="67" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="info.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/user/other/info.blade.php">
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="true">
+        <entry file="file://$USER_HOME$/Desktop/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="86" column="59" lean-forward="false" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="59" />
+            <state relative-caret-position="416">
+              <caret line="76" column="27" lean-forward="false" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WangController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="query.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/wang/query.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="218">
+              <caret line="182" column="39" lean-forward="false" selection-start-line="182" selection-start-column="39" selection-end-line="182" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dai.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/wang/dai.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="190" column="82" lean-forward="false" selection-start-line="190" selection-start-column="82" selection-end-line="190" selection-end-column="82" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WangController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Other/WangController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="302" column="16" lean-forward="false" selection-start-line="302" selection-start-column="16" selection-end-line="302" selection-end-column="16" />
+            <state relative-caret-position="-22451">
+              <caret line="744" column="29" lean-forward="false" selection-start-line="744" selection-start-column="29" selection-end-line="744" selection-end-column="29" />
               <folding>
                 <element signature="e#45#81#0#PHP" expanded="true" />
+                <element signature="e#504#603#0#PHP" expanded="false" />
                 <element signature="e#621#1195#0#PHP" expanded="false" />
+                <element signature="e#8032#9591#0#PHP" expanded="false" />
+                <element signature="e#9613#12147#0#PHP" expanded="false" />
+                <element signature="e#16055#17001#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -130,9 +148,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/user/pgame1/recode.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/user/pgame1/spick.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Middleware/CheckUser.php" />
         <option value="$PROJECT_DIR$/resources/views/user/index/ccom.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/user/index/pubnotice.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/user/index/snotice.blade.php" />
@@ -178,9 +193,12 @@
         <option value="$PROJECT_DIR$/resources/views/echarts/echarts.blade.php" />
         <option value="$USER_HOME$/Desktop/HandleController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Other/HandleController.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/resources/views/wang/recharge.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/wang/dai.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/wang/query.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Other/WangController.php" />
+        <option value="$USER_HOME$/Desktop/routes.php" />
       </list>
     </option>
   </component>
@@ -220,6 +238,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -400,8 +420,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -629,28 +647,30 @@
       <workItem from="1499668752878" duration="1029000" />
       <workItem from="1499744351354" duration="1608000" />
       <workItem from="1500124729087" duration="600000" />
-      <workItem from="1500162089601" duration="20464000" />
+      <workItem from="1500162089601" duration="22154000" />
+      <workItem from="1500208402211" duration="2414000" />
+      <workItem from="1500295224596" duration="7963000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="470400000" />
+    <option name="totallyTimeSpent" value="482467000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22390318" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.544741" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32933104" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31217837" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31046313" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -693,27 +713,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/user/find1/pickup.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="180" column="51" lean-forward="false" selection-start-line="180" selection-start-column="51" selection-end-line="180" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/user/find1/admin.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5500">
-          <caret line="250" column="21" lean-forward="false" selection-start-line="250" selection-start-column="21" selection-end-line="250" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/user/index/reshow.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2926">
-          <caret line="133" column="26" lean-forward="false" selection-start-line="133" selection-start-column="26" selection-end-line="133" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/User/FindController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2376">
@@ -991,25 +990,16 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Desktop/HandleController.php" />
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="65" column="58" lean-forward="false" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/user/other/info.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="86" column="59" lean-forward="false" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Other/HandleController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-164">
+        <state relative-caret-position="0">
           <caret line="78" column="26" lean-forward="false" selection-start-line="78" selection-start-column="20" selection-end-line="78" selection-end-column="26" />
           <folding>
             <element signature="e#45#81#0#PHP" expanded="true" />
@@ -1020,22 +1010,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/wang/recharge.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
+        <state relative-caret-position="-44">
           <caret line="170" column="63" lean-forward="false" selection-start-line="170" selection-start-column="63" selection-end-line="170" selection-end-column="63" />
-          <folding>
-            <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/wang/dai.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="190" column="82" lean-forward="false" selection-start-line="190" selection-start-column="82" selection-end-line="190" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/wang/query.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="182" column="39" lean-forward="false" selection-start-line="182" selection-start-column="39" selection-end-line="182" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Other/WangController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="302" column="16" lean-forward="false" selection-start-line="302" selection-start-column="16" selection-end-line="302" selection-end-column="16" />
+        <state relative-caret-position="-22451">
+          <caret line="744" column="29" lean-forward="false" selection-start-line="744" selection-start-column="29" selection-end-line="744" selection-end-column="29" />
           <folding>
             <element signature="e#45#81#0#PHP" expanded="true" />
+            <element signature="e#504#603#0#PHP" expanded="false" />
             <element signature="e#621#1195#0#PHP" expanded="false" />
+            <element signature="e#8032#9591#0#PHP" expanded="false" />
+            <element signature="e#9613#12147#0#PHP" expanded="false" />
+            <element signature="e#16055#17001#0#PHP" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="85" column="67" lean-forward="false" selection-start-line="51" selection-start-column="3" selection-end-line="85" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="76" column="27" lean-forward="false" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>

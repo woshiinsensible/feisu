@@ -70,6 +70,24 @@ Route::group(['middleware' => ['web']], function () {
         return view('wang.dai');
     });
 
+    Route::get('/wang_dai_stop', 'Other\WangController@wang_dai_stop');
+
+    Route::get('/wang_dai_start', 'Other\WangController@wang_dai_start');
+
+    Route::get('/wang_yes2', 'Other\WangController@wang_yes2');
+
+    /*wang---查询*/
+    Route::get('/wang_query',function(){
+        return view('wang.query');
+    });
+
+    Route::get('/wang_sheng', 'Other\WangController@wang_sheng');
+
+    Route::get('/wang_status', 'Other\WangController@wang_status');
+
+
+
+
 
 
 
