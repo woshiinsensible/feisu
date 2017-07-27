@@ -12,7 +12,7 @@
 </head>
 	<body style="background-color:darkgrey">
 		<div id="login-page" class="container" style="margin-top:100px;width: 540px;height: 400px">
-			<form id="login-form" class="well form-horizontal">
+			<form id="login-form" class="well form-horizontal" style="width:510px">
 				<div class="control-group">
 					<div class="controls">
 						<h3>王者荣耀代挂</h3>
@@ -23,10 +23,10 @@
 					<div class="controls">
 						<select id="sel1" name="zhanqu">
 							<option value="0">请选择</option>
-							<option value="AZVX-">安卓微信</option>
+							{{--<option value="AZVX-">安卓微信</option>--}}
 							<option value="AZQQ-">安卓qq</option>
-							<option value="IOSVX-">苹果微信</option>
-							<option value="IOSQQ">苹果qq</option>
+							{{--<option value="IOSVX-">苹果微信</option>--}}
+							<option value="IOSQQ-">苹果qq</option>
 						</select>
 					</div>
 				</div>
@@ -62,8 +62,9 @@
 				<div class="control-group">
 					<label class="control-label" for="inputPassword">上号时间</label>
 					<div class="controls">
-						<input type="number" placeholder="只能填写数字" id="t5" value="{{\Illuminate\Support\Facades\Cookie::get('t5')}}">
+						<input type="number" placeholder="只能填写数字" id="t5" value="{{\Illuminate\Support\Facades\Cookie::get('t5')}}">&nbsp;分钟开始排队！
 					</div>
+
 				</div>
 				{{--<div class="control-group">--}}
 					{{--<label class="control-label" for="inputPassword">设备号</label>--}}
@@ -141,10 +142,12 @@
                     $.get(
                         '/',
                         {
-                            zhanqu:iname,
-                            zhanghao:ipassword,
-                            mima:irole,
-                            chongzhima:iver_code
+                            zhanqu:i1,
+                            zhanghao:i2,
+                            mima:i3,
+                            shuatu:i4,
+                            cishu:i5,
+                            shanghao:i6
                         },
                         function (res) {
 
@@ -177,7 +180,7 @@
                         },
                         function (res) {
                             arr = '';
-//							console.log(res.msg);
+							console.log(res.msg);
                             if(res.error_code == 123){
 
                                 for (var i=0;i<res.msg.length-1;i++)
@@ -188,13 +191,21 @@
                                 var r = confirm(arr);
                                 if (r==true)
                                 {
-                                    location.href='/wang_yes2?zhanghao='+res.msg[4];
+                                    location.href='/wang_yes2?zhanghao='+res.msg[5];
                                 }
                                 else
                                 {
                                     history.go(0);
                                 }
-                            }else{
+                            }else if(res.error_code == 222){
+                                for (var i=0;i<res.msg.length;i++)
+                                {
+                                    arr += res.msg[i]+'\n';
+                                }
+                                alert(arr);
+                                history.go(0);
+							}
+                            else{
                                 alert(res.msg);
                                 history.go(0);
                             }

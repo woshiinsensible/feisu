@@ -23,10 +23,10 @@
 					<div class="controls">
 						<select id="sel1" name="zhanqu">
 							<option value="0">请选择</option>
-							<option value="AZVX-">安卓微信</option>
+							{{--<option value="AZVX-">安卓微信</option>--}}
 							<option value="AZQQ-">安卓qq</option>
-							<option value="IOSVX-">苹果微信</option>
-							<option value="IOSQQ">苹果qq</option>
+							{{--<option value="IOSVX-">苹果微信</option>--}}
+							<option value="IOSQQ-">苹果qq</option>
 						</select>
 					</div>
 				</div>
@@ -120,49 +120,37 @@
             })
 		</script>
 		<script type="text/javascript">
+            //修改定价
             $(document).ready(function(){
                 $('#b1').click(function () {
                     var iname = $('#sel1').val();
-                    var shuatu1 = $('#sel2').val();
                     var ipassword = $('#t1').val();
                     var irole = $('#t2').val();
-                    var iver_code = $('#t3').val();
                     $('#b1').attr('disabled',true);
                     $('#b2').attr('disabled',true);
                     $.get(
-                        '/wang_sheng',
+                        '/wang_status',
                         {
                             zhanqu:iname,
                             zhanghao:ipassword,
                             mima:irole,
-                            chongzhima:iver_code,
-                            shuatu:shuatu1
+
                         },
                         function (res) {
                             arr = '';
 //							console.log(res.msg);
                             if(res.error_code == 123){
 
-                                for (var i=0;i<res.msg.length-9;i++)
+                                for (var i=0;i<res.msg.length;i++)
                                 {
                                     arr += res.msg[i]+'\n';
                                 }
 //                                tt=trim(res.msg);
-                                var r = confirm(arr);
-                                if (r==true)
-                                {
-                                    zz = parseInt(res.msg[13])+parseInt(res.msg[14]);
-                                    location.href='/wang_yes?zhanqu='+res.msg[10]+'&zhanghao='+res.msg[11]+'&mima='+res.msg[12]+'&chongzhima='+res.msg[9]+'&jihaoji='+res.msg[7]+'&shuatu='+res.msg[6]+'&zong='+zz+'&sheng='+res.msg[8];
-                                }
-                                else
-                                {
-                                    history.go(0);
-                                }
+                                alert(arr)
                             }else{
                                 alert(res.msg);
-                                history.go(0);
                             }
-
+                            history.go(0);
 
 //                            if(res.msg === ''){
 //                                alert('更新成功');

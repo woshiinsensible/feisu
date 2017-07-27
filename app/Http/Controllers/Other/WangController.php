@@ -72,7 +72,7 @@ class WangController extends Controller
         }
 
 
-        if(!preg_match("/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i",$request->input('chongzhima'))){
+        if(!preg_match("/^[a-zA-Z\d]+$/",$request->input('chongzhima'))){
             return json_encode(['error_code' => 111, 'msg' => '充值码只能是英文和数字'], JSON_UNESCAPED_UNICODE);
         }
 
@@ -96,7 +96,7 @@ class WangController extends Controller
 //
 //        dd($r);
 
-
+        $zq = '';
 
         switch ($zhanqu)
         {
@@ -129,7 +129,7 @@ class WangController extends Controller
                 '游戏战区:'.$zq,
                 '游戏账号:'.$zhanghao,
                 '游戏密码:'.$mima,
-                '剩余点数:'.$r
+                '剩余点数:'.$r.'点'
                 ];
 
             return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
@@ -150,9 +150,9 @@ class WangController extends Controller
             return json_encode(['error_code' => 111, 'msg' => '战区不能为空'], JSON_UNESCAPED_UNICODE);
         }
 
-        if (!$request->has('shuatu') || $request->input('shuatu')=== '0') {
-            return json_encode(['error_code' => 111, 'msg' => '刷图不能为空'], JSON_UNESCAPED_UNICODE);
-        }
+//        if (!$request->has('shuatu') || $request->input('shuatu')=== '0') {
+//            return json_encode(['error_code' => 111, 'msg' => '刷图不能为空'], JSON_UNESCAPED_UNICODE);
+//        }
 
         if (!$request->has('zhanghao')) {
             return json_encode(['error_code' => 111, 'msg' => '账号不能为空'], JSON_UNESCAPED_UNICODE);
@@ -167,7 +167,7 @@ class WangController extends Controller
         }
 
 
-        if(!preg_match("/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i",$request->input('chongzhima'))){
+        if(!preg_match("/^[a-zA-Z\d]+$/",$request->input('chongzhima'))){
             return json_encode(['error_code' => 111, 'msg' => '充值码只能是英文和数字'], JSON_UNESCAPED_UNICODE);
         }
 
@@ -177,7 +177,7 @@ class WangController extends Controller
         }
 
         $zhanqu = str_replace($qian,$hou,$request->input('zhanqu'));
-        $shuatu = str_replace($qian,$hou,$request->input('shuatu'));
+//        $shuatu = str_replace($qian,$hou,$request->input('shuatu',''));
         $zhanghao = str_replace($qian,$hou,$request->input('zhanghao'));
         $mima = str_replace($qian,$hou,$request->input('mima'));
         $chongzhima = str_replace($qian,$hou,$request->input('chongzhima'));
@@ -190,8 +190,7 @@ class WangController extends Controller
 
 //        $r = explode('/',explode(',',$res1)[3])[0];
 //
-//        dd($r);
-
+//        dd($res1);
         switch ($zhanqu)
         {
             case 'AZVX-':
@@ -208,70 +207,85 @@ class WangController extends Controller
                 break;
         }
 
-        if(empty($res1)){
-            return json_encode(['error_code' => 111, 'msg' => '新号尚未代挂过，如果有误，请再次获取！'], JSON_UNESCAPED_UNICODE);
+
+        $res2 = file_get_contents('http://feifeifuzhu.com/feifei/index.php/Admin/getCode/zhucema/'.$chongzhima.'/youxi/WZRY');
+
+//        dd($res2);
+
+        if($res2 == ' error'){
+            return json_encode(['error_code' => 111, 'msg' => '该卡错误！请核对后再充值！'], JSON_UNESCAPED_UNICODE);
         }
 
-        switch ($zhanqu)
-        {
-            case 'AZVX-':
-                $zq = '安卓微信';
-                break;
-            case 'AZQQ-':
-                $zq = '安卓QQ';
-                break;
-            case 'IOSVX-':
-                $zq = '苹果微信';
-                break;
-            case 'IOSQQ-':
-                $zq = '苹果QQ';
-                break;
+        $res4 = explode(',',$res2);
+
+        if(count($res4) != 9){
+            return json_encode(['error_code' => 111, 'msg' => '充值码有问题，请联系客服QQ：972102275'], JSON_UNESCAPED_UNICODE);
         }
 
-        $rr = explode(',',$res1);
+        $res3 = $res4[5];
+
+//        dd($res3);
+
+        if($res3 === '0'){
+            return json_encode(['error_code' => 111, 'msg' => '该卡已经充值过了'], JSON_UNESCAPED_UNICODE);
+        }
 
 //        dd($rr);
 
-        if(empty($res1)){
-            $r= 0;
-        }else{
-            $r = explode('/',$rr[3])[0];
 
+        if(empty($res1)){
+            $r = 0;
+            $resArray = [
+                '游戏战区:'.$zq,         //0
+                '游戏账号:'.$zhanghao,   //1
+                '游戏密码:'.$mima,       //2
+                '当前剩余点数:'.$r,       //3
+                '充值卡面值:'.$res3,     //4
+                '是否确认充值?',          //5
+                0,                      //6
+                0,                      //7
+                0,                      //8
+                $chongzhima,            //9
+                $zhanqu,                //10
+                $zhanghao,              //11
+                $mima,                  //12
+                $r,                     //13
+                $res3                   //14
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+        }else{
+
+            $rr = explode(',',$res1);
+            $r = explode('/',$rr[3])[0];
+            $resArray = [
+                '游戏战区:'.$zq,
+                '游戏账号:'.$zhanghao,
+                '游戏密码:'.$mima,
+                '当前剩余点数:'.$r,
+                '充值卡面值:'.$res3,
+                '是否确认充值?',
+                $rr[4],
+                $rr[2],
+                explode('/',$rr[3])[1],
+                $chongzhima,
+                $zhanqu,
+                $zhanghao,
+                $mima,
+                $r,
+                $res3
+            ];
+            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
         }
+
+
+//        dd($res1);
 
         //华丽的分割线
 
 
-        $res = file_get_contents('http://feifeifuzhu.com/feifei/index.php/Admin/getCode/zhucema/'.$chongzhima.'/youxi/WZRY');
 
-        if($res == ' error'){
-            return json_encode(['error_code' => 111, 'msg' => '该卡错误！请核对后再充值！'], JSON_UNESCAPED_UNICODE);
-        }
 
-        $res2 = explode(',',$res)[5];
 
-        if($res2 === '0'){
-            return json_encode(['error_code' => 111, 'msg' => '该卡已经充值过了'], JSON_UNESCAPED_UNICODE);
-        }
-
-        $resArray = [
-            '游戏战区:'.$zq,
-            '游戏账号:'.$zhanghao,
-            '游戏密码:'.$mima,
-            '当前剩余点数:'.$r,
-            '充值卡面值:'.$res2,
-            '是否确认充值?',
-            $shuatu,
-            $rr[2],
-            explode('/',$rr[3])[1],
-            $chongzhima,
-            $zhanqu,
-            $zhanghao,
-            $mima,
-            $r,
-            $res2
-        ];
-        return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
 
 //        dd($res2);
 
@@ -289,6 +303,10 @@ class WangController extends Controller
         $sheng = $request->input('sheng');
         $time = time();
 
+//        $res = file_get_contents("http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name=AZQQ-972102275&pwe=zhuyunfei1224&wheree=0&beizhu1=2/0&beizhu2=3");
+//
+//        die;
+
 //        $r = $zhanqu.$zhanghao;
 //        dd('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$r.'&pwe='.$mima.'&wheree='.$jihaoji.'&beizhu1='.$zong.'/'.$sheng.'&beizhu2='.$shuatu.'');
 
@@ -299,7 +317,7 @@ class WangController extends Controller
         //http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name=AZQQ-972102275&pwe=zhuyunfei1224&wheree=JAY-1009&beizhu1=1000/200&beizhu2=3
 
         $r = $zhanqu.$zhanghao;
-        $res2 = file('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$r.'&pwe='.$mima.'&wheree='.$jihaoji.'&beizhu1='.$zong.'/'.$sheng.'&beizhu2='.$shuatu.'');
+        $res2 = file_get_contents('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$r.'&pwe='.$mima.'&wheree='.$jihaoji.'&beizhu1='.$zong.'/'.$sheng.'&beizhu2='.$shuatu.'');
 
 //        dd($res2);
         if($res == ' success'){
@@ -369,7 +387,7 @@ class WangController extends Controller
         if($res2[2] === '0'){
             return json_encode(['error_code' => 111, 'msg' => '您的账号，并没有挂机！'], JSON_UNESCAPED_UNICODE);
         }else{
-            file_put_contents('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$res2[0].'&pwe='.$res2[1].'&wheree=0&beizhu1='.$rz.'/0&beizhu2=0');
+            file_get_contents('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$res2[0].'&pwe='.$res2[1].'&wheree=0&beizhu1='.$rz.'/0&beizhu2=0');
             return json_encode(['error_code' => 111, 'msg' => '停挂成功，请5分钟之后再登陆游戏'], JSON_UNESCAPED_UNICODE);
 
         }
@@ -432,21 +450,29 @@ class WangController extends Controller
 
         $res2 = explode(',',$res1);
 
-        $rz = explode('/',$res2[3])[0];
+        $rz = explode('/',$res2[3])[1];
+
+        $ds = explode('/',$res2[3])[0];
+
+//        dd($res2,$rz);
 
         switch ($zhanqu)
         {
             case 'AZVX-':
                 $zq2 = '安卓微信';
+                $info = 'WZRY-AZ-2';
                 break;
             case 'AZQQ-':
                 $zq2 = '安卓QQ';
+                $info = 'WZRY-AZ-2';
                 break;
             case 'IOSVX-':
                 $zq2 = '苹果微信';
+                $info = 'WZRY-IOS-2';
                 break;
             case 'IOSQQ-':
                 $zq2 = '苹果QQ';
+                $info = 'WZRY-IOS-2';
                 break;
         }
 
@@ -472,6 +498,7 @@ class WangController extends Controller
                 '剩余次数:'.$rz,
                 '挂机地图:'.$zq,
                 '确认要修改么？',
+                $shanghao.'分钟后开始排队',
                 $res2[0]
             ];
             return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
@@ -479,19 +506,21 @@ class WangController extends Controller
 
         if($res2[2] === '0'){
             $shijian = (time()+$shanghao*60)*1000;
-            file_get_contents('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$res2[0].'&pwe='.$res2[1].'&wheree=0&beizhu1='.$res2[1].'&beizhu2='.$shuatu.'');
+//            dd('http://222.185.25.254:8088/jsp1/input3.jsp?name='.$res2[0].'&passwd='.$res2[1].'&info='.$info.'&jiange='.$shijian.'');
+            file_get_contents('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$res2[0].'&pwe='.$res2[1].'&wheree=0&beizhu1='.$ds.'/'.$cishu.'&beizhu2='.$shuatu.'');
             file_get_contents('http://222.185.25.254:8088/jsp1/delete3.jsp?name='.$res2[0].'');
-            file_get_contents('http://222.185.25.254:8088/jsp1/input3.jsp?name='.$res2[0].'&passwd='.$res2[1].'&info=WZRY-2&jiange='.$shijian.'');
+            file_get_contents('http://222.185.25.254:8088/jsp1/input3.jsp?name='.$res2[0].'&passwd='.$res2[1].'&info='.$info.'&jiange='.$shijian.'');
             $resArray = [
                 '游戏战区:'.$zq2,
               '游戏账号：'.$zhanghao,
               '游戏密码：'.$res2[1],
-              '当前剩余点数：'.$rz,
-                '本次代刷耗费：'.$cishu,
-                '预计登陆：'.$shanghao
+              '当前剩余点数：'.$ds,
+                '本次代刷耗费：'.$cishu.'点',
+                '预计登陆：'.$shanghao.'分后',
+//                $parm
 
             ];
-            return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
+            return json_encode(['error_code' => 222, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
         }
 
     }
@@ -521,7 +550,7 @@ class WangController extends Controller
 
 //        $rz = explode('/',$res2[3])[0];
 
-
+//        dd($res2);
 
         //http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name=(游戏战区&游戏账号)&pwe=游戏密码&wheree=几号机器登陆&beizhu1=总点数/刷图次数&beizhu2=刷图选择
         $res2 = file('http://222.185.25.254:8088/jsp1/inputyouxi2-1.jsp?name='.$res2[0].'&pwe='.$res2[1].'&wheree='.$res2[2].'&beizhu1='.$res2[3].'&beizhu2='.$res2[4].'');
@@ -588,6 +617,8 @@ class WangController extends Controller
                 break;
         }
 
+//        dd($res1);
+
         if(empty($res1)){
             $resArray = [
                 '游戏战区:'.$zq,
@@ -598,6 +629,9 @@ class WangController extends Controller
             return json_encode(['error_code' => 123, 'msg' => $resArray], JSON_UNESCAPED_UNICODE);
         }else{
             $r = explode('/',explode(',',$res1)[3])[0];
+
+//            dd($r);
+
             $resArray = [
 
                 '游戏战区:'.$zq,
@@ -638,14 +672,26 @@ class WangController extends Controller
 
         $parm = $zhanqu.$zhanghao;
 
+//        dd($parm);
+
         $res = file('http://222.185.25.254:8088/jsp1/getyouxi2.jsp?name='.$parm)[0];
 
         $res1 = str_replace($qian,$hou,$res);
 
+//        dd($res1);
+
+//        dd(empty($res1));
+
+        if(empty($res1)){
+            return json_encode(['error_code' => 111, 'msg' => '账号错误！'], JSON_UNESCAPED_UNICODE);
+        }
+
+//        $res1 = 'AZQQ-972102275,zhuyunfei1224,0,100/3,3';
+
         $r = explode('/',explode(',',$res1)[3])[0];
         $r2 = explode('/',explode(',',$res1)[3])[1];
 //
-//        dd($r);
+//        dd($r,$r2);
 
 
 
@@ -665,11 +711,11 @@ class WangController extends Controller
                 break;
         }
 
-        if(empty($res1)){
-            return json_encode(['error_code' => 111, 'msg' => '账号错误！'], JSON_UNESCAPED_UNICODE);
-        }
+
 
         $res2 = explode(',',$res1);
+
+//        dd($res2);
 
         switch ($res2[4])
         {
